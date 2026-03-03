@@ -1371,8 +1371,8 @@
               <span id="descuentoText">S/ 0</span>
             </div>
             <div>
-              <span id="IGVLabel">IGV: 18%</span>
-              <span id="IGVText">S/ 0</span>
+              <span id="IGVLabel">INCLUYE IGV (18%)</span>
+              <span id="IGVText"></span>
             </div>
             <div class="grand">
               <span>Total:</span>
@@ -2227,12 +2227,12 @@
       function renderCotizacion() {
         const tbody = byId("tablaCotizacion");
         const descuentoEl = byId("descuento");
-        const IGVEl = byId("IGV");
+     
 
-        if (!tbody || !descuentoEl || !IGVEl) return;
+        if (!tbody || !descuentoEl) return;
 
         const descuento = Number(descuentoEl.value || 0);
-        const IGVPorcentaje = Number(IGVEl?.value || 0);
+       
 
         sincronizarCabecera();
         actualizarFechasCotizacion();
@@ -2316,13 +2316,13 @@
 
         const subtotalFinal = subtotal;
         const descuentoFinal = Math.max(descuento, 0);
-        const IGVMonto = subtotalFinal * (IGVPorcentaje / 100);
-        const total = Math.max(subtotalFinal - descuentoFinal, 0) + IGVMonto;
+        
+        const total = Math.max(subtotalFinal - descuentoFinal, 0);
 
         byId("subtotalText").textContent = money(subtotalFinal);
         byId("descuentoText").textContent = money(descuentoFinal);
-        byId("IGVLabel").textContent = `IGV: ${IGVPorcentaje}%`;
-        byId("IGVText").textContent = money(IGVMonto);
+        byId("IGVLabel").textContent = "INCLUYE IGV (18%)";
+        byId("IGVText").textContent = "";
         byId("totalText").textContent = money(total);
       }
 
