@@ -1,0 +1,2693 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cotizador Privado</title>
+    <style>
+      .quote-ticket-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 10px;
+        border-bottom: 1px solid #d1d5db;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+      }
+
+      .ticket-left {
+        flex: 0 0 auto;
+        min-width: 0;
+      }
+
+      .ticket-company-img {
+        width: 100%;
+        max-width: 520px;
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      .ticket-right-box {
+        width: 230px;
+        min-width: 230px;
+        border: 2px solid #111827;
+        padding: 12px 10px;
+        text-align: center;
+        background: #fff;
+        margin-left: 0;
+      }
+
+      .ticket-ruc {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .ticket-doc-title {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.05;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .ticket-doc-number {
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .quote-meta-inline {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .fechas-top {
+        display: flex;
+        justify-content: flex-end;
+        gap: 18px;
+        font-size: 12px;
+        margin: 6px 0 6px 0; /* pegadito a la tabla */
+      }
+      .quote-meta-inline p {
+        margin: 0;
+        font-size: 14px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      :root {
+        --bg: #f3f6fb;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --blue: #2563eb;
+        --blue2: #1d4ed8;
+        --red: #dc2626;
+        --red2: #b91c1c;
+        --gray: #6b7280;
+        --gray2: #4b5563;
+        --green: #059669;
+        --green2: #047857;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: auto;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin-bottom: 12px;
+      }
+
+      p {
+        line-height: 1.45;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 700;
+        margin-top: 8px;
+      }
+
+      input,
+      select,
+      button,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 14px;
+        margin-top: 6px;
+        outline: none;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #93c5fd;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      }
+
+      textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        font-weight: 700;
+      }
+
+      .btn-primary {
+        background: var(--blue);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--blue2);
+      }
+
+      .btn-danger {
+        background: var(--red);
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background: var(--red2);
+      }
+
+      .btn-gray {
+        background: var(--gray);
+        color: white;
+      }
+
+      .btn-gray:hover {
+        background: var(--gray2);
+      }
+
+      .btn-green {
+        background: var(--green);
+        color: white;
+      }
+
+      .btn-green:hover {
+        background: var(--green2);
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+        width: 100%;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .grid-4 {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
+
+      .grid-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .login-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 30px;
+      }
+
+      .login-card {
+        width: 100%;
+        max-width: 430px;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      .brand-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-box img {
+        width: 58px;
+        height: 58px;
+        border-radius: 10px;
+        object-fit: contain;
+        background: white;
+        border: 1px solid var(--line);
+        display: block;
+      }
+
+      .results-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      .results-scroll {
+        max-height: 620px;
+        overflow-y: auto;
+        padding-right: 6px;
+      }
+
+      .results-scroll::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .results-scroll::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 999px;
+      }
+
+      .results-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .product-item {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        background: #fafafa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .product-item small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+      }
+
+      .product-card-content {
+        width: 100%;
+      }
+
+      .product-main {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .product-title {
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 1.2;
+        margin-bottom: 4px;
+        word-break: break-word;
+      }
+
+      .product-sub {
+        display: block;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .product-actions button {
+        width: auto;
+        padding: 9px 14px;
+        flex-shrink: 0;
+      }
+
+      .product-edit-box {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+
+      .product-edit-box label {
+        font-size: 12px;
+        margin-top: 6px;
+      }
+
+      .product-edit-box input,
+      .product-edit-box textarea {
+        font-size: 12px;
+      }
+
+      .product-edit-box textarea {
+        min-height: 70px;
+      }
+
+      .details-box ul {
+        margin-top: 10px;
+        padding-left: 20px;
+      }
+
+      .details-box li {
+        margin-bottom: 6px;
+      }
+
+      .detail-edit {
+        width: 100%;
+        min-height: 90px;
+        resize: vertical;
+        font-size: 13px;
+        line-height: 1.2;
+        margin-top: 8px;
+      }
+
+      .pill {
+        display: inline-block;
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-top: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px;
+        text-align: left;
+        vertical-align: top;
+        font-size: 14px;
+      }
+
+      th {
+        background: #f8fafc;
+      }
+
+      .mini-input {
+        width: 90px;
+        padding: 8px;
+        margin-top: 0;
+      }
+
+      .print-only {
+        display: none;
+      }
+
+      .no-print {
+        display: inline-block;
+      }
+
+      .desc-edit {
+        width: 100%;
+        min-height: 70px;
+        resize: vertical;
+        font-size: 12px;
+        line-height: 1.2;
+        margin-top: 0;
+      }
+
+      .quote-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        border-bottom: 1px solid #d1d5db;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+      }
+
+      .quote-header-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        flex: 1;
+      }
+
+      .print-brand-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        flex: 1;
+      }
+
+      .print-brand-stack h2 {
+        margin: 0;
+      }
+
+      .print-logo-wrap {
+        width: 90px;
+        min-width: 90px;
+      }
+
+      .print-logo-wrap img {
+        width: 84px;
+        height: 84px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .info-banners {
+  display: flex;
+  margin-top: 20px;
+  border-top: 1px solid #d1d5db;
+  padding-top: 16px;
+  gap: 0;              /* ❌ sin espacio */
+}
+
+.info-item {
+  flex: 1;
+  text-align: center;
+  padding: 0;          /* ❌ sin relleno */
+}
+
+.info-item img {
+  width: 100%;
+  max-width: none;     /* ❌ quita límite */
+  height: auto;
+  display: block;
+  margin: 0;           /* ❌ sin espacio */
+}
+
+      .quote-meta {
+        text-align: right;
+        min-width: 220px;
+      }
+
+      .quote-meta p {
+        margin-bottom: 4px;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .company-lines p,
+      .payment-lines p,
+      .note-box p {
+        margin-bottom: 4px;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+
+      .totals {
+        max-width: 260px;
+        margin-left: auto;
+        margin-top: 14px;
+      }
+
+      .totals div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+
+      .totals .grand {
+        font-size: 18px;
+        font-weight: 700;
+        border-top: 2px solid var(--line);
+        padding-top: 10px;
+        margin-top: 10px;
+      }
+
+      .status {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      #datosCotizacionCard .grid {
+        align-items: end;
+      }
+
+      #datosCotizacionCard .muted {
+        font-size: 14px;
+      }
+
+      #productResultsCard,
+      #productDetailCard,
+      #quoteCard {
+        overflow: hidden;
+      }
+
+      #detalleProducto,
+      #geminiResultados,
+      #listaProductos {
+        min-width: 0;
+        word-break: break-word;
+      }
+
+      @media (max-width: 980px) {
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .grid-5 {
+          grid-template-columns: 1fr;
+        }
+
+        .top-bar,
+        .quote-header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .product-item {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .quote-meta {
+          text-align: left;
+          min-width: auto;
+        }
+
+        .results-scroll {
+          max-height: 420px;
+        }
+
+        .product-actions {
+          justify-content: flex-start;
+        }
+      }
+      .print-client-grid {
+        width: 100%;
+        margin: 6px 0 10px;
+      }
+
+      .print-client-grid .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 columnas */
+        gap: 12px 28px;
+        margin-bottom: 4px;
+      }
+
+      .print-client-grid .field {
+        display: grid;
+        grid-template-columns: 90px 1fr; /* label fijo + valor */
+        gap: 8px;
+        align-items: baseline;
+      }
+      /* Empuja solo la 2da columna (DNI/RUC y Teléfono) hacia la derecha */
+      .print-client-grid .row > .field:nth-child(2) {
+        margin-left: 60px; /* prueba 40, 60, 80 */
+      }
+
+      .print-client-grid .lbl {
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .print-client-grid .val {
+        min-width: 0;
+        word-break: break-word;
+      }
+      .ticket-right-box {
+        width: 230px;
+        min-width: 230px;
+        border: 2px solid #111827;
+        padding: 12px 10px;
+        text-align: center;
+        background: #f3f4f6; /* ✅ gris */
+        margin-left: 0;
+      }
+
+      .ticket-company-name {
+        margin-top: 6px;
+        font-weight: 800;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #111827;
+      }
+
+      .letter-intro {
+        margin: 6px 0 10px;
+        font-size: 12px;
+        line-height: 1.35;
+        text-transform: uppercase;
+      }
+      .letter-intro p {
+        margin: 0;
+      }
+
+      .quote-center-note {
+        margin-top: 10px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        gap: 60px; /* separa los 2 textos */
+      }
+
+      .cierre-empresa {
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: left;
+        margin-top: 18px;
+        margin-bottom: 14px;
+        color: #050505;
+      }
+
+      .garantia-box {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 16px 0 6px 0;
+        letter-spacing: 0.5px;
+      }
+
+      .proformas-title {
+        width: 100%;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+        font-family: "Times New Roman", serif;
+      }
+
+      @media print {
+        .print-client-grid .row > .field:nth-child(2) {
+          margin-left: 40px; /* un poco menos en impresión */
+        }
+      }
+      @media print {
+        .mensaje-empresarial {
+          font-family: "Times New Roman", serif !important;
+          font-size: 10px !important;
+          font-weight: 700 !important;
+          text-align: left !important;
+          margin: 10px 0 6px 0 !important;
+        }
+
+        .proformas-title {
+          font-size: 17px !important;
+          font-weight: 700 !important;
+          text-align: center !important;
+          margin-bottom: 4px !important;
+          font-family: "Times New Roman", serif !important;
+        }
+
+                  .info-banners {
+            display: flex !important;
+            gap: 0 !important;
+          }
+
+          .info-item img {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+          }
+
+        .garantia-box {
+          font-family: "Times New Roman", serif !important;
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          text-align: center !important;
+          margin: 6px 0 10px 0 !important;
+        }
+        .quote-ticket-header {
+          display: grid;
+          grid-template-columns: minmax(0, 520px) 230px;
+          align-items: start;
+          justify-content: start;
+          column-gap: 10px;
+          border-bottom: 1px solid #d1d5db;
+          padding-bottom: 12px;
+          margin-bottom: 12px;
+        }
+
+        .quote-center-note {
+          font-size: 9.5px !important;
+          gap: 40px !important;
+          margin-top: 8px !important;
+        }
+
+        .ticket-left {
+          min-width: 0;
+        }
+
+        .letter-intro {
+          font-size: 9.5px !important;
+          margin: 4px 0 8px !important;
+        }
+
+        .ticket-company-img {
+          width: 100%;
+          max-width: 520px;
+          height: auto;
+          display: block;
+          object-fit: contain;
+        }
+
+        .ticket-right-box {
+          width: 230px;
+          border: 2px solid #000000;
+          padding: 12px 10px;
+          text-align: center;
+          background: #c5c4c4 !important; /* ✅ gris también en impresión */
+          margin: 0;
+          justify-self: start;
+          align-self: start;
+
+          -webkit-print-color-adjust: exact; /* ✅ fuerza colores */
+          print-color-adjust: exact; /* ✅ fuerza colores */
+        }
+
+        .ticket-company-name {
+          font-size: 11px !important;
+          margin-top: 4px !important;
+        }
+
+        .ticket-ruc {
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          margin-bottom: 8px !important;
+        }
+
+        .ticket-doc-title {
+          font-size: 22px !important;
+          font-weight: 800 !important;
+          line-height: 1.05 !important;
+          margin-bottom: 8px !important;
+        }
+
+        .ticket-doc-number {
+          font-size: 18px !important;
+          font-weight: 700 !important;
+        }
+
+        .quote-meta-inline {
+          display: flex !important;
+          gap: 12px !important;
+          flex-wrap: wrap !important;
+          margin-bottom: 10px !important;
+        }
+
+        .quote-meta-inline p {
+          margin: 0 !important;
+          font-size: 10px !important;
+        }
+        @page {
+          size: A4;
+          margin: 8mm;
+        }
+
+        html,
+        body {
+          background: #fff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        #loginView,
+        #controlsArea,
+        #productSearchArea,
+        #productResultsCard,
+        #productDetailCard,
+        #geminiArea,
+        #actionsArea,
+        #logoutBtn {
+          display: none !important;
+          visibility: hidden !important;
+        }
+
+        body * {
+          visibility: hidden !important;
+        }
+
+        #quoteCard,
+        #quoteCard * {
+          visibility: visible !important;
+        }
+
+        #quoteCard {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          background: #fff !important;
+          border: none !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        #accionesColumna,
+        .acciones-celda {
+          display: none !important;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+
+        .print-only {
+          display: inline !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+        }
+
+        table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          margin-top: 6px !important;
+          font-size: 10px !important;
+        }
+
+        th,
+        td {
+          padding: 4px !important;
+          vertical-align: top !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+        }
+
+        th {
+          background: #f8fafc !important;
+        }
+
+        #quoteCard th:nth-child(2),
+        #quoteCard td:nth-child(2) {
+          font-size: 8.5px !important;
+          line-height: 1.05 !important;
+          width: 34% !important;
+        }
+
+        .print-logo-wrap {
+          width: 110px !important;
+          min-width: 110px !important;
+        }
+
+        .print-logo-wrap img {
+          width: 100px !important;
+          height: 100px !important;
+          object-fit: contain !important;
+        }
+
+        .quote-header {
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: flex-start !important;
+          gap: 18px !important;
+          padding-bottom: 10px !important;
+          margin-bottom: 10px !important;
+          border-bottom: 1px solid #d1d5db !important;
+        }
+
+        .quote-header-left {
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 12px !important;
+          flex: 1 !important;
+        }
+
+        .quote-meta {
+          text-align: right !important;
+          min-width: 190px !important;
+        }
+
+        .quote-meta p {
+          margin-bottom: 3px !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+        }
+
+        .company-lines p,
+        .payment-lines p,
+        .note-box p {
+          margin-bottom: 3px !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+        }
+
+        .totals {
+          max-width: 220px !important;
+          margin-top: 8px !important;
+        }
+
+        .totals div {
+          font-size: 10px !important;
+          margin-bottom: 3px !important;
+        }
+
+        .totals .grand {
+          font-size: 12px !important;
+          padding-top: 4px !important;
+          margin-top: 4px !important;
+        }
+          /* ===== AJUSTE DE TABLA PARA MÁS ESPACIO EN CARACTERÍSTICAS ===== */
+
+  #quoteCard table {
+    table-layout: fixed !important;
+  }
+
+  #quoteCard th:nth-child(1),
+  #quoteCard td:nth-child(1) {
+    width: 24% !important;
+  }
+
+  #quoteCard th:nth-child(2),
+  #quoteCard td:nth-child(2) {
+    width: 48% !important;
+    padding-left: 2px !important;
+    padding-right: 6px !important;
+    word-break: break-word !important;
+  }
+
+  #quoteCard th:nth-child(3),
+  #quoteCard td:nth-child(3) {
+    width: 6% !important;
+    text-align: center !important;
+  }
+
+  #quoteCard th:nth-child(4),
+  #quoteCard td:nth-child(4) {
+    width: 10% !important;
+    text-align: right !important;
+  }
+
+  #quoteCard th:nth-child(5),
+  #quoteCard td:nth-child(5) {
+    width: 12% !important;
+    text-align: right !important;
+  }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="loginView" class="login-wrap">
+        <div class="card login-card">
+          <h2>Ingreso al Cotizador</h2>
+          <p class="muted">Uso personal.</p>
+
+          <label>Usuario</label>
+          <input type="text" id="username" placeholder="Ingresa tu usuario" />
+
+          <label>Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Ingresa tu contraseña"
+            onkeydown="if (event.key === 'Enter') iniciarSesion();"
+          />
+
+          <button
+            class="btn-primary"
+            style="margin-top: 16px"
+            onclick="iniciarSesion()"
+          >
+            Ingresar
+          </button>
+
+          <p id="loginError" style="color: #dc2626; margin-top: 10px"></p>
+        </div>
+      </div>
+
+      <div id="appView" class="hidden">
+        <div class="top-bar" id="controlsArea">
+          <div class="brand-box">
+            <img
+              id="logoVista"
+              src="img/logo.png"
+              alt="Logo tienda"
+              onerror="this.style.display = 'none'"
+            />
+            <div>
+              <h1 id="topStoreName">Cotizador Privado</h1>
+              <p class="muted">PC, Laptops y Cámaras</p>
+            </div>
+          </div>
+
+          <button
+            id="logoutBtn"
+            class="btn-danger"
+            style="max-width: 180px"
+            onclick="cerrarSesion()"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+
+        <div class="card" id="datosCotizacionCard">
+          <h3>Datos de la cotización</h3>
+
+          <div class="grid grid-3">
+            <div class="grid grid-2" style="margin-top: 14px">
+              <div>
+                <label>DNI/RUC</label>
+                <input
+                  type="text"
+                  id="dniRuc"
+                  placeholder="DNI o RUC"
+                  oninput="sincronizarCabecera()"
+                />
+              </div>
+
+              <div>
+                <label>Dirección</label>
+                <input
+                  type="text"
+                  id="direccionCliente"
+                  placeholder="Dirección del cliente"
+                  oninput="sincronizarCabecera()"
+                />
+              </div>
+            </div>
+            <div>
+              <label>Cliente</label>
+              <input
+                type="text"
+                id="cliente"
+                placeholder="Nombre del cliente"
+                oninput="sincronizarCabecera()"
+              />
+            </div>
+
+            <div>
+              <label>Teléfono cliente</label>
+              <input
+                type="text"
+                id="telefono"
+                placeholder="Número del cliente"
+                oninput="sincronizarCabecera()"
+              />
+            </div>
+
+            <div>
+              <label>N° Cotización</label>
+              <input
+                type="text"
+                id="numeroCotizacion"
+                oninput="sincronizarCabecera()"
+              />
+            </div>
+
+            <div>
+              <label>Descuento (S/)</label>
+              <input
+                type="number"
+                id="descuento"
+                value="0"
+                min="0"
+                step="0.01"
+                oninput="renderCotizacion()"
+              />
+            </div>
+
+            <div>
+              <label>IGV (%)</label>
+              <input
+                type="number"
+                id="IGV"
+                value="18"
+                min="0"
+                step="0.01"
+                oninput="renderCotizacion()"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-2" style="margin-top: 14px">
+            <div>
+              <label>Nombre de la tienda</label>
+              <input
+                type="text"
+                id="storeName"
+                value="JCB Technology"
+                oninput="actualizarDatosTienda()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="geminiArea">
+          <h3>Sugerencia rápida con Gemini</h3>
+          <p class="muted">
+            Es opcional. Sirve para escribir lo que necesitas y que intente
+            encontrar productos del catálogo.
+          </p>
+
+          <label style="margin-top: 12px">Qué quieres cotizar</label>
+          <textarea
+            id="geminiPrompt"
+            placeholder="Ej: necesito una laptop para oficina con 16GB RAM"
+          ></textarea>
+
+          <div class="grid grid-3" style="margin-top: 12px">
+            <button class="btn-green" onclick="usarGemini()">
+              Analizar con Gemini
+            </button>
+            <button class="btn-primary" onclick="agregarResultadosGemini()">
+              Agregar sugeridos
+            </button>
+            <button class="btn-gray" onclick="limpiarGemini()">
+              Limpiar Gemini
+            </button>
+          </div>
+
+          <p id="geminiStatus" class="status">Sin analizar.</p>
+          <div id="geminiResultados" style="margin-top: 12px"></div>
+        </div>
+
+        <div class="card" id="productSearchArea">
+          <h3>Buscar productos</h3>
+
+          <div class="grid grid-3">
+            <div>
+              <label>Categoría</label>
+              <select id="categoria" onchange="renderProductos()">
+                <option value="todos">Todos</option>
+                <option value="pc">PC</option>
+                <option value="laptop">Laptops</option>
+                <option value="camara">Cámaras</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Buscar</label>
+              <input
+                type="text"
+                id="busqueda"
+                placeholder="Nombre, marca o modelo"
+                oninput="renderProductos()"
+              />
+            </div>
+
+            <div>
+              <label>Agregar manual rápido</label>
+              <button class="btn-primary" onclick="mostrarFormularioManual()">
+                Abrir formulario manual
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card results-card" id="productResultsCard">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 12px;
+              "
+            >
+              <h3 style="margin-bottom: 0">Resultados</h3>
+
+              <button
+                class="btn-primary"
+                style="
+                  width: auto;
+                  min-width: 44px;
+                  padding: 8px 14px;
+                  font-size: 20px;
+                  line-height: 1;
+                "
+                onclick="mostrarFormularioManual()"
+                title="Agregar producto manualmente"
+              >
+                +
+              </button>
+            </div>
+
+            <div class="results-scroll">
+              <div id="listaProductos"></div>
+            </div>
+          </div>
+
+          <div class="card details-box results-card" id="productDetailCard">
+            <h3>Características del producto</h3>
+            <div class="results-scroll">
+              <div id="detalleProducto">
+                <p class="muted">
+                  Selecciona un producto para ver sus características o usa el
+                  botón + para agregar uno manualmente.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="quoteCard">
+          <div class="quote-ticket-header">
+            <div class="ticket-left">
+              <img
+                src="/img/cotizacionimg.png"
+                alt="Encabezado cotización"
+                class="ticket-company-img"
+                onerror="this.style.display = 'none'"
+              />
+
+              <div class="ticket-company-name">
+                JUAN CARLOS BERNA SOCIEDAD ANONIMA CERRADA
+              </div>
+            </div>
+
+            <div class="ticket-right-box">
+              <div class="ticket-ruc">RUC 20489584868</div>
+
+              <div class="ticket-doc-title">COTIZACIÓN</div>
+
+              <div class="ticket-doc-number">
+                <span id="printNumeroCotizacion">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-meta-inline">
+            <div class="proformas-title">PROFORMAS JCB S.A.C</div>
+            <div class="print-client-grid">
+              <div class="row">
+                <div class="field">
+                  <span class="lbl">SR.(s):</span>
+                  <span class="val" id="printClienteNombre">-</span>
+                </div>
+
+                <div class="field">
+                  <span class="lbl">DNI/RUC:</span>
+                  <span class="val" id="printDniRuc">-</span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="field">
+                  <span class="lbl">DIRECCIÓN:</span>
+                  <span class="val" id="printDireccion">-</span>
+                </div>
+
+                <div class="field">
+                  <span class="lbl">TELÉFONO:</span>
+                  <span class="val" id="printTelefonoCliente">-</span>
+                </div>
+              </div>
+            </div>
+            <div class="letter-intro">
+              <p><strong>ESTIMADO CLIENTE:</strong></p>
+              <p>
+                POR MEDIO DE ESTA PRESENTE HACEMOS LLEGAR NUESTRO CORDIAL SALUDO
+                Y A LA VEZ LA PRESENTE COTIZACIÓN A VUESTRA SOLICITUD:
+              </p>
+            </div>
+          </div>
+
+          <h3>DETALLES:</h3>
+          <div class="fechas-top">
+            <span
+              ><strong>Fecha de emisión:</strong>
+              <span id="fechaEmisionTop">-</span></span
+            >
+            <span
+              ><strong>Fecha de vencimiento:</strong>
+              <span id="fechaVencimientoTop">-</span></span
+            >
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Características</th>
+                <th>Cant.</th>
+                <th>P. Unit.</th>
+                <th>Subtotal</th>
+                <th id="accionesColumna">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaCotizacion"></tbody>
+          </table>
+
+          <div class="totals">
+            <div>
+              <span>Subtotal:</span>
+              <span id="subtotalText">S/ 0</span>
+            </div>
+            <div>
+              <span>Descuento:</span>
+              <span id="descuentoText">S/ 0</span>
+            </div>
+            <div>
+              <span id="IGVLabel">IGV: 18%</span>
+              <span id="IGVText">S/ 0</span>
+            </div>
+            <div class="grand">
+              <span>Total:</span>
+              <span id="totalText">S/ 0</span>
+            </div>
+          </div>
+
+          <div class="mensaje-empresarial">
+            SIN OTRO PARTICULAR, Y EN ESPERA DE SU AMABLE ACEPTACIÓN, QUEDAMOS A
+            SU ENTERA DISPOSIÓN PARA CUALQUIER CONSULTA O ACLARACIÓN QUE ESTIME
+            PERTINENTE. AGRADECEMOS LA OPORTUNIDAD DE COTIZAR NUESTROS PRODUCTOS
+            Y SERVICIOS, Y ESPERAMOS PODER SERVIRLE PRONTO.
+          </div>
+
+          <div class="garantia-box">GARANTÍA 12 MESES</div>
+
+          <div class="note-box" style="margin-top: 18px">
+            <p>
+              <strong>Observaciones:</strong> Precios sujetos a variación según
+              stock. Cotización referencial.
+            </p>
+            <p><strong>Validez:</strong> 10 días calendario.</p>
+          </div>
+
+          <div class="info-banners">
+
+            <div class="info-item">
+              <img src="/img/cuentas.png" alt="Cuentas" />
+              <div class="info-text"></div>
+            </div>
+
+            <div class="info-item">
+              <img src="/img/envio.png" alt="Envío nacional" />
+              <div class="info-text"></div>
+            </div>
+
+            <div class="info-item">
+              <img src="/img/redes.png" alt="Redes sociales" />
+              <div class="info-text"></div>
+            </div>
+
+</div>
+
+        <div class="card" id="actionsArea">
+          <div class="grid grid-4">
+            <button class="btn-gray" onclick="limpiarCotizacion()">
+              Limpiar cotización
+            </button>
+            <button class="btn-primary" onclick="window.print()">
+              Imprimir / Guardar PDF
+            </button>
+            <button class="btn-gray" onclick="copiarCotizacionTexto()">
+              Copiar texto
+            </button>
+            <button class="btn-danger" onclick="resetearTodo()">
+              Reiniciar todo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const USER = "JCB@cotizar.com";
+      const PASS = "jcb2026123";
+
+      const productos = [];
+
+      let cotizacion = [];
+      let productoSeleccionado = null;
+      let geminiSugeridos = [];
+
+      function byId(id) {
+        return document.getElementById(id);
+      }
+
+      function money(n) {
+        const num = Number(n || 0);
+        if (Number.isInteger(num)) return "S/ " + num;
+        return "S/ " + num.toFixed(2);
+      }
+
+      function textoNormal(str) {
+        return String(str || "")
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+      }
+
+      function guardarCampo(clave, valor) {
+        localStorage.setItem(clave, valor);
+      }
+
+      function leerCampo(clave, defecto = "") {
+        return localStorage.getItem(clave) || defecto;
+      }
+
+      function generarNumeroCotizacion() {
+        const ahora = new Date();
+        const numero =
+          "COT-" +
+          ahora.getFullYear() +
+          String(ahora.getMonth() + 1).padStart(2, "0") +
+          String(ahora.getDate()).padStart(2, "0") +
+          "-" +
+          String(ahora.getHours()).padStart(2, "0") +
+          String(ahora.getMinutes()).padStart(2, "0");
+
+        byId("numeroCotizacion").value = numero;
+        sincronizarCabecera();
+      }
+
+      // ==== FECHAS (EMISIÓN / VENCIMIENTO) ====
+
+      // dd/mm/yyyy
+      function formatPE(d) {
+        const dd = String(d.getDate()).padStart(2, "0");
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const yyyy = d.getFullYear();
+        return `${dd}/${mm}/${yyyy}`;
+      }
+
+      function addDays(date, days) {
+        const d = new Date(date);
+        d.setDate(d.getDate() + Number(days || 0));
+        return d;
+      }
+
+      // setText seguro (no revienta si no existe el ID)
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      }
+
+      // ✅ Esta es la que realmente actualiza los spans que tienes en el HTML
+      function actualizarFechasArriba() {
+        const hoy = new Date();
+        const emision = formatPE(hoy);
+        const venc = formatPE(addDays(hoy, 10));
+
+        setText("fechaEmisionTop", emision);
+        setText("fechaVencimientoTop", venc);
+
+        // Si aún usas estos IDs en algún lado, también los llena
+        setText("printFecha", emision);
+        setText("fechaVista", emision);
+      }
+
+      // Si quieres mantener el nombre ponerFecha() porque lo llamas en tu código:
+      function ponerFecha() {
+        actualizarFechasArriba();
+      }
+      function actualizarFechasCotizacion() {
+        const hoy = new Date();
+
+        const emision = hoy.toLocaleDateString("es-PE");
+
+        const vencimientoDate = new Date(hoy);
+        vencimientoDate.setDate(vencimientoDate.getDate() + 10);
+        const vencimiento = vencimientoDate.toLocaleDateString("es-PE");
+
+        const emisionEl = byId("printFechaEmision");
+        const vencimientoEl = byId("printFechaVencimiento");
+
+        if (emisionEl) emisionEl.textContent = emision;
+        if (vencimientoEl) vencimientoEl.textContent = vencimiento;
+      }
+
+      function actualizarFechasArriba() {
+        const hoy = new Date();
+        const emision = hoy.toLocaleDateString("es-PE");
+
+        const venc = new Date(hoy);
+        venc.setDate(hoy.getDate() + 10);
+        const vencimiento = venc.toLocaleDateString("es-PE");
+
+        const e = byId("fechaEmisionTop");
+        const v = byId("fechaVencimientoTop");
+        if (e) e.textContent = emision;
+        if (v) v.textContent = vencimiento;
+      }
+      function iniciarSesion() {
+        const user = byId("username").value.trim();
+        const pass = byId("password").value.trim();
+        const error = byId("loginError");
+
+        if (user === USER && pass === PASS) {
+          localStorage.setItem("cotizador_logueado", "true");
+          mostrarApp();
+          error.textContent = "";
+          iniciarApp(); // async, pero se puede llamar igual
+        } else {
+          error.textContent = "Usuario o contraseña incorrectos.";
+        }
+      }
+
+      function cerrarSesion() {
+        localStorage.removeItem("cotizador_logueado");
+        byId("appView").classList.add("hidden");
+        byId("appView").style.display = "none";
+        byId("loginView").style.display = "flex";
+        byId("password").value = "";
+        byId("loginError").textContent = "";
+        window.scrollTo(0, 0);
+      }
+
+      function verificarSesion() {
+        const logueado = localStorage.getItem("cotizador_logueado") === "true";
+
+        if (logueado) {
+          // OJO: esto usa DOM. Por eso ahora SOLO llamamos iniciarApp cuando DOM ya cargó.
+          mostrarApp();
+          return true;
+        }
+
+        byId("loginView").style.display = "flex";
+        byId("appView").classList.add("hidden");
+        byId("appView").style.display = "none";
+        return false;
+      }
+
+      function mostrarApp() {
+        byId("loginView").style.display = "none";
+        byId("appView").classList.remove("hidden");
+        byId("appView").style.display = "block";
+        window.scrollTo(0, 0);
+      }
+
+      function cargarLogoGuardado() {
+        const vista = byId("logoVista");
+        const print = byId("logoPrint");
+
+        // ✅ si estás en una vista donde esos IDs no existen, no rompas el JS
+        if (!vista && !print) return;
+
+        const guardado = localStorage.getItem("cotizador_logo");
+
+        const src = guardado || "img/logo.png";
+
+        if (vista) vista.src = src;
+        if (print) print.src = src;
+      }
+      function actualizarDatosTienda() {
+        const nombre = byId("storeName").value.trim() || "JCB SAC";
+
+        const telefono = "+51 902 440 550"; // cambia aquí
+        const correo = ""; // cambia aquí
+
+        const cuentas = {
+          bcp: "365-03476440002",
+          bcpCci: "002-36510347644000252",
+          interbank: "561-300409312-0",
+          interbankCci: "003-561-003004093120-83",
+          cajaHuancayo: "5613004093123",
+          cajaHuancayoCci: "00356100300409312083",
+          bbva: "0011-0827-02005880-84",
+          bbvaCci: "011-827-00020058808430",
+          scotia: "2120353327",
+          scotiaCci: "00934920212035332722",
+        };
+
+        if (byId("topStoreName")) byId("topStoreName").textContent = nombre;
+        if (byId("printStoreName")) byId("printStoreName").textContent = nombre;
+        if (byId("printStorePhone"))
+          byId("printStorePhone").textContent = telefono;
+        if (byId("printStoreEmail"))
+          byId("printStoreEmail").textContent = correo;
+
+        if (byId("printBCP")) byId("printBCP").textContent = cuentas.bcp;
+        if (byId("printBCPcci"))
+          byId("printBCPcci").textContent = cuentas.bcpCci;
+        if (byId("printInterbank"))
+          byId("printInterbank").textContent = cuentas.interbank;
+        if (byId("printInterbankCci"))
+          byId("printInterbankCci").textContent = cuentas.interbankCci;
+        if (byId("printCajaHuancayo"))
+          byId("printCajaHuancayo").textContent = cuentas.cajaHuancayo;
+        if (byId("printCajaHuancayoCci"))
+          byId("printCajaHuancayoCci").textContent = cuentas.cajaHuancayoCci;
+        if (byId("printBBVA")) byId("printBBVA").textContent = cuentas.bbva;
+        if (byId("printBBVACci"))
+          byId("printBBVACci").textContent = cuentas.bbvaCci;
+        if (byId("printScotia"))
+          byId("printScotia").textContent = cuentas.scotia;
+        if (byId("printScotiaCci"))
+          byId("printScotiaCci").textContent = cuentas.scotiaCci;
+
+        guardarCampo("storeName", byId("storeName").value);
+      }
+
+      function actualizarCuentas() {
+        // fijo desde actualizarDatosTienda
+      }
+
+      function sincronizarCabecera() {
+        const num = byId("numeroCotizacion")?.value?.trim() || "-";
+        const cliente = byId("cliente")?.value?.trim() || "-";
+        const telefono = byId("telefono")?.value?.trim() || "-";
+
+        // ✅ solo setea si existe
+        setText("printNumeroCotizacion", num);
+        setText("printCliente", cliente);
+        setText("printTelefono", telefono);
+
+        // ✅ NUEVOS CAMPOS
+        const dniRuc = byId("dniRuc")?.value?.trim() || "-";
+        const direccion = byId("direccionCliente")?.value?.trim() || "-";
+
+        setText("printClienteNombre", cliente);
+        setText("printTelefonoCliente", telefono);
+        setText("printDniRuc", dniRuc);
+        setText("printDireccion", direccion);
+
+        // guardar
+        guardarCampo("cliente", byId("cliente")?.value || "");
+        guardarCampo("telefono", byId("telefono")?.value || "");
+        guardarCampo("numeroCotizacion", byId("numeroCotizacion")?.value || "");
+        guardarCampo("dniRuc", byId("dniRuc")?.value || "");
+        guardarCampo("direccionCliente", byId("direccionCliente")?.value || "");
+
+        // fecha
+        ponerFecha();
+      }
+
+      function cargarDatosGuardados() {
+        byId("storeName").value = leerCampo("storeName", "JCB Technology");
+        byId("cliente").value = leerCampo("cliente", "");
+        byId("telefono").value = leerCampo("telefono", "");
+        byId("numeroCotizacion").value = leerCampo("numeroCotizacion", "");
+        actualizarDatosTienda();
+        if (byId("dniRuc")) byId("dniRuc").value = leerCampo("dniRuc", "");
+        if (byId("direccionCliente"))
+          byId("direccionCliente").value = leerCampo("direccionCliente", "");
+      }
+
+      function normalizarCategoria(cat) {
+        const c = textoNormal(cat);
+        if (c.includes("laptop")) return "laptop";
+        if (c.includes("cam")) return "camara";
+        return "pc";
+      }
+
+      function separarNombreYModelo(producto) {
+        const nombre = String(producto?.nombre || "").trim();
+        const modelo = String(producto?.modelo || "").trim();
+
+        if (!nombre) {
+          return {
+            titulo: "Producto sin nombre",
+            subtituloModelo: modelo || "N/D",
+          };
+        }
+
+        if (modelo && nombre.toLowerCase().endsWith(modelo.toLowerCase())) {
+          const tituloLimpio = nombre
+            .slice(0, nombre.length - modelo.length)
+            .trim();
+          return {
+            titulo: tituloLimpio || nombre,
+            subtituloModelo: modelo,
+          };
+        }
+
+        return {
+          titulo: nombre,
+          subtituloModelo: modelo || "N/D",
+        };
+      }
+
+      function renderProductos() {
+        const categoriaEl = byId("categoria");
+        const busquedaEl = byId("busqueda");
+        const contenedor = byId("listaProductos");
+
+        if (!categoriaEl || !busquedaEl || !contenedor) return;
+
+        const categoria = categoriaEl.value;
+        const busqueda = textoNormal(busquedaEl.value);
+
+        const filtrados = productos.filter((p) => {
+          const okCategoria =
+            categoria === "todos" || p.categoria === categoria;
+          const texto = textoNormal(
+            `${p.nombre} ${p.marca} ${p.modelo} ${(p.caracteristicas || []).join(" ")}`,
+          );
+          return okCategoria && texto.includes(busqueda);
+        });
+
+        if (!filtrados.length) {
+          contenedor.innerHTML =
+            '<p class="muted">No se encontraron productos.</p>';
+          return;
+        }
+
+        contenedor.innerHTML = filtrados
+          .map((p) => {
+            const vista = separarNombreYModelo(p);
+
+            return `
+                <div class="product-item" style="align-items:flex-start;">
+                  <div class="product-card-content">
+                    <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start;">
+                      <div class="product-main">
+                        <div class="product-title">${vista.titulo}</div>
+                        <small class="product-sub">${p.marca} | ${vista.subtituloModelo} | ${money(p.precio)}</small>
+                      </div>
+
+                      <div class="product-actions">
+                        <button class="btn-gray" onclick="verDetalle(${p.id})">Ver</button>
+                        <button class="btn-green" onclick="toggleEditarLista(${p.id})">Editar</button>
+                        <button class="btn-danger" onclick="eliminarProductoCatalogo(${p.id})">Eliminar</button>
+                        <button class="btn-primary" onclick="agregarProducto(${p.id})">Agregar</button>
+                      </div>
+                    </div>
+
+                    <div id="editBox_${p.id}" class="product-edit-box hidden">
+                      <label>Título</label>
+                      <input
+                        type="text"
+                        id="nombreLista_${p.id}"
+                        value="${String(p.nombre || "").replace(/"/g, "&quot;")}"
+                      />
+
+                      <label>Precio</label>
+                      <input
+                        type="number"
+                        id="precioLista_${p.id}"
+                        min="0"
+                        step="0.01"
+                        value="${Number(p.precio || 0)}"
+                      />
+
+                      <label>Características</label>
+                      <textarea id="descLista_${p.id}">${(p.caracteristicas || []).join("\n")}</textarea>
+
+                      <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;">
+                        <button
+                          class="btn-green"
+                          style="width:auto; padding:9px 14px;"
+                          onclick="cambiarProductoLista(${p.id})"
+                        >
+                          Guardar
+                        </button>
+
+                        <button
+                          class="btn-gray"
+                          style="width:auto; padding:9px 14px;"
+                          onclick="toggleEditarLista(${p.id})"
+                        >
+                          Cerrar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+          })
+          .join("");
+      }
+
+      function verDetalle(id) {
+        const p = productos.find((x) => x.id === id);
+        if (!p) return;
+
+        productoSeleccionado = p;
+
+        byId("detalleProducto").innerHTML = `
+            <p><strong>Nombre:</strong> ${p.nombre}</p>
+            <p><strong>Marca:</strong> ${p.marca}</p>
+            <p><strong>Modelo:</strong> ${p.modelo}</p>
+            <p><strong>Precio:</strong> ${money(p.precio)}</p>
+            <div class="pill">${String(p.categoria || "").toUpperCase()}</div>
+
+            <h4 style="margin-top:12px;">Características</h4>
+            <ul>
+              ${(p.caracteristicas || []).map((c) => `<li>${c}</li>`).join("")}
+            </ul>
+          `;
+      }
+
+      function mostrarFormularioManual() {
+        productoSeleccionado = null;
+
+        byId("detalleProducto").innerHTML = `
+            <h4>Agregar producto manualmente</h4>
+
+            <label>Nombre</label>
+            <input type="text" id="manualNombre" placeholder="Ej. RTX 4070 Super" />
+
+            <label>Marca</label>
+            <input type="text" id="manualMarca" placeholder="Ej. ASUS" />
+
+            <label>Modelo</label>
+            <input type="text" id="manualModelo" placeholder="Ej. DUAL-RTX4070S" />
+
+            <label>Categoría</label>
+            <select id="manualCategoria">
+              <option value="pc">PC</option>
+              <option value="laptop">Laptop</option>
+              <option value="camara">Cámara</option>
+            </select>
+
+            <label>Precio</label>
+            <input type="number" id="manualPrecio" min="0" step="0.01" value="0" />
+
+            <label>Características</label>
+            <textarea id="manualCaracteristicas" class="detail-edit" placeholder="Una característica por línea"></textarea>
+
+            <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+              <button
+                class="btn-green"
+                style="width:auto; padding:9px 14px;"
+                onclick="guardarProductoManual()"
+              >
+                Guardar producto
+              </button>
+
+              <button
+                class="btn-gray"
+                style="width:auto; padding:9px 14px;"
+                onclick="limpiarDetalleProducto()"
+              >
+                Cancelar
+              </button>
+            </div>
+          `;
+      }
+
+      // ========= helpers BD (/api/products) =========
+      async function cargarCatalogoBD() {
+        console.log("📡 Llamando /api/products...");
+
+        const res = await fetch("/api/products");
+        const data = await res.json().catch(() => ({})); // ✅ data definido aquí
+
+        console.log("📦 Respuesta BD:", data);
+
+        if (!res.ok || !data.ok) {
+          throw new Error(
+            data?.error || "No se pudo cargar desde /api/products",
+          );
+        }
+
+        productos.length = 0;
+
+        (data.products || []).forEach((p) => {
+          productos.push({
+            id: p.id,
+            categoria: p.categoria || "pc",
+            nombre: p.nombre || "N/D",
+            marca: p.marca || "N/D",
+            modelo: p.modelo || "N/D",
+            precio: Number(p.precio || 0),
+            caracteristicas: Array.isArray(p.detalles) ? p.detalles : [],
+          });
+        });
+
+        console.log("✅ Productos cargados:", productos.length);
+      }
+
+      async function crearProductoBD(prod) {
+        const res = await fetch("/api/products", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            categoria: prod.categoria,
+            nombre: prod.nombre,
+            marca: prod.marca,
+            modelo: prod.modelo,
+            precio: Number(prod.precio || 0),
+            detalles: prod.caracteristicas || [],
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) {
+          throw new Error(data?.error || "No se pudo guardar en BD");
+        }
+      }
+
+      async function actualizarProductoBD(id, prod) {
+        const res = await fetch("/api/products", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id,
+            categoria: prod.categoria,
+            nombre: prod.nombre,
+            marca: prod.marca,
+            modelo: prod.modelo,
+            precio: Number(prod.precio || 0),
+            detalles: prod.caracteristicas || [],
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) {
+          throw new Error(data?.error || "No se pudo actualizar en BD");
+        }
+      }
+
+      async function eliminarProductoBD(id) {
+        const res = await fetch(`/api/products?id=${encodeURIComponent(id)}`, {
+          method: "DELETE",
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) {
+          throw new Error(data?.error || "No se pudo eliminar en BD");
+        }
+      }
+      // ========= FIN helpers BD =========
+
+      async function guardarProductoManual() {
+        const nombre = String(byId("manualNombre")?.value || "").trim();
+        const marca = String(byId("manualMarca")?.value || "").trim() || "N/D";
+        const modelo =
+          String(byId("manualModelo")?.value || "").trim() || "N/D";
+        const categoria = String(byId("manualCategoria")?.value || "pc").trim();
+        const precio = parseFloat(byId("manualPrecio")?.value || "0");
+        const caracteristicas = String(
+          byId("manualCaracteristicas")?.value || "",
+        )
+          .split("\n")
+          .map((x) => x.trim())
+          .filter(Boolean);
+
+        if (!nombre) {
+          alert("El nombre es obligatorio.");
+          return;
+        }
+
+        if (isNaN(precio) || precio < 0) {
+          alert("El precio es inválido.");
+          return;
+        }
+
+        const nuevoProducto = {
+          id: 0,
+          categoria: normalizarCategoria(categoria),
+          nombre,
+          marca,
+          modelo,
+          precio,
+          caracteristicas,
+          creadoManualmente: true,
+        };
+
+        try {
+          await crearProductoBD(nuevoProducto);
+          await cargarCatalogoBD();
+          renderProductos();
+
+          const creado = productos.find(
+            (p) =>
+              textoNormal(p.nombre) === textoNormal(nombre) &&
+              textoNormal(p.modelo) === textoNormal(modelo),
+          );
+
+          if (creado) verDetalle(creado.id);
+          else limpiarDetalleProducto();
+        } catch (e) {
+          console.error(e);
+          alert("No se pudo guardar en la BD: " + e.message);
+        }
+      }
+
+      function limpiarDetalleProducto() {
+        const el = byId("detalleProducto");
+        if (!el) return;
+        el.innerHTML =
+          '<p class="muted">Selecciona un producto para ver sus características o usa el botón + para agregar uno manualmente.</p>';
+      }
+
+      function toggleEditarLista(id) {
+        const box = byId(`editBox_${id}`);
+        if (!box) return;
+        box.classList.toggle("hidden");
+      }
+
+      async function cambiarProductoLista(id) {
+        const p = productos.find((x) => x.id === id);
+        if (!p) return;
+
+        const nombreInput = byId(`nombreLista_${id}`);
+        const precioInput = byId(`precioLista_${id}`);
+        const descInput = byId(`descLista_${id}`);
+
+        const nuevoNombre = String(nombreInput?.value || "").trim();
+        if (nuevoNombre) p.nombre = nuevoNombre;
+
+        const precioTexto = String(precioInput?.value || "").trim();
+        if (precioTexto !== "") {
+          const nuevoPrecio = Number(precioTexto);
+          if (!isNaN(nuevoPrecio) && nuevoPrecio >= 0) {
+            p.precio = Number.isInteger(nuevoPrecio)
+              ? parseInt(precioTexto, 10)
+              : nuevoPrecio;
+          }
+        }
+
+        p.caracteristicas = String(descInput?.value || "")
+          .split("\n")
+          .map((x) => x.trim())
+          .filter(Boolean);
+
+        try {
+          await actualizarProductoBD(id, p);
+          await cargarCatalogoBD();
+        } catch (e) {
+          console.error(e);
+          alert("No se pudo guardar cambios en BD: " + e.message);
+          return;
+        }
+
+        const item = cotizacion.find((x) => x.id === id);
+        if (item) {
+          item.nombre = p.nombre;
+          item.precio = p.precio;
+          item.caracteristicas = [...(p.caracteristicas || [])];
+          renderCotizacion();
+        }
+
+        if (productoSeleccionado && productoSeleccionado.id === id) {
+          verDetalle(id);
+        }
+
+        renderProductos();
+      }
+
+      async function eliminarProductoCatalogo(id) {
+        const p = productos.find((x) => x.id === id);
+        if (!p) return;
+
+        const confirmar = confirm(`¿Eliminar "${p.nombre}" del catálogo?`);
+        if (!confirmar) return;
+
+        try {
+          await eliminarProductoBD(id);
+          await cargarCatalogoBD();
+        } catch (e) {
+          console.error(e);
+          alert("No se pudo eliminar en BD: " + e.message);
+          return;
+        }
+
+        cotizacion = cotizacion.filter((x) => x.id !== id);
+
+        if (productoSeleccionado && productoSeleccionado.id === id) {
+          productoSeleccionado = null;
+          limpiarDetalleProducto();
+        }
+
+        renderProductos();
+        renderCotizacion();
+      }
+
+      function guardarCatalogoLocal() {
+        localStorage.setItem("catalogo_extra", JSON.stringify(productos));
+      }
+
+      function cargarCatalogoLocal() {
+        const guardado = localStorage.getItem("catalogo_extra");
+        if (!guardado) return;
+
+        try {
+          const data = JSON.parse(guardado);
+          if (Array.isArray(data) && data.length) {
+            productos.length = 0;
+            data.forEach((p) => productos.push(p));
+          }
+        } catch (e) {
+          console.error("No se pudo cargar catálogo local:", e);
+        }
+      }
+
+      function agregarProducto(id, cantidad = 1) {
+        const p = productos.find((x) => x.id === id);
+        if (!p) {
+          alert("No se encontró el producto para agregar.");
+          return;
+        }
+
+        const existente = cotizacion.find((item) => item.id === id);
+
+        if (existente) {
+          existente.cantidad += Number(cantidad || 1);
+        } else {
+          cotizacion.push({
+            id: p.id,
+            nombre: p.nombre,
+            marca: p.marca,
+            modelo: p.modelo,
+            precio: p.precio,
+            cantidad: Number(cantidad || 1),
+            caracteristicas: [...(p.caracteristicas || [])],
+          });
+        }
+
+        // ✅ Esto hace visible que sí agregó
+        renderCotizacion();
+        verDetalle(id);
+
+        // ✅ baja a la cotización para que lo veas
+        const quoteCard = byId("quoteCard");
+        if (quoteCard)
+          quoteCard.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function cambiarCantidad(id, valor) {
+        const item = cotizacion.find((x) => x.id === id);
+        if (!item) return;
+
+        const cantidad = parseInt(valor, 10);
+        item.cantidad = isNaN(cantidad) || cantidad < 1 ? 1 : cantidad;
+
+        renderCotizacion();
+      }
+
+      function cambiarPrecio(id, valor) {
+        const item = cotizacion.find((x) => x.id === id);
+        if (!item) return;
+
+        const precio = parseFloat(valor);
+        item.precio = isNaN(precio) || precio < 0 ? item.precio : precio;
+
+        renderCotizacion();
+      }
+
+      function cambiarDescripcion(id, valor) {
+        const item = cotizacion.find((x) => x.id === id);
+        if (!item) return;
+
+        item.caracteristicas = String(valor || "")
+          .split("\n")
+          .map((x) => x.trim())
+          .filter(Boolean);
+
+        renderCotizacion();
+      }
+
+      function eliminarProducto(id) {
+        cotizacion = cotizacion.filter((x) => x.id !== id);
+        renderCotizacion();
+      }
+
+      function limpiarCotizacion() {
+        cotizacion = [];
+        renderCotizacion();
+      }
+
+      function renderCotizacion() {
+        const tbody = byId("tablaCotizacion");
+        const descuentoEl = byId("descuento");
+        const IGVEl = byId("IGV");
+
+        if (!tbody || !descuentoEl || !IGVEl) return;
+
+        const descuento = Number(descuentoEl.value || 0);
+        const IGVPorcentaje = Number(IGVEl?.value || 0);
+
+        sincronizarCabecera();
+        actualizarFechasCotizacion();
+
+        if (!cotizacion.length) {
+          tbody.innerHTML = `
+              <tr>
+                <td colspan="6" class="muted">Aún no hay productos agregados.</td>
+              </tr>
+            `;
+          byId("subtotalText").textContent = money(0);
+          byId("descuentoText").textContent = money(descuento);
+          byId("IGVLabel").textContent = `IGV: ${IGVPorcentaje}%`;
+          byId("IGVText").textContent = money(0);
+          byId("totalText").textContent = money(0);
+          return;
+        }
+
+        let subtotal = 0;
+
+        tbody.innerHTML = cotizacion
+          .map((item) => {
+            const sub = Number(item.precio) * Number(item.cantidad);
+            subtotal += sub;
+
+            return `
+                <tr>
+                  <td>
+                    <strong>${item.nombre}</strong><br>
+                    <span class="muted">${item.marca} | ${item.modelo}</span>
+                  </td>
+
+                  <td>
+                    <div class="print-only" style="font-size:9px; line-height:1.05;">
+                      ${item.caracteristicas.map((c) => `• ${c}`).join("<br>")}
+                    </div>
+                    <textarea
+                      class="desc-edit no-print"
+                      onchange="cambiarDescripcion(${item.id}, this.value)"
+                    >${item.caracteristicas.join("\n")}</textarea>
+                  </td>
+
+                  <td>
+                    <span class="print-only">${item.cantidad}</span>
+                    <input
+                      type="number"
+                      min="1"
+                      value="${item.cantidad}"
+                      class="mini-input no-print"
+                      onchange="cambiarCantidad(${item.id}, this.value)"
+                    />
+                  </td>
+
+                  <td>
+                    <span class="print-only">${money(item.precio)}</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value="${item.precio}"
+                      class="mini-input no-print"
+                      onchange="cambiarPrecio(${item.id}, this.value)"
+                    />
+                  </td>
+
+                  <td>${money(sub)}</td>
+
+                  <td class="acciones-celda">
+                    <button
+                      class="btn-danger"
+                      style="width:auto; padding:8px 12px;"
+                      onclick="eliminarProducto(${item.id})"
+                    >
+                      Quitar
+                    </button>
+                  </td>
+                </tr>
+              `;
+          })
+          .join("");
+
+        const subtotalFinal = subtotal;
+        const descuentoFinal = Math.max(descuento, 0);
+        const IGVMonto = subtotalFinal * (IGVPorcentaje / 100);
+        const total = Math.max(subtotalFinal - descuentoFinal, 0) + IGVMonto;
+
+        byId("subtotalText").textContent = money(subtotalFinal);
+        byId("descuentoText").textContent = money(descuentoFinal);
+        byId("IGVLabel").textContent = `IGV: ${IGVPorcentaje}%`;
+        byId("IGVText").textContent = money(IGVMonto);
+        byId("totalText").textContent = money(total);
+      }
+
+      // ====== helpers seguros ======
+      function txt(id, fallback = "-") {
+        const el = byId(id);
+        return el ? String(el.textContent || "").trim() || fallback : fallback;
+      }
+      function val(id, fallback = "") {
+        const el = byId(id);
+        return el ? String(el.value || "").trim() : fallback;
+      }
+
+      // 🔥 usa tus IDs reales (los que sí existen en tu HTML)
+      function getCliente() {
+        return val("cliente", "") || txt("printClienteNombre", "-");
+      }
+      function getTelefono() {
+        return val("telefono", "") || txt("printTelefonoCliente", "-");
+      }
+      function getNumeroCot() {
+        return val("numeroCotizacion", "") || txt("printNumeroCotizacion", "-");
+      }
+      function getFechaEmision() {
+        // tus fechas de arriba
+        return txt("fechaEmisionTop", "-");
+      }
+      function getFechaVencimiento() {
+        return txt("fechaVencimientoTop", "-");
+      }
+
+      // ====== FECHAS: usa los IDs que tienes en el HTML ======
+      function actualizarFechasArriba() {
+        const hoy = new Date();
+        const emision = hoy.toLocaleDateString("es-PE");
+
+        const venc = new Date(hoy);
+        venc.setDate(venc.getDate() + 10);
+        const vencimiento = venc.toLocaleDateString("es-PE");
+
+        const e = byId("fechaEmisionTop");
+        const v = byId("fechaVencimientoTop");
+        if (e) e.textContent = emision;
+        if (v) v.textContent = vencimiento;
+      }
+
+      // ====== BOTONES (reemplazar) ======
+      function limpiarCotizacion() {
+        cotizacion = [];
+        renderCotizacion();
+      }
+
+      function resetearTodo() {
+        cotizacion = [];
+        geminiSugeridos = [];
+
+        if (byId("cliente")) byId("cliente").value = "";
+        if (byId("telefono")) byId("telefono").value = "";
+        if (byId("dniRuc")) byId("dniRuc").value = "";
+        if (byId("direccionCliente")) byId("direccionCliente").value = "";
+
+        if (byId("busqueda")) byId("busqueda").value = "";
+        if (byId("categoria")) byId("categoria").value = "todos";
+        if (byId("descuento")) byId("descuento").value = "0";
+        if (byId("IGV")) byId("IGV").value = "18";
+
+        if (byId("geminiPrompt")) byId("geminiPrompt").value = "";
+        if (byId("geminiResultados")) byId("geminiResultados").innerHTML = "";
+        if (byId("geminiStatus"))
+          byId("geminiStatus").textContent = "Sin analizar.";
+
+        limpiarDetalleProducto();
+
+        generarNumeroCotizacion();
+        actualizarFechasArriba(); // ✅ fechas arriba
+        renderProductos();
+        renderCotizacion();
+        sincronizarCabecera();
+      }
+
+      function copiarCotizacionTexto() {
+        // ✅ NO usa IDs que no existen
+        const storeName =
+          val("storeName", "JCB Technology") || "JCB Technology";
+        const cliente = getCliente();
+        const telefono = getTelefono();
+        const numero = getNumeroCot();
+        const emision = getFechaEmision();
+        const venc = getFechaVencimiento();
+
+        if (!cotizacion.length) {
+          alert("No hay productos en la cotización.");
+          return;
+        }
+
+        let texto = "";
+        texto += `${storeName}\n`;
+        texto += `Cliente: ${cliente}\n`;
+        texto += `Teléfono: ${telefono}\n`;
+        texto += `N° Cotización: ${numero}\n`;
+        texto += `Fecha de emisión: ${emision}\n`;
+        texto += `Fecha de vencimiento: ${venc}\n\n`;
+        texto += `DETALLE:\n`;
+
+        cotizacion.forEach((item, index) => {
+          const sub = Number(item.precio) * Number(item.cantidad);
+          texto += `${index + 1}. ${item.nombre}\n`;
+          texto += `   Cantidad: ${item.cantidad}\n`;
+          texto += `   Precio: ${money(item.precio)}\n`;
+          texto += `   Subtotal: ${money(sub)}\n`;
+        });
+
+        texto += `\nSubtotal: ${txt("subtotalText", "S/ 0")}\n`;
+        texto += `Descuento: ${txt("descuentoText", "S/ 0")}\n`;
+        texto += `${txt("IGVLabel", "IGV")} - ${txt("IGVText", "S/ 0")}\n`;
+        texto += `Total: ${txt("totalText", "S/ 0")}\n\n`;
+
+        texto += `BCP: ${txt("printBCP", "-")}\n`;
+        texto += `CCI BCP: ${txt("printBCPcci", "-")}\n`;
+        texto += `Interbank: ${txt("printInterbank", "-")}\n`;
+        texto += `CCI Interbank: ${txt("printInterbankCci", "-")}\n`;
+        texto += `Caja Huancayo: ${txt("printCajaHuancayo", "-")}\n`;
+        texto += `CCI Caja Huancayo: ${txt("printCajaHuancayoCci", "-")}\n`;
+        texto += `BBVA: ${txt("printBBVA", "-")}\n`;
+        texto += `CCI BBVA: ${txt("printBBVACci", "-")}\n`;
+        texto += `Scotiabank: ${txt("printScotia", "-")}\n`;
+        texto += `CCI Scotiabank: ${txt("printScotiaCci", "-")}\n`;
+
+        navigator.clipboard
+          .writeText(texto)
+          .then(() => alert("Cotización copiada al portapapeles."))
+          .catch(() => alert("No se pudo copiar."));
+      }
+
+      // ====== IMPORTANTE: asegura que los onclick encuentren las funciones ======
+      window.limpiarCotizacion = limpiarCotizacion;
+      window.resetearTodo = resetearTodo;
+      window.copiarCotizacionTexto = copiarCotizacionTexto;
+
+      // ✅ llama fechas arriba al cargar
+      document.addEventListener("DOMContentLoaded", () => {
+        actualizarFechasArriba();
+      });
+
+      function yaExisteEnCatalogoGemini(item) {
+        const nombre = textoNormal(item?.nombre || "");
+        const modelo = textoNormal(item?.modelo || "");
+
+        return productos.some((p) => {
+          const pn = textoNormal(p.nombre || "");
+          const pm = textoNormal(p.modelo || "");
+          if (modelo) return pn === nombre && pm === modelo;
+          return pn === nombre;
+        });
+      }
+
+      async function usarGemini() {
+        const promptUsuario = byId("geminiPrompt").value.trim();
+
+        if (!promptUsuario) {
+          byId("geminiStatus").textContent =
+            "Escribe primero qué deseas cotizar.";
+          return;
+        }
+
+        byId("geminiStatus").textContent = "Buscando producto con Gemini...";
+        byId("geminiResultados").innerHTML = "";
+
+        try {
+          const res = await fetch("/api/gemini", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: promptUsuario }),
+          });
+
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok)
+            throw new Error(data?.error || "Error al consultar /api/gemini");
+
+          const esValido =
+            data &&
+            ((data.exact_match === true && data.nombre) ||
+              (typeof data.exact_match === "undefined" && data.nombre));
+
+          if (!esValido) {
+            geminiSugeridos = [];
+            renderGeminiResultados();
+            byId("geminiStatus").textContent =
+              "No se encontró coincidencia exacta o no hubo resultado usable.";
+            return;
+          }
+
+          // ✅ SOLO sugerir (NO guardar aquí)
+          geminiSugeridos = [data];
+          renderGeminiResultados();
+
+          // ✅ mensaje según si ya existe o no
+          if (yaExisteEnCatalogoGemini(data)) {
+            byId("geminiStatus").textContent =
+              "Gemini encontró el producto (ya existe en tu catálogo) ✅";
+          } else {
+            byId("geminiStatus").textContent =
+              "Gemini encontró el producto ✅ Listo para agregar.";
+          }
+        } catch (error) {
+          console.error(error);
+          byId("geminiStatus").textContent =
+            "No se pudo usar Gemini: " + (error?.message || "error");
+        }
+      }
+
+      function renderGeminiResultados() {
+        const box = byId("geminiResultados");
+
+        if (!box) return;
+
+        if (!geminiSugeridos.length) {
+          box.innerHTML = '<p class="muted">No hay sugerencias listas.</p>';
+          return;
+        }
+
+        box.innerHTML = geminiSugeridos
+          .map(
+            (item, i) => `
+                <div class="product-item">
+                  <div>
+                    <strong>${item.nombre}</strong>
+                    <small>Categoría: ${item.categoria || "-"}</small>
+                    <small>Marca: ${item.marca || "-"}</small>
+                    <small>Modelo: ${item.modelo || "-"}</small>
+                    <small>Precio sugerido: ${money(item.precio_sugerido || 0)}</small>
+                    <small>Detalles: ${(item.detalles || []).join(" | ") || "-"}</small>
+                  </div>
+                  <div class="product-actions">
+                    <button class="btn-primary" onclick="agregarGeminiAlCatalogo(${i})">Agregar al catálogo</button>
+                    <button class="btn-green" onclick="agregarGeminiDirectoACotizacion(${i})">Agregar y cotizar</button>
+                  </div>
+                </div>
+              `,
+          )
+          .join("");
+      }
+
+      async function agregarGeminiAlCatalogo(index) {
+        const item = geminiSugeridos[index];
+        if (!item) return;
+
+        const nuevoProducto = {
+          categoria: normalizarCategoria(item.categoria),
+          nombre: item.nombre || "Producto nuevo",
+          marca: item.marca || "N/D",
+          modelo: item.modelo || "N/D",
+          precio: Number(item.precio_sugerido || 0),
+          caracteristicas: Array.isArray(item.detalles) ? item.detalles : [],
+          creadoPorGemini: true,
+        };
+
+        try {
+          await crearProductoBD(nuevoProducto);
+          await cargarCatalogoBD();
+          renderProductos();
+
+          const creado = productos.find(
+            (p) =>
+              textoNormal(p.nombre) === textoNormal(nuevoProducto.nombre) &&
+              textoNormal(p.modelo) === textoNormal(nuevoProducto.modelo),
+          );
+          if (creado) verDetalle(creado.id);
+
+          byId("geminiStatus").textContent = "Producto agregado al catálogo.";
+        } catch (e) {
+          console.error(e);
+          alert("No se pudo guardar el producto de Gemini en BD: " + e.message);
+        }
+      }
+
+      async function agregarGeminiDirectoACotizacion(index) {
+        const item = geminiSugeridos[index];
+        if (!item) return;
+
+        const nuevoProducto = {
+          categoria: normalizarCategoria(item.categoria),
+          nombre: item.nombre || "Producto nuevo",
+          marca: item.marca || "N/D",
+          modelo: item.modelo || "N/D",
+          precio: Number(item.precio_sugerido || 0),
+          caracteristicas: Array.isArray(item.detalles) ? item.detalles : [],
+          creadoPorGemini: true,
+        };
+
+        try {
+          await crearProductoBD(nuevoProducto);
+          await cargarCatalogoBD();
+          renderProductos();
+
+          const creado = productos.find(
+            (p) =>
+              textoNormal(p.nombre) === textoNormal(nuevoProducto.nombre) &&
+              textoNormal(p.modelo) === textoNormal(nuevoProducto.modelo),
+          );
+
+          if (creado) agregarProducto(creado.id, 1);
+
+          byId("geminiStatus").textContent =
+            "Producto agregado al catálogo y a la cotización.";
+        } catch (e) {
+          console.error(e);
+          alert("No se pudo guardar el producto de Gemini en BD: " + e.message);
+        }
+      }
+
+      function agregarResultadosGemini() {
+        if (!geminiSugeridos.length) {
+          byId("geminiStatus").textContent = "No hay sugerencias para agregar.";
+          return;
+        }
+
+        geminiSugeridos.forEach((_, i) => {
+          agregarGeminiAlCatalogo(i);
+        });
+
+        byId("geminiStatus").textContent =
+          "Se agregaron los sugeridos al catálogo.";
+      }
+
+      function limpiarGemini() {
+        geminiSugeridos = [];
+        byId("geminiPrompt").value = "";
+        byId("geminiResultados").innerHTML = "";
+        byId("geminiStatus").textContent = "Sin analizar.";
+      }
+
+      async function iniciarApp() {
+        const logueado = verificarSesion();
+        if (!logueado) return;
+
+        mostrarApp();
+
+        cargarLogoGuardado();
+        cargarDatosGuardados();
+
+        try {
+          await cargarCatalogoBD();
+        } catch (e) {
+          console.warn("BD no disponible, usando catálogo local:", e);
+          cargarCatalogoLocal();
+        }
+
+        // ✅ Render una sola vez
+        renderProductos();
+        limpiarDetalleProducto();
+
+        generarNumeroCotizacion();
+        renderCotizacion();
+        actualizarDatosTienda();
+        actualizarCuentas();
+        sincronizarCabecera();
+        actualizarFechasCotizacion();
+        ponerFecha();
+      }
+
+      // ✅ IMPORTANTE: correr cuando el DOM ya existe (evita que se mueran botones al recargar)
+      document.addEventListener("DOMContentLoaded", () => {
+        iniciarApp();
+      });
+    </script>
+  </body>
+</html>
