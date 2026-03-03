@@ -1139,15 +1139,8 @@
             </div>
 
             <div>
-              <label>IGV (%)</label>
-              <input
-                type="number"
-                id="IGV"
-                value="18"
-                min="0"
-                step="0.01"
-                oninput="renderCotizacion()"
-              />
+              <label>TODOS LOS PRODUCTOS INCLUYEN IGV (18%)</label>
+           
             </div>
           </div>
 
@@ -1371,9 +1364,8 @@
               <span id="descuentoText">S/ 0</span>
             </div>
             <div>
-              <span id="IGVLabel">IGV: 18%</span>
-              <span id="IGVText">S/ 0</span>
-            </div>
+              <span id="IGVLabel">Todos los productos ya incluyen IGV: 18%</span>
+              </div>
             <div class="grand">
               <span>Total:</span>
               <span id="totalText">S/ 0</span>
@@ -2227,12 +2219,12 @@
       function renderCotizacion() {
         const tbody = byId("tablaCotizacion");
         const descuentoEl = byId("descuento");
-        const IGVEl = byId("IGV");
 
-        if (!tbody || !descuentoEl || !IGVEl) return;
+
+        if (!tbody || !descuentoEl) return;
 
         const descuento = Number(descuentoEl.value || 0);
-        const IGVPorcentaje = Number(IGVEl?.value || 0);
+
 
         sincronizarCabecera();
         actualizarFechasCotizacion();
@@ -2245,8 +2237,8 @@
             `;
           byId("subtotalText").textContent = money(0);
           byId("descuentoText").textContent = money(descuento);
-          byId("IGVLabel").textContent = `IGV: ${IGVPorcentaje}%`;
-          byId("IGVText").textContent = money(0);
+
+
           byId("totalText").textContent = money(0);
           return;
         }
@@ -2316,13 +2308,13 @@
 
         const subtotalFinal = subtotal;
         const descuentoFinal = Math.max(descuento, 0);
-        const IGVMonto = subtotalFinal * (IGVPorcentaje / 100);
-        const total = Math.max(subtotalFinal - descuentoFinal, 0) + IGVMonto;
+
+
 
         byId("subtotalText").textContent = money(subtotalFinal);
         byId("descuentoText").textContent = money(descuentoFinal);
-        byId("IGVLabel").textContent = `IGV: ${IGVPorcentaje}%`;
-        byId("IGVText").textContent = money(IGVMonto);
+
+ 
         byId("totalText").textContent = money(total);
       }
 
@@ -2387,7 +2379,7 @@
         if (byId("busqueda")) byId("busqueda").value = "";
         if (byId("categoria")) byId("categoria").value = "todos";
         if (byId("descuento")) byId("descuento").value = "0";
-        if (byId("IGV")) byId("IGV").value = "18";
+
 
         if (byId("geminiPrompt")) byId("geminiPrompt").value = "";
         if (byId("geminiResultados")) byId("geminiResultados").innerHTML = "";
@@ -2437,7 +2429,7 @@
 
         texto += `\nSubtotal: ${txt("subtotalText", "S/ 0")}\n`;
         texto += `Descuento: ${txt("descuentoText", "S/ 0")}\n`;
-        texto += `${txt("IGVLabel", "IGV")} - ${txt("IGVText", "S/ 0")}\n`;
+
         texto += `Total: ${txt("totalText", "S/ 0")}\n\n`;
 
         texto += `BCP: ${txt("printBCP", "-")}\n`;
