@@ -711,6 +711,16 @@
         }
       }
       @media print {
+
+         /* por defecto: oculto */
+  #quoteCard.hide-unit-print .col-unit {
+    display: none !important;
+  }
+
+  /* si activas mostrar */
+  #quoteCard.show-unit-print .col-unit {
+    display: table-cell !important;
+  }
         .mensaje-empresarial {
           font-family: "Times New Roman", serif !important;
           font-size: 10px !important;
@@ -978,6 +988,30 @@
           padding-top: 4px !important;
           margin-top: 4px !important;
         }
+
+/* ✅ Si NO está marcada la opción, ocultar P.Unit y Subtotal por producto */
+#quoteCard:not(.print-show-line-prices) table th:nth-child(4),
+#quoteCard:not(.print-show-line-prices) table td:nth-child(4),
+#quoteCard:not(.print-show-line-prices) table th:nth-child(5),
+#quoteCard:not(.print-show-line-prices) table td:nth-child(5) {
+  display: none !important;
+}
+
+/* (Opcional) Ajusta anchos cuando se ocultan columnas para que no se vea “apretado” */
+#quoteCard:not(.print-show-line-prices) table th:nth-child(1),
+#quoteCard:not(.print-show-line-prices) table td:nth-child(1) {
+  width: 36% !important;
+}
+#quoteCard:not(.print-show-line-prices) table th:nth-child(2),
+#quoteCard:not(.print-show-line-prices) table td:nth-child(2) {
+  width: 44% !important;
+}
+#quoteCard:not(.print-show-line-prices) table th:nth-child(3),
+#quoteCard:not(.print-show-line-prices) table td:nth-child(3) {
+  width: 20% !important;
+  text-align: right !important;
+}
+
           /* ===== AJUSTE DE TABLA PARA MÁS ESPACIO EN CARACTERÍSTICAS ===== */
 
   #quoteCard table {
@@ -1353,7 +1387,7 @@
                 <th>Producto</th>
                 <th>Características</th>
                 <th>Cant.</th>
-                <th>P. Unit.</th>
+                <th class="col-unit">P. Unit.</th>
                 <th>Subtotal</th>
                 <th id="accionesColumna">Acción</th>
               </tr>
@@ -1417,7 +1451,15 @@
 </div>
 
         <div class="card" id="actionsArea">
+          <!-- Preferencia de impresión (no afecta el PDF si no imprimes) -->
+<div class="no-print" style="margin-bottom:12px;">
+  <label style="display:flex; align-items:center; gap:10px; font-weight:700; margin:0;">
+    <input id="printDetallesPrecio" type="checkbox" style="width:auto; margin:0;" />
+    Mostrar P. Unit. y Subtotal por producto al imprimir
+  </label>
+</div>
           <div class="grid grid-4">
+
             <button class="btn-gray" onclick="limpiarCotizacion()">
               Limpiar cotización
             </button>
@@ -2232,6 +2274,7 @@
         if (!tbody || !descuentoEl) return;
 
         const descuento = Number(descuentoEl.value || 0);
+        const IGVPorcentaje = Number(byId("IGV")?.value || 18); // solo para que no reviente
        
 
         sincronizarCabecera();
@@ -2245,8 +2288,8 @@
             `;
           byId("subtotalText").textContent = money(0);
           byId("descuentoText").textContent = money(descuento);
-          byId("IGVLabel").textContent = `IGV: ${IGVPorcentaje}%`;
-          byId("IGVText").textContent = money(0);
+          byId("IGVLabel").textContent = "INCLUYE IGV (18%)";
+          byId("IGVText").textContent = "";
           byId("totalText").textContent = money(0);
           return;
         }
@@ -2286,17 +2329,17 @@
                     />
                   </td>
 
-                  <td>
-                    <span class="print-only">${money(item.precio)}</span>
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value="${item.precio}"
-                      class="mini-input no-print"
-                      onchange="cambiarPrecio(${item.id}, this.value)"
-                    />
-                  </td>
+                  <td class="col-unit">
+  <span class="print-only">${money(item.precio)}</span>
+  <input
+    type="number"
+    min="0"
+    step="0.01"
+    value="${item.precio}"
+    class="mini-input no-print"
+    onchange="cambiarPrecio(${item.id}, this.value)"
+  />
+</td>
 
                   <td>${money(sub)}</td>
 
@@ -2634,6 +2677,33 @@
         }
       }
 
+      function aplicarPreferenciaImpresion() {
+  const chk = byId("printDetallesPrecio");
+  const card = byId("quoteCard");
+  if (!chk || !card) return;
+
+  const show = !!chk.checked;
+
+  // Guarda preferencia
+  localStorage.setItem("print_detalles_precio", show ? "1" : "0");
+
+  // Clase que controla columnas en impresión
+  card.classList.toggle("print-show-line-prices", show);
+}
+
+// Cargar preferencia al abrir
+document.addEventListener("DOMContentLoaded", () => {
+  const chk = byId("printDetallesPrecio");
+  if (chk) {
+    chk.checked = localStorage.getItem("print_detalles_precio") === "1";
+    chk.addEventListener("change", aplicarPreferenciaImpresion);
+  }
+  aplicarPreferenciaImpresion();
+});
+
+// Antes de imprimir, aplica sí o sí
+window.addEventListener("beforeprint", aplicarPreferenciaImpresion);
+
       function agregarResultadosGemini() {
         if (!geminiSugeridos.length) {
           byId("geminiStatus").textContent = "No hay sugerencias para agregar.";
@@ -2682,6 +2752,7 @@
         sincronizarCabecera();
         actualizarFechasCotizacion();
         ponerFecha();
+        
       }
 
       // ✅ IMPORTANTE: correr cuando el DOM ya existe (evita que se mueran botones al recargar)
