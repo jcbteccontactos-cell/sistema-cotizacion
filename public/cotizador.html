@@ -737,10 +737,11 @@
           font-family: "Times New Roman", serif !important;
         }
 
-                  .info-banners {
-            display: flex !important;
-            gap: 0 !important;
-          }
+                 .info-banners {
+  display: flex !important;
+  gap: 0 !important;
+  margin-top: auto !important; /* 🔥 esto lo empuja abajo */
+}
 
           .info-item img {
             width: 100% !important;
@@ -871,6 +872,9 @@
         }
 
         #quoteCard {
+          display: flex !important;
+  flex-direction: column !important;
+  min-height: calc(100vh - 16mm) !important; /* altura hoja A4 */
           position: absolute !important;
           top: 0 !important;
           left: 0 !important;
