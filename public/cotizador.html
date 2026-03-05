@@ -881,8 +881,11 @@
           border: none !important;
           box-shadow: none !important;
           border-radius: 0 !important;
-          page-break-inside: avoid !important;
-          break-inside: avoid !important;
+            page-break-inside: auto !important;
+  break-inside: auto !important;
+
+  overflow: visible !important;
+  isolation: isolate !important;
         }
 
         #accionesColumna,
@@ -1048,6 +1051,42 @@
     width: 12% !important;
     text-align: right !important;
   }
+
+  /* Asegura que no se recorte la marca por overflow hidden */
+  #quoteCard{
+    overflow: visible !important;
+    isolation: isolate !important; /* capa propia para z-index */
+  }
+
+  /* La marca de agua (repite en cada página por ser FIXED) */
+  #quoteCard::before{
+  content: "JCB";
+
+  position: fixed !important;     /* ✅ se repite en cada página */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) rotate(-25deg) !important;
+
+  font-size: 300px !important;    /* 🔥 casi toda la hoja */
+  font-weight: 900 !important;
+  letter-spacing: 18px !important;
+
+  color: rgba(0,0,0,0.06) !important;  /* suave */
+  z-index: 0 !important;
+  pointer-events: none !important;
+
+  /* ✅ por tu "body * { visibility:hidden }" */
+  visibility: visible !important;
+
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* ✅ Tu contenido siempre encima */
+#quoteCard > *{
+  position: relative !important;
+  z-index: 1 !important;
+}
       }
     </style>
   </head>
