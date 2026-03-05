@@ -1059,30 +1059,38 @@
   }
 
   /* La marca de agua (repite en cada página por ser FIXED) */
-  #quoteCard::before{
-  content: "JCB";
+/* =========================
+   MARCA DE AGUA CON IMAGEN
+   ========================= */
 
-  position: fixed !important;     /* ✅ se repite en cada página */
-  top: 50% !important;
+#quoteCard::before{
+  content: "";
+
+  position: fixed !important;
+  top: 55% !important;
   left: 50% !important;
   transform: translate(-50%, -50%) rotate(-25deg) !important;
 
-  font-size: 300px !important;    /* 🔥 casi toda la hoja */
-  font-weight: 900 !important;
-  letter-spacing: 18px !important;
+  width: 80vw !important;     /* tamaño de la imagen */
+  height: 80vh !important;
 
-  color: rgba(0,0,0,0.06) !important;  /* suave */
+  background-image: url("/img/agua.png"); /* ruta de tu imagen */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  opacity: 0.22 !important;   /* intensidad de la marca */
+
   z-index: 0 !important;
   pointer-events: none !important;
 
-  /* ✅ por tu "body * { visibility:hidden }" */
   visibility: visible !important;
 
   -webkit-print-color-adjust: exact !important;
   print-color-adjust: exact !important;
 }
 
-/* ✅ Tu contenido siempre encima */
+/* contenido encima */
 #quoteCard > *{
   position: relative !important;
   z-index: 1 !important;
