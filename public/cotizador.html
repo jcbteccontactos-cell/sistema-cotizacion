@@ -4,1758 +4,1982 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cotizador Privado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-.quote-ticket-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 10px;
-  border-bottom: 1px solid #d1d5db;
-  padding-bottom: 12px;
-  margin-bottom: 12px;
-}
-
-.ticket-left {
-  flex: 0 0 auto;
-  min-width: 0;
-}
-
-.ticket-company-img {
-  width: 100%;
-  max-width: 520px;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
-.ticket-right-box {
-  width: 230px;
-  min-width: 230px;
-  border: 2px solid #111827;
-  padding: 12px 10px;
-  text-align: center;
-  background: #fff;
-  margin-left: 0;
-}
-
-.ticket-ruc {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.ticket-doc-title {
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.05;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-
-.ticket-doc-number {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.quote-meta-inline {
-  display: flex;
-  gap: 18px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-.fechas-top {
-  display: flex;
-  justify-content: flex-end;
-  gap: 18px;
-  font-size: 12px;
-  margin: 6px 0 6px 0; /* pegadito a la tabla */
-}
-.quote-meta-inline p {
-  margin: 0;
-  font-size: 14px;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', sans-serif; /* Tipografía moderna y limpia para elegancia */
-  color: #000000 !important; /* Negro puro en TODAS las letras y símbolos, sin excepción, papito lerdo */
-}
-
-:root {
-  --bg: #f0f9ff; /* Fondo celeste suave */
-  --card: #ffffff;
-  --muted: #64748b;
-  --line: #dbeafe;
-  --blue: #2563eb; /* Azul principal */
-  --blue2: #1d4ed8; /* Hover azul */
-  --celeste: #0ea5e9; /* Celeste para acentos */
-  --celeste2: #0284c7; /* Hover celeste */
-  --red: #ef4444;
-  --red2: #dc2626;
-  --gray: #6b7280;
-  --gray2: #4b5563;
-  --green: #10b981;
-  --green2: #059669;
-}
-
-body {
-  background: var(--bg);
-  padding: 24px; /* Más espacio para aire */
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 1280px;
-  margin: auto;
-}
-
-.card {
-  background: var(--card);
-  border-radius: 20px; /* Bordes más suaves */
-  padding: 24px; /* Más padding para comodidad */
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1); /* Sombra azulada suave */
-  margin-bottom: 24px;
-  transition: box-shadow 0.3s ease; /* Transición para hover */
-}
-
-.card:hover {
-  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15); /* Hover más pronunciado */
-}
-
-h1,
-h2,
-h3,
-h4 {
-  margin-bottom: 16px;
-  color: #000000; /* Negro */
-  font-family: 'Playfair Display', serif; /* Serif premium para títulos elegantes */
-}
-
-p {
-  line-height: 1.6;
-}
-
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 8px;
-  color: #000000; /* Negro */
-}
-
-input,
-select,
-button,
-textarea {
-  width: 100%;
-  padding: 12px 16px; /* Más padding para comodidad */
-  border: 1px solid var(--line);
-  border-radius: 12px; /* Bordes redondeados */
-  font-size: 14px;
-  margin-top: 6px;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  color: #000000; /* Negro */
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--celeste);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2); /* Focus celeste suave */
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  font-weight: 600;
-  transition: background 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
-  border-radius: 12px; /* Bordes redondeados */
-  color: #000000; /* Negro para texto en botones si no es blanco */
-}
-
-button:hover {
-  transform: translateY(-2px); /* Efecto lift en hover */
-}
-
-.btn-primary {
-  background: var(--blue);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: var(--blue2);
-}
-
-.btn-danger {
-  background: var(--red);
-  color: white;
-}
-
-.btn-danger:hover {
-  background: var(--red2);
-}
-
-.btn-gray {
-  background: var(--gray);
-  color: white;
-}
-
-.btn-gray:hover {
-  background: var(--gray2);
-}
-
-.btn-green {
-  background: var(--green);
-  color: white;
-}
-
-.btn-green:hover {
-  background: var(--green2);
-}
-
-.hidden {
-  display: none !important;
-}
-
-.grid {
-  display: grid;
-  gap: 20px; /* Más gap para aire */
-  width: 100%;
-}
-
-.grid-2 {
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Más responsive */
-}
-
-.grid-3 {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.grid-4 {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
-.grid-5 {
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-}
-
-.login-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 40px;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 480px; /* Un poco más ancho para comodidad */
-  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15); /* Sombra azulada */
-}
-
-.muted {
-  color: #000000; /* Negro */
-  font-size: 13px;
-}
-
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 24px;
-  width: 100%;
-}
-
-.brand-box {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.brand-box img {
-  width: 64px;
-  height: 64px;
-  border-radius: 0; /* Cuadrada, gil */
-  object-fit: contain;
-  background: white;
-  border: 1px solid var(--line);
-  display: block;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra ligera */
-}
-
-.results-card {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.results-scroll {
-  max-height: 620px;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-.results-scroll::-webkit-scrollbar {
-  width: 6px;
-}
-
-.results-scroll::-webkit-scrollbar-thumb {
-  background: var(--celeste);
-  border-radius: 999px;
-}
-
-.results-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.product-item {
-  border: 1px solid var(--line);
-  border-radius: 16px; /* Más redondeado */
-  padding: 16px;
-  background: #f9fafb; /* Fondo más claro */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1); /* Hover azulado */
-}
-
-.product-item small {
-  display: block;
-  margin-top: 4px;
-  color: #000000; /* Negro */
-}
-
-.product-card-content {
-  width: 100%;
-}
-
-.product-main {
-  min-width: 0;
-  flex: 1;
-}
-
-.product-title {
-  font-weight: 700;
-  font-size: 16px; /* Un poco más grande */
-  line-height: 1.3;
-  margin-bottom: 6px;
-  word-break: break-word;
-  color: #000000; /* Negro */
-}
-
-.product-sub {
-  display: block;
-  color: #000000; /* Negro */
-  font-size: 13px;
-  line-height: 1.3;
-}
-
-.product-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.product-actions button {
-  width: auto;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.product-edit-box {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-}
-
-.product-edit-box label {
-  font-size: 13px;
-  margin-top: 8px;
-}
-
-.product-edit-box input,
-.product-edit-box textarea {
-  font-size: 13px;
-}
-
-.product-edit-box textarea {
-  min-height: 80px;
-}
-
-.details-box ul {
-  margin-top: 12px;
-  padding-left: 24px;
-}
-
-.details-box li {
-  margin-bottom: 8px;
-  list-style-type: disc;
-  color: var(--celeste); /* Celeste para bullets */
-}
-
-.detail-edit {
-  width: 100%;
-  min-height: 100px;
-  resize: vertical;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-top: 8px;
-}
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  background: #dbeafe;
-  color: #000000; /* Negro */
-  border: 1px solid #bfdbfe;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 8px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-}
-
-th,
-td {
-  border-bottom: 1px solid var(--line);
-  padding: 12px;
-  text-align: left;
-  vertical-align: top;
-  font-size: 14px;
-}
-
-th {
-  background: #eff6ff; /* Fondo azul claro */
-  color: #000000; /* Negro */
-  font-weight: 600;
-}
-
-.mini-input {
-  width: 100px; /* Un poco más ancho */
-  padding: 8px 12px;
-  margin-top: 0;
-}
-
-.print-only {
-  display: none;
-}
-
-.no-print {
-  display: inline-block;
-}
-
-.desc-edit {
-  width: 100%;
-  min-height: 80px;
-  resize: vertical;
-  font-size: 13px;
-  line-height: 1.4;
-  margin-top: 0;
-}
-
-.quote-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 24px;
-  border-bottom: 1px solid #dbeafe; /* Línea celeste */
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-}
-
-.quote-header-left {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  flex: 1;
-}
-
-.print-brand-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  flex: 1;
-}
-
-.print-brand-stack h2 {
-  margin: 0;
-  color: #000000; /* Negro */
-}
-
-.print-logo-wrap {
-  width: 96px;
-  min-width: 96px;
-}
-
-.print-logo-wrap img {
-  width: 88px;
-  height: 88px;
-  object-fit: contain;
-  display: block;
-  border-radius: 0; /* Cuadrada */
-}
-
-.info-banners {
-  display: flex;
-  margin-top: 24px;
-  border-top: 1px solid #dbeafe;
-  padding-top: 20px;
-  gap: 0;
-}
-
-.info-item {
-  flex: 1;
-  text-align: center;
-  padding: 0;
-}
-
-.info-item img {
-  width: 100%;
-  max-width: none;
-  height: auto;
-  display: block;
-  margin: 0;
-  border-radius: 0; /* Cuadrada */
-}
-
-.quote-meta {
-  text-align: right;
-  min-width: 240px;
-}
-
-.quote-meta p {
-  margin-bottom: 6px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #000000; /* Negro */
-}
-
-.company-lines p,
-.payment-lines p,
-.note-box p {
-  margin-bottom: 6px;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-.totals {
-  max-width: 280px;
-  margin-left: auto;
-  margin-top: 16px;
-  padding: 12px;
-  background: #eff6ff; /* Fondo azul claro para totales */
-  border-radius: 12px;
-}
-
-.totals div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 15px;
-}
-
-.totals .grand {
-  font-size: 18px;
-  font-weight: 700;
-  border-top: 2px solid var(--celeste);
-  padding-top: 12px;
-  margin-top: 12px;
-  color: #000000; /* Negro */
-}
-
-.status {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #000000; /* Negro */
-}
-
-#datosCotizacionCard .grid {
-  align-items: end;
-}
-
-#datosCotizacionCard .muted {
-  font-size: 14px;
-}
-
-#productResultsCard,
-#productDetailCard,
-#quoteCard {
-  overflow: hidden;
-}
-
-#detalleProducto,
-#geminiResultados,
-#listaProductos {
-  min-width: 0;
-  word-break: break-word;
-}
-
-@media (max-width: 980px) {
-  .grid-2,
-  .grid-3,
-  .grid-4,
-  .grid-5 {
-    grid-template-columns: 1fr;
-  }
-
-  .top-bar,
-  .quote-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .product-item {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .quote-meta {
-    text-align: left;
-    min-width: auto;
-  }
-
-  .results-scroll {
-    max-height: 420px;
-  }
-
-  .product-actions {
-    justify-content: flex-start;
-  }
-}
-.print-client-grid {
-  width: 100%;
-  margin: 6px 0 10px;
-}
-
-.print-client-grid .row {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columnas */
-  gap: 12px 28px;
-  margin-bottom: 4px;
-}
-
-.print-client-grid .field {
-  display: grid;
-  grid-template-columns: 90px 1fr; /* label fijo + valor */
-  gap: 8px;
-  align-items: baseline;
-}
-/* Empuja solo la 2da columna (DNI/RUC y Teléfono) hacia la derecha */
-.print-client-grid .row > .field:nth-child(2) {
-  margin-left: 60px; /* prueba 40, 60, 80 */
-}
-
-.print-client-grid .lbl {
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.print-client-grid .val {
-  min-width: 0;
-  word-break: break-word;
-}
-.ticket-right-box {
-  width: 230px;
-  min-width: 230px;
-  border: 2px solid #111827;
-  padding: 12px 10px;
-  text-align: center;
-  background: #f3f4f6; /* ✅ gris */
-  margin-left: 0;
-}
-
-.ticket-company-name {
-  margin-top: 6px;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: #111827;
-}
-
-.letter-intro {
-  margin: 6px 0 10px;
-  font-size: 12px;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-.letter-intro p {
-  margin: 0;
-}
-
-.quote-center-note {
-  margin-top: 10px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  gap: 60px; /* separa los 2 textos */
-}
-
-.cierre-empresa {
-  font-family: "Times New Roman", Georgia, serif;
-  font-size: 18px;
-  font-weight: 700;
-  text-align: left;
-  margin-top: 18px;
-  margin-bottom: 14px;
-  color: #050505;
-}
-
-.garantia-box {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 700;
-  margin: 16px 0 6px 0;
-  letter-spacing: 0.5px;
-}
-
-.proformas-title {
-  width: 100%;
-  text-align: center;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 6px;
-  font-family: "Times New Roman", serif;
-}
-
-.input-suggest-wrap {
-  position: relative;
-}
-
-.suggest-box {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  background: #ffffff; /* Blanco puro para visibilidad */
-  border: 1px solid #d4d4d8;
-  border-radius: 20px;
-  box-shadow: 0 12px 36px rgba(161, 161, 170, 0.15); /* Sombra plateada */
-  padding: 20px;
-  z-index: 999;
-  animation: fadeIn 0.4s ease;
-  opacity: 1 !important; /* Forzado visible, no invisible como tu cerebro */
-  transform: translateY(-12px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.suggest-box:not(.hidden) {
-  opacity: 1 !important;
-  transform: translateY(0);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.suggest-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: #000000; /* Negro */
-  margin-bottom: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
-.suggest-item {
-  width: 100%;
-  text-align: left;
-  background: #f3f4f6; /* Plateado claro */
-  border: 1px solid #d4d4d8;
-  border-radius: 16px;
-  padding: 14px 18px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-bottom: 12px;
-  transition: background 0.4s ease;
-  position: relative;
-  padding-left: 36px;
-  color: #000000 !important; /* Negro forzado, visible como tu estupidez */
-}
-
-.suggest-item::before {
-  content: '✓'; /* Icono check */
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--gold);
-  font-size: 18px;
-}
-
-.suggest-item:hover {
-  background: #e4e4e7; /* Hover plateado más oscuro */
-}
-
-.suggest-manual {
-  background: var(--blue);
-  color: #fff;
-  border-color: var(--blue);
-}
-
-.suggest-manual:hover {
-  background: var(--blue2);
-}
-
-.suggest-error {
-  font-size: 14px;
-  color: var(--red);
-  margin-top: 10px;
-}
-
-/* ===== Popup flotante DNI/RUC ===== */
-.doc-wrap {
-  position: relative;
-}
-
-.doc-popup {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: min(520px, 100%);
-  background: #ffffff; /* Blanco puro */
-  border: 1px solid #d4d4d8;
-  border-radius: 20px;
-  box-shadow: 0 12px 36px rgba(161, 161, 170, 0.15);
-  padding: 20px;
-  z-index: 50;
-  animation: fadeIn 0.4s ease;
-  opacity: 1 !important; /* Visible */
-}
-
-.doc-popup-title {
-  font-weight: 700;
-  font-size: 15px;
-  margin-bottom: 10px;
-  color: #000000;
-}
-
-.doc-popup-name {
-  font-size: 16px;
-  font-weight: 600;
-  padding: 14px 18px;
-  background: #f3f4f6;
-  border: 1px solid #d4d4d8;
-  border-radius: 16px;
-  color: #000000;
-}
-
-.doc-popup-actions {
-  display: flex;
-  gap: 14px;
-  margin-top: 14px;
-  flex-wrap: wrap;
-}
-
-.doc-btn {
-  width: auto !important;
-  padding: 12px 20px !important;
-  border-radius: 16px !important;
-  font-size: 15px;
-  color: #000000; /* Negro */
-}
-
-.doc-popup-msg {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #000000; /* Negro */
-}
-
-@media (max-width: 520px) {
-  .doc-popup { width: 100%; }
-}
-
-@media print {
-  .print-client-grid .row > .field:nth-child(2) {
-    margin-left: 40px; /* un poco menos en impresión */
-  }
-}
-@media print {
-
-   /* por defecto: oculto */
-#quoteCard.hide-unit-print .col-unit {
-  display: none !important;
-}
-
-#quoteCard.show-unit-print .col-unit {
-  display: table-cell !important;
-}
-  .mensaje-empresarial {
-    font-family: "Times New Roman", serif !important;
-    font-size: 10px !important;
-    font-weight: 700 !important;
-    text-align: left !important;
-    margin: 10px 0 6px 0 !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .proformas-title {
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    text-align: center !important;
-    margin-bottom: 4px !important;
-    font-family: "Times New Roman", serif !important;
-    color: #000000 !important; /* Negro */
-  }
-
-           .info-banners {
-display: flex !important;
-gap: 0 !important;
-margin-top: auto !important; /* 🔥 esto lo empuja abajo */
-}
-
-    .info-item img {
-      width: 100% !important;
-      max-width: none !important;
-      margin: 0 !important;
-    }
-
-  .garantia-box {
-    font-family: "Times New Roman", serif !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    text-align: center !important;
-    margin: 6px 0 10px 0 !important;
-    color: #000000 !important; /* Negro */
-  }
-  .quote-ticket-header {
-    display: grid;
-    grid-template-columns: minmax(0, 520px) 230px;
-    align-items: start;
-    justify-content: start;
-    column-gap: 10px;
-    border-bottom: 1px solid #d1d5db;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
-  }
-
-  .quote-center-note {
-    font-size: 9.5px !important;
-    gap: 40px !important;
-    margin-top: 8px !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .ticket-left {
-    min-width: 0;
-  }
-
-  .letter-intro {
-    font-size: 9.5px !important;
-    margin: 4px 0 8px !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .ticket-company-img {
-    width: 100%;
-    max-width: 520px;
-    height: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  .ticket-right-box {
-    width: 230px;
-    border: 2px solid #000000;
-    padding: 12px 10px;
-    text-align: center;
-    background: #c5c4c4 !important; /* ✅ gris también en impresión */
-    margin: 0;
-    justify-self: start;
-    align-self: start;
-
-    -webkit-print-color-adjust: exact; /* ✅ fuerza colores */
-    print-color-adjust: exact; /* ✅ fuerza colores */
-  }
-
-  .ticket-company-name {
-    font-size: 11px !important;
-    margin-top: 4px !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .ticket-ruc {
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    margin-bottom: 8px !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .ticket-doc-title {
-    font-size: 22px !important;
-    font-weight: 800 !important;
-    line-height: 1.05 !important;
-    margin-bottom: 8px !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .ticket-doc-number {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .quote-meta-inline {
-    display: flex !important;
-    gap: 12px !important;
-    flex-wrap: wrap !important;
-    margin-bottom: 10px !important;
-  }
-
-  .quote-meta-inline p {
-    margin: 0 !important;
-    font-size: 10px !important;
-    color: #000000 !important; /* Negro */
-  }
-  @page {
-    size: A4;
-    margin: 8mm;
-  }
-
-  html,
-  body {
-    background: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  #loginView,
-  #controlsArea,
-  #productSearchArea,
-  #productResultsCard,
-  #productDetailCard,
-  #geminiArea,
-  #actionsArea,
-  #logoutBtn {
-    display: none !important;
-    visibility: hidden !important;
-  }
-
-  body * {
-    visibility: hidden !important;
-  }
-
-  #quoteCard,
-  #quoteCard * {
-    visibility: visible !important;
-  }
-
-  #quoteCard {
-    display: flex !important;
-flex-direction: column !important;
-min-height: calc(100vh - 16mm) !important; /* altura hoja A4 */
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #fff !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-      page-break-inside: auto !important;
-break-inside: auto !important;
-
-overflow: visible !important;
-isolation: isolate !important;
-  }
-
-  #accionesColumna,
-  .acciones-celda {
-    display: none !important;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-
-  .print-only {
-    display: inline !important;
-    font-size: 10px !important;
-    line-height: 1.15 !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-    margin-top: 6px !important;
-    font-size: 10px !important;
-  }
-
-  th,
-  td {
-    padding: 4px !important;
-    vertical-align: top !important;
-    font-size: 10px !important;
-    line-height: 1.15 !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  th {
-    background: #f8fafc !important;
-  }
-
-  #quoteCard th:nth-child(2),
-  #quoteCard td:nth-child(2) {
-    font-size: 8.5px !important;
-    line-height: 1.05 !important;
-    width: 34% !important;
-  }
-
-  .print-logo-wrap {
-    width: 110px !important;
-    min-width: 110px !important;
-  }
-
-  .print-logo-wrap img {
-    width: 100px !important;
-    height: 100px !important;
-    object-fit: contain !important;
-  }
-
-  .quote-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    gap: 18px !important;
-    padding-bottom: 10px !important;
-    margin-bottom: 10px !important;
-    border-bottom: 1px solid #d1d5db !important;
-  }
-
-  .quote-header-left {
-    display: flex !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-    flex: 1 !important;
-  }
-
-  .quote-meta {
-    text-align: right !important;
-    min-width: 190px !important;
-  }
-
-  .quote-meta p {
-    margin-bottom: 3px !important;
-    font-size: 10px !important;
-    line-height: 1.15 !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .company-lines p,
-  .payment-lines p,
-  .note-box p {
-    margin-bottom: 3px !important;
-    font-size: 10px !important;
-    line-height: 1.15 !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .totals {
-    max-width: 220px !important;
-    margin-top: 8px !important;
-  }
-
-  .totals div {
-    font-size: 10px !important;
-    margin-bottom: 3px !important;
-    color: #000000 !important; /* Negro */
-  }
-
-  .totals .grand {
-    font-size: 12px !important;
-    padding-top: 4px !important;
-    margin-top: 4px !important;
-    color: #000000 !important; /* Negro */
-  }
-/* ✅ Si NO está marcada la opción, ocultar P.Unit y Subtotal por producto */
-#quoteCard:not(.print-show-line-prices) table th:nth-child(4),
-#quoteCard:not(.print-show-line-prices) table td:nth-child(4),
-#quoteCard:not(.print-show-line-prices) table th:nth-child(5),
-#quoteCard:not(.print-show-line-prices) table td:nth-child(5) {
-  display: none !important;
-}
-
-/* (Opcional) Ajusta anchos cuando se ocultan columnas para que no se vea “apretado” */
-#quoteCard:not(.print-show-line-prices) table th:nth-child(1),
-#quoteCard:not(.print-show-line-prices) table td:nth-child(1) {
-  width: 36% !important;
-}
-#quoteCard:not(.print-show-line-prices) table th:nth-child(2),
-#quoteCard:not(.print-show-line-prices) table td:nth-child(2) {
-  width: 44% !important;
-}
-#quoteCard:not(.print-show-line-prices) table th:nth-child(3),
-#quoteCard:not(.print-show-line-prices) table td:nth-child(3) {
-  width: 20% !important;
-  text-align: right !important;
-}
-
-    /* ===== AJUSTE DE TABLA PARA MÁS ESPACIO EN CARACTERÍSTICAS ===== */
-
-#quoteCard table {
-  table-layout: fixed !important;
-}
-
-#quoteCard th:nth-child(1),
-#quoteCard td:nth-child(1) {
-  width: 24% !important;
-}
-
-#quoteCard th:nth-child(2),
-#quoteCard td:nth-child(2) {
-  width: 48% !important;
-  padding-left: 2px !important;
-  padding-right: 6px !important;
-  word-break: break-word !important;
-}
-
-#quoteCard th:nth-child(3),
-#quoteCard td:nth-child(3) {
-  width: 6% !important;
-  text-align: center !important;
-}
-
-#quoteCard th:nth-child(4),
-#quoteCard td:nth-child(4) {
-  width: 10% !important;
-  text-align: right !important;
-}
-
-#quoteCard th:nth-child(5),
-#quoteCard td:nth-child(5) {
-  width: 12% !important;
-  text-align: right !important;
-}
-
-#quoteCard{
-  overflow: visible !important;
-  isolation: isolate !important; /* capa propia para z-index */
-}
-
-/* La marca de agua (repite en cada página por ser FIXED) */
-/* =========================
-   MARCA DE AGUA CON IMAGEN
-   ========================= */
-
-#quoteCard::before{
-  content: "";
-
-  position: fixed !important;
-  top: 50% !important; /* Medio exacto, gil */
-  left: 50% !important;
-  transform: translate(-50%, -50%) rotate(-25deg) !important;
-
-  width: 80vw !important;     /* tamaño de la imagen */
-  height: 80vh !important;
-
-  background-image: url("/img/agua.png"); /* ruta de tu imagen */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-
-  opacity: 0.22 !important;   /* intensidad de la marca */
-
-  z-index: 0 !important;
-  pointer-events: none !important;
-
-  visibility: visible !important;
-
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
-
-/* contenido encima */
-#quoteCard > *{
-  position: relative !important;
-  z-index: 1 !important;
-}
-}
+      /* ============================================================
+   RESET & VARIABLES
+   ============================================================ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0b0d13;
+        --surface: #13161f;
+        --surface2: #1a1e2a;
+        --border: rgba(255, 255, 255, 0.07);
+        --border2: rgba(201, 168, 76, 0.28);
+        --text: #e8e4da;
+        --text2: #8a8479;
+        --gold: #c9a84c;
+        --gold2: #debb6a;
+        --golddim: rgba(201, 168, 76, 0.08);
+        --blue: #2a4a90;
+        --blue2: #3a5fad;
+        --red: #8f2828;
+        --red2: #ad3636;
+        --green: #1a5c3e;
+        --green2: #236b4a;
+        --gray: #383b47;
+        --gray2: #484c5c;
+        --rsm: 10px;
+        --rmd: 16px;
+        --rlg: 22px;
+      }
+
+      /* ============================================================
+   BASE
+   ============================================================ */
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        background-image:
+          radial-gradient(
+            ellipse 70% 50% at 8% 0%,
+            rgba(201, 168, 76, 0.05) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            ellipse 60% 70% at 92% 100%,
+            rgba(42, 74, 144, 0.06) 0%,
+            transparent 55%
+          );
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+      p {
+        color: var(--text2);
+        line-height: 1.7;
+      }
+
+      /* ============================================================
+   LAYOUT — LOGIN
+   ============================================================ */
+      .login-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 24px;
+      }
+      .login-card {
+        width: 100%;
+        max-width: 460px;
+        padding: 44px 40px;
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 26px;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
+      }
+      .login-card h2 {
+        font-size: 30px;
+        background: linear-gradient(135deg, var(--gold2), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 4px;
+      }
+
+      /* ============================================================
+   LAYOUT — APP  (dos columnas)
+   ============================================================ */
+      #appView {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* top bar fija */
+      .top-bar {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 24px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        z-index: 10;
+      }
+      .brand-box {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .brand-box img {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        object-fit: contain;
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        padding: 3px;
+      }
+      .brand-box h1 {
+        font-size: 20px;
+        margin-bottom: 0;
+        background: linear-gradient(135deg, var(--text), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .brand-box .muted {
+        font-size: 11px;
+        color: var(--text2);
+      }
+
+      /* columnas principales — controles izquierda, PDF derecha */
+      .app-columns {
+        flex: 1 1 0;
+        display: grid;
+        grid-template-columns: 520px 1fr;
+        height: calc(100vh - 70px);
+      }
+
+      /* ── IZQUIERDA: controles ── */
+      .col-controls {
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .col-controls::-webkit-scrollbar {
+        width: 4px;
+      }
+      .col-controls::-webkit-scrollbar-thumb {
+        background: rgba(201, 168, 76, 0.35);
+        border-radius: 999px;
+      }
+      .col-controls::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      /* ── DERECHA: preview PDF ── */
+      .col-preview {
+        overflow-y: auto;
+        padding: 24px 24px 24px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        order: 2;
+      }
+      .col-preview::-webkit-scrollbar {
+        width: 4px;
+      }
+      .col-preview::-webkit-scrollbar-thumb {
+        background: var(--gold);
+        border-radius: 999px;
+      }
+      .col-preview::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      /* ============================================================
+   CARD
+   ============================================================ */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--rlg);
+        padding: 22px 24px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(201, 168, 76, 0.45),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.35s;
+      }
+      .card:hover::before {
+        opacity: 1;
+      }
+      .card:hover {
+        border-color: var(--border2);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+      }
+
+      /* section title in card */
+      .card-title {
+        font-family: "DM Sans", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+      }
+
+      /* ============================================================
+   FORMS
+   ============================================================ */
+      label {
+        display: block;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text2);
+        margin-bottom: 5px;
+        margin-top: 12px;
+      }
+      label:first-child {
+        margin-top: 0;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 11px 14px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--rsm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        color: var(--text);
+        outline: none;
+        transition:
+          border-color 0.22s,
+          box-shadow 0.22s;
+        margin-top: 0;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: var(--text2);
+        opacity: 0.5;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+        background: rgba(201, 168, 76, 0.03);
+      }
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8479' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 32px;
+        cursor: pointer;
+      }
+      select option {
+        background: #1a1e2a;
+        color: var(--text);
+      }
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      /* ============================================================
+   BUTTONS
+   ============================================================ */
+      button {
+        width: 100%;
+        padding: 11px 18px;
+        border: none;
+        border-radius: var(--rsm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          filter 0.2s;
+        color: #fff;
+        margin-top: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      button:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
+      }
+      button:active {
+        transform: translateY(0);
+        filter: brightness(0.95);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #2a4a90, #1c3268);
+        box-shadow: 0 4px 14px rgba(42, 74, 144, 0.35);
+      }
+      .btn-danger {
+        background: linear-gradient(135deg, #8f2828, #6b1e1e);
+        box-shadow: 0 4px 14px rgba(143, 40, 40, 0.3);
+      }
+      .btn-gray {
+        background: linear-gradient(135deg, #383b47, #2c2f3a);
+      }
+      .btn-green {
+        background: linear-gradient(135deg, #1a5c3e, #113d2a);
+        box-shadow: 0 4px 14px rgba(26, 92, 62, 0.3);
+      }
+
+      /* small inline buttons */
+      .btn-sm {
+        width: auto;
+        padding: 8px 14px;
+        font-size: 11px;
+        border-radius: 8px;
+      }
+
+      /* ============================================================
+   GRID HELPERS
+   ============================================================ */
+      .grid {
+        display: grid;
+        gap: 12px;
+        width: 100%;
+      }
+      .g2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .g3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .g4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      /* ============================================================
+   MISC
+   ============================================================ */
+      .hidden {
+        display: none !important;
+      }
+      .muted {
+        color: var(--text2);
+        font-size: 12px;
+      }
+
+      .status {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--text2);
+        padding: 9px 13px;
+        background: var(--surface2);
+        border-radius: var(--rsm);
+        border-left: 2px solid var(--gold);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        background: var(--surface2);
+        color: var(--text2);
+        border: 1px solid var(--border);
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      /* ============================================================
+   RESULTS SCROLL (dentro de col-controls)
+   ============================================================ */
+      .results-scroll {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+      .results-scroll::-webkit-scrollbar {
+        width: 3px;
+      }
+      .results-scroll::-webkit-scrollbar-thumb {
+        background: var(--gold);
+        border-radius: 999px;
+      }
+      .results-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      /* ============================================================
+   PRODUCT ITEM
+   ============================================================ */
+      .product-item {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 16px;
+        background: var(--surface2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+        transition: all 0.22s;
+      }
+      .product-item:hover {
+        border-color: var(--border2);
+        transform: translateX(2px);
+      }
+      .product-item small {
+        display: block;
+        margin-top: 4px;
+        color: var(--text2);
+        font-size: 11px;
+      }
+      .product-title {
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.35;
+        margin-bottom: 3px;
+      }
+      .product-sub {
+        color: var(--text2);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      .product-main {
+        flex: 1;
+        min-width: 0;
+      }
+      .product-card-content {
+        width: 100%;
+      }
+      .product-actions {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .product-actions button {
+        width: auto;
+        padding: 7px 12px;
+        border-radius: 7px;
+        font-size: 11px;
+      }
+      .product-edit-box {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+      .product-edit-box label {
+        font-size: 10px;
+        margin-top: 8px;
+      }
+      .product-edit-box input,
+      .product-edit-box textarea {
+        font-size: 12px;
+      }
+      .product-edit-box textarea {
+        min-height: 80px;
+      }
+
+      /* ============================================================
+   DETAILS BOX
+   ============================================================ */
+      .details-box ul {
+        margin-top: 12px;
+        padding-left: 0;
+      }
+      .details-box li {
+        list-style: none;
+        font-size: 12px;
+        color: var(--text2);
+        padding: 6px 8px 6px 20px;
+        position: relative;
+        border-bottom: 1px solid var(--border);
+      }
+      .details-box li::before {
+        content: "▸";
+        position: absolute;
+        left: 5px;
+        top: 7px;
+        color: var(--gold);
+        font-size: 10px;
+      }
+      .detail-edit {
+        width: 100%;
+        min-height: 110px;
+        resize: vertical;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      /* ============================================================
+   TABLA (pantalla)
+   ============================================================ */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border-bottom: 1px solid var(--border);
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: top;
+        font-size: 12px;
+        color: var(--text);
+      }
+      th {
+        background: var(--surface2);
+        color: var(--gold);
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      tr:hover td {
+        background: rgba(201, 168, 76, 0.02);
+      }
+      .mini-input {
+        width: 80px;
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+
+      /* ============================================================
+   TOTALS
+   ============================================================ */
+      .totals {
+        max-width: 260px;
+        margin-left: auto;
+        margin-top: 16px;
+        padding: 14px 18px;
+        background: var(--surface2);
+        border: 1px solid var(--border2);
+        border-radius: 12px;
+      }
+      .totals div {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: var(--text2);
+      }
+      .totals .grand {
+        font-size: 17px;
+        font-weight: 700;
+        border-top: 1px solid var(--border2);
+        padding-top: 10px;
+        margin-top: 10px;
+        color: var(--gold);
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      /* ============================================================
+   SUGGEST / DNI
+   ============================================================ */
+      .input-suggest-wrap {
+        position: relative;
+      }
+      .suggest-box {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 12px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+        padding: 14px;
+        z-index: 999;
+        animation: fadeUp 0.22s ease;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .suggest-title {
+        font-size: 9px;
+        font-weight: 700;
+        color: var(--gold);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .suggest-item {
+        width: 100%;
+        text-align: left;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 12px 9px 28px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 6px;
+        color: var(--text);
+        transition: all 0.18s;
+        position: relative;
+      }
+      .suggest-item::before {
+        content: "✓";
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gold);
+        font-size: 12px;
+      }
+      .suggest-item:hover {
+        border-color: var(--border2);
+        background: var(--golddim);
+        transform: none;
+      }
+      .suggest-manual {
+        background: var(--blue);
+        color: #fff;
+        border-color: transparent;
+      }
+      .suggest-manual:hover {
+        background: var(--blue2);
+      }
+      .suggest-error {
+        font-size: 11px;
+        color: #ef4444;
+        margin-top: 6px;
+      }
+
+      .doc-wrap {
+        position: relative;
+      }
+      .doc-popup {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        width: min(420px, 100%);
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 12px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+        padding: 16px;
+        z-index: 50;
+        animation: fadeUp 0.22s ease;
+      }
+      .doc-popup-title {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 8px;
+      }
+      .doc-popup-name {
+        font-size: 14px;
+        font-weight: 600;
+        padding: 10px 12px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+      }
+      .doc-popup-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+      .doc-btn {
+        width: auto !important;
+        padding: 9px 16px !important;
+        border-radius: 7px !important;
+        font-size: 12px;
+      }
+      .doc-popup-msg {
+        margin-top: 8px;
+        font-size: 11px;
+        color: var(--text2);
+      }
+
+      .dni-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(6px);
+      }
+      .dni-modal-card {
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 20px;
+        padding: 30px 32px;
+        width: min(400px, 90vw);
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.65);
+      }
+      .dni-modal-title {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+      }
+      .dni-modal-name {
+        font-size: 17px;
+        font-weight: 600;
+        padding: 12px 14px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        margin-bottom: 14px;
+      }
+      .dni-modal-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .dni-modal-actions button {
+        font-size: 12px;
+        padding: 10px 18px;
+      }
+
+      /* ============================================================
+   ACCIONES AREA
+   ============================================================ */
+      #actionsArea {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--rlg);
+        padding: 18px 20px;
+      }
+      #actionsArea .card-title {
+        margin-bottom: 12px;
+      }
+      #actionsArea label {
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text2);
+        text-transform: none;
+        letter-spacing: 0;
+        cursor: pointer;
+        font-weight: 400;
+        margin: 0 0 12px 0;
+      }
+      #actionsArea input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        accent-color: var(--gold);
+        padding: 0;
+        border: none;
+      }
+
+      /* ============================================================
+   PRINT ONLY / NO PRINT
+   ============================================================ */
+      .print-only {
+        display: none;
+      }
+      .no-print {
+        display: inline-block;
+      }
+
+      /* ============================================================
+   QUOTE CARD — pantalla (preview)
+   ============================================================ */
+      #quoteCard {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: var(--rlg);
+        padding: 24px;
+        color: #111;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      /* overrides de color del ticket para que se vea bien en fondo blanco */
+      #quoteCard h3 {
+        color: #111;
+        font-family: "DM Sans", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5e7eb;
+        margin-bottom: 10px;
+      }
+      #quoteCard th {
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 9px;
+      }
+      #quoteCard th,
+      #quoteCard td {
+        color: #111;
+        font-size: 11px;
+        padding: 8px 10px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      #quoteCard tr:hover td {
+        background: #f9fafb;
+      }
+      #quoteCard .totals {
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+      }
+      #quoteCard .totals div {
+        color: #374151;
+        font-size: 11px;
+      }
+      #quoteCard .totals .grand {
+        color: #111;
+        font-size: 15px;
+        border-top: 1px solid #d1d5db;
+      }
+      #quoteCard .note-box p {
+        color: #374151;
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+
+      /* ── ticket header ── */
+      .quote-ticket-header {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 10px;
+        border-bottom: 1px solid #d1d5db;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+      }
+      .ticket-left {
+        flex: 0 0 auto;
+        min-width: 0;
+      }
+      .ticket-company-img {
+        width: 100%;
+        max-width: 460px;
+        height: auto;
+        display: block;
+        object-fit: contain;
+      }
+      .ticket-right-box {
+        width: 210px;
+        min-width: 210px;
+        border: 2px solid #111;
+        padding: 10px 8px;
+        text-align: center;
+        background: #e5e7eb;
+      }
+      .ticket-ruc {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #111;
+      }
+      .ticket-doc-title {
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        color: #111;
+      }
+      .ticket-doc-number {
+        font-size: 17px;
+        font-weight: 700;
+        color: #111;
+      }
+      .ticket-company-name {
+        margin-top: 5px;
+        font-weight: 800;
+        font-size: 11px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: #111;
+      }
+
+      .quote-meta-inline {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .quote-meta-inline p {
+        margin: 0;
+        font-size: 11px;
+        color: #111;
+      }
+      .fechas-top {
+        display: flex;
+        justify-content: flex-end;
+        gap: 14px;
+        font-size: 10px;
+        margin: 4px 0;
+        color: #111;
+      }
+
+      .print-client-grid {
+        width: 100%;
+        margin: 4px 0 8px;
+      }
+      .print-client-grid .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 20px;
+        margin-bottom: 3px;
+      }
+      .print-client-grid .field {
+        display: grid;
+        grid-template-columns: 76px 1fr;
+        gap: 6px;
+        align-items: baseline;
+      }
+      .print-client-grid .row > .field:nth-child(2) {
+        margin-left: 40px;
+      }
+      .print-client-grid .lbl {
+        font-weight: 700;
+        white-space: nowrap;
+        font-size: 11px;
+        color: #111;
+      }
+      .print-client-grid .val {
+        min-width: 0;
+        word-break: break-word;
+        font-size: 11px;
+        color: #111;
+      }
+
+      .letter-intro {
+        margin: 5px 0 8px;
+        font-size: 10px;
+        line-height: 1.3;
+        text-transform: uppercase;
+        color: #111;
+      }
+      .letter-intro p {
+        margin: 0;
+        color: #111;
+      }
+
+      .quote-center-note {
+        margin-top: 8px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 10px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        color: #111;
+      }
+
+      .proformas-title {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 5px;
+        font-family: "Times New Roman", serif;
+        color: #111;
+      }
+
+      .garantia-box {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        margin: 12px 0 4px;
+        letter-spacing: 0.5px;
+        color: #111;
+      }
+
+      .mensaje-empresarial {
+        font-family: "Times New Roman", serif;
+        font-size: 9px;
+        font-weight: 700;
+        text-align: left;
+        margin: 8px 0 4px;
+        color: #000;
+      }
+
+      .company-lines p,
+      .payment-lines p,
+      .note-box p {
+        margin-bottom: 6px;
+        font-size: 11px;
+        line-height: 1.5;
+        color: #374151;
+      }
+
+      .info-banners {
+        display: flex;
+        margin-top: 16px;
+        border-top: 1px solid #d1d5db;
+        padding-top: 16px;
+        gap: 0;
+      }
+      .info-item {
+        flex: 1;
+        text-align: center;
+        padding: 0;
+      }
+      .info-item img {
+        width: 100%;
+        max-width: none;
+        height: auto;
+        display: block;
+        margin: 0;
+        border-radius: 0;
+      }
+
+      /* ============================================================
+   RESPONSIVE
+   ============================================================ */
+      @media (max-width: 1000px) {
+        .app-columns {
+          grid-template-columns: 1fr;
+        }
+        .col-controls {
+          order: 1;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+        .col-preview {
+          order: 2;
+          max-height: 70vh;
+        }
+        .g2,
+        .g3,
+        .g4 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ============================================================
+   @media print — INTACTO + sin marca de agua + fondo blanco + todo negro
+   ============================================================ */
+      @media print {
+        #quoteCard.hide-unit-print .col-unit {
+          display: none !important;
+        }
+        #quoteCard.show-unit-print .col-unit {
+          display: table-cell !important;
+        }
+
+        .mensaje-empresarial {
+          font-family: "Times New Roman", serif !important;
+          font-size: 10px !important;
+          font-weight: 700 !important;
+          text-align: left !important;
+          margin: 10px 0 6px 0 !important;
+          color: #000000 !important;
+        }
+        .proformas-title {
+          font-size: 17px !important;
+          font-weight: 700 !important;
+          text-align: center !important;
+          margin-bottom: 4px !important;
+          font-family: "Times New Roman", serif !important;
+          color: #000000 !important;
+        }
+        .info-banners {
+          display: flex !important;
+          gap: 0 !important;
+          margin-top: auto !important;
+        }
+        .info-item img {
+          width: 100% !important;
+          max-width: none !important;
+          margin: 0 !important;
+        }
+        .garantia-box {
+          font-family: "Times New Roman", serif !important;
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          text-align: center !important;
+          margin: 6px 0 10px 0 !important;
+          color: #000000 !important;
+        }
+        .quote-ticket-header {
+          display: grid;
+          grid-template-columns: minmax(0, 520px) 230px;
+          align-items: start;
+          justify-content: start;
+          column-gap: 10px;
+          border-bottom: 1px solid #d1d5db;
+          padding-bottom: 12px;
+          margin-bottom: 12px;
+        }
+        .quote-center-note {
+          font-size: 9.5px !important;
+          gap: 40px !important;
+          margin-top: 8px !important;
+          color: #000000 !important;
+        }
+        .ticket-left {
+          min-width: 0;
+        }
+        .letter-intro {
+          font-size: 9.5px !important;
+          margin: 4px 0 8px !important;
+          color: #000000 !important;
+        }
+        .ticket-company-img {
+          width: 100%;
+          max-width: 520px;
+          height: auto;
+          display: block;
+          object-fit: contain;
+        }
+        .ticket-right-box {
+          width: 230px;
+          border: 2px solid #000000;
+          padding: 12px 10px;
+          text-align: center;
+          background: #c5c4c4 !important;
+          margin: 0;
+          justify-self: start;
+          align-self: start;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .ticket-company-name {
+          font-size: 11px !important;
+          margin-top: 4px !important;
+          color: #000000 !important;
+        }
+        .ticket-ruc {
+          font-size: 14px !important;
+          font-weight: 700 !important;
+          margin-bottom: 8px !important;
+          color: #000000 !important;
+        }
+        .ticket-doc-title {
+          font-size: 22px !important;
+          font-weight: 800 !important;
+          line-height: 1.05 !important;
+          margin-bottom: 8px !important;
+          color: #000000 !important;
+        }
+        .ticket-doc-number {
+          font-size: 18px !important;
+          font-weight: 700 !important;
+          color: #000000 !important;
+        }
+        .quote-meta-inline {
+          display: flex !important;
+          gap: 12px !important;
+          flex-wrap: wrap !important;
+          margin-bottom: 10px !important;
+        }
+        .quote-meta-inline p {
+          margin: 0 !important;
+          font-size: 10px !important;
+          color: #000000 !important;
+        }
+
+        @page {
+          size: A4;
+          margin: 8mm;
+        }
+
+        html,
+        body {
+          background: #ffffff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        /* ocultar todo excepto el quoteCard */
+        #loginView,
+        .top-bar,
+        .app-columns > .col-controls,
+        #controlsArea,
+        #productSearchArea,
+        #productResultsCard,
+        #productDetailCard,
+        #geminiArea,
+        #actionsArea,
+        #logoutBtn {
+          display: none !important;
+          visibility: hidden !important;
+        }
+
+        body * {
+          visibility: hidden !important;
+        }
+        #quoteCard,
+        #quoteCard * {
+          visibility: visible !important;
+        }
+
+        #quoteCard {
+          display: flex !important;
+          flex-direction: column !important;
+          min-height: calc(100vh - 16mm) !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          background: #ffffff !important;
+          border: none !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          page-break-inside: auto !important;
+          break-inside: auto !important;
+          overflow: visible !important;
+          isolation: isolate !important;
+          color: #000000 !important;
+        }
+
+        /* MARCA DE AGUA */
+        #quoteCard::before {
+          content: "" !important;
+          position: fixed !important;
+          top: 50% !important;
+          left: 50% !important;
+          transform: translate(-50%, -50%) rotate(-25deg) !important;
+          width: 80vw !important;
+          height: 80vh !important;
+          background-image: url("/img/agua.png") !important;
+          background-repeat: no-repeat !important;
+          background-position: center !important;
+          background-size: contain !important;
+          opacity: 0.22 !important;
+          z-index: 0 !important;
+          pointer-events: none !important;
+          visibility: visible !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        /* todo el texto negro */
+        #quoteCard,
+        #quoteCard *,
+        #quoteCard p,
+        #quoteCard span,
+        #quoteCard td,
+        #quoteCard th,
+        #quoteCard div,
+        #quoteCard strong,
+        #quoteCard b,
+        #quoteCard em {
+          color: #000000 !important;
+        }
+
+        #accionesColumna,
+        .acciones-celda {
+          display: none !important;
+        }
+        .no-print {
+          display: none !important;
+        }
+        .print-only {
+          display: inline !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+          color: #000000 !important;
+        }
+
+        table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          margin-top: 6px !important;
+          font-size: 10px !important;
+        }
+        th,
+        td {
+          padding: 4px !important;
+          vertical-align: top !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+          color: #000000 !important;
+          border-color: #aaaaaa !important;
+        }
+        th {
+          background: #f0f0f0 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+          color: #000000 !important;
+        }
+
+        #quoteCard th:nth-child(2),
+        #quoteCard td:nth-child(2) {
+          font-size: 8.5px !important;
+          line-height: 1.05 !important;
+          width: 34% !important;
+        }
+
+        .print-logo-wrap {
+          width: 110px !important;
+          min-width: 110px !important;
+        }
+        .print-logo-wrap img {
+          width: 100px !important;
+          height: 100px !important;
+          object-fit: contain !important;
+        }
+
+        .quote-header {
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: flex-start !important;
+          gap: 18px !important;
+          padding-bottom: 10px !important;
+          margin-bottom: 10px !important;
+          border-bottom: 1px solid #cccccc !important;
+        }
+        .quote-header-left {
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 12px !important;
+          flex: 1 !important;
+        }
+        .quote-meta {
+          text-align: right !important;
+          min-width: 190px !important;
+        }
+        .quote-meta p {
+          margin-bottom: 3px !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+          color: #000000 !important;
+        }
+        .company-lines p,
+        .payment-lines p,
+        .note-box p {
+          margin-bottom: 3px !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
+          color: #000000 !important;
+        }
+
+        .totals {
+          max-width: 220px !important;
+          margin-top: 8px !important;
+          background: #f0f0f0 !important;
+          border: 1px solid #cccccc !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .totals div {
+          font-size: 10px !important;
+          margin-bottom: 3px !important;
+          color: #000000 !important;
+        }
+        .totals .grand {
+          font-size: 12px !important;
+          padding-top: 4px !important;
+          margin-top: 4px !important;
+          color: #000000 !important;
+          border-top: 1px solid #aaaaaa !important;
+        }
+
+        #quoteCard:not(.print-show-line-prices) table th:nth-child(4),
+        #quoteCard:not(.print-show-line-prices) table td:nth-child(4),
+        #quoteCard:not(.print-show-line-prices) table th:nth-child(5),
+        #quoteCard:not(.print-show-line-prices) table td:nth-child(5) {
+          display: none !important;
+        }
+
+        #quoteCard:not(.print-show-line-prices) table th:nth-child(1),
+        #quoteCard:not(.print-show-line-prices) table td:nth-child(1) {
+          width: 36% !important;
+        }
+        #quoteCard:not(.print-show-line-prices) table th:nth-child(2),
+        #quoteCard:not(.print-show-line-prices) table td:nth-child(2) {
+          width: 44% !important;
+        }
+        #quoteCard:not(.print-show-line-prices) table th:nth-child(3),
+        #quoteCard:not(.print-show-line-prices) table td:nth-child(3) {
+          width: 20% !important;
+          text-align: right !important;
+        }
+
+        #quoteCard table {
+          table-layout: fixed !important;
+        }
+        #quoteCard th:nth-child(1),
+        #quoteCard td:nth-child(1) {
+          width: 24% !important;
+        }
+        #quoteCard th:nth-child(2),
+        #quoteCard td:nth-child(2) {
+          width: 48% !important;
+          padding-left: 2px !important;
+          padding-right: 6px !important;
+          word-break: break-word !important;
+        }
+        #quoteCard th:nth-child(3),
+        #quoteCard td:nth-child(3) {
+          width: 6% !important;
+          text-align: center !important;
+        }
+        #quoteCard th:nth-child(4),
+        #quoteCard td:nth-child(4) {
+          width: 10% !important;
+          text-align: right !important;
+        }
+        #quoteCard th:nth-child(5),
+        #quoteCard td:nth-child(5) {
+          width: 12% !important;
+          text-align: right !important;
+        }
+
+        #quoteCard > * {
+          position: relative !important;
+          z-index: 1 !important;
+        }
+
+        .print-client-grid .row > .field:nth-child(2) {
+          margin-left: 40px;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div id="loginView" class="login-wrap">
-        <div class="card login-card">
-          <h2>Ingreso al Cotizador</h2>
-          <p class="muted">Uso personal.</p>
+    <!-- ============================================================
+     LOGIN
+     ============================================================ -->
+    <div id="loginView" class="login-wrap">
+      <div class="card login-card">
+        <h2>Cotizador Privado</h2>
+        <p class="muted" style="margin-bottom: 28px">
+          Acceso restringido · Uso interno
+        </p>
 
-          <label>Usuario</label>
-          <input type="text" id="username" placeholder="Ingresa tu usuario" />
+        <label>Usuario</label>
+        <input type="text" id="username" placeholder="Ingresa tu usuario" />
 
-          <label>Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Ingresa tu contraseña"
-            onkeydown="if (event.key === 'Enter') iniciarSesion();"
+        <label>Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Ingresa tu contraseña"
+          onkeydown="if (event.key === 'Enter') iniciarSesion();"
+        />
+
+        <button
+          class="btn-primary"
+          style="margin-top: 20px"
+          onclick="iniciarSesion()"
+        >
+          Ingresar
+        </button>
+        <p
+          id="loginError"
+          style="color: #ef4444; margin-top: 10px; font-size: 12px"
+        ></p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+     APP
+     ============================================================ -->
+    <div id="appView" class="hidden">
+      <!-- TOP BAR -->
+      <div class="top-bar" id="controlsArea">
+        <div class="brand-box">
+          <img
+            id="logoVista"
+            src="img/logo.png"
+            alt="Logo"
+            onerror="this.style.display = 'none'"
           />
-
-          <button
-            class="btn-primary"
-            style="margin-top: 16px"
-            onclick="iniciarSesion()"
-          >
-            Ingresar
-          </button>
-
-          <p id="loginError" style="color: #dc2626; margin-top: 10px"></p>
+          <div>
+            <h1 id="topStoreName">Cotizador Privado</h1>
+            <p class="muted">PC · Laptops · Cámaras</p>
+          </div>
         </div>
+        <button
+          id="logoutBtn"
+          class="btn-danger btn-sm"
+          style="width: auto; padding: 9px 20px"
+          onclick="cerrarSesion()"
+        >
+          Cerrar sesión
+        </button>
       </div>
 
-      <div id="appView" class="hidden">
-        <div class="top-bar" id="controlsArea">
-          <div class="brand-box">
-            <img
-              id="logoVista"
-              src="img/logo.png"
-              alt="Logo tienda"
-              onerror="this.style.display = 'none'"
-            />
-            <div>
-              <h1 id="topStoreName">Cotizador Privado</h1>
-              <p class="muted">PC, Laptops y Cámaras</p>
+      <!-- DOS COLUMNAS -->
+      <div class="app-columns">
+        <!-- ── IZQUIERDA: PDF preview ── -->
+        <div class="col-preview">
+          <div id="quoteCard">
+            <div class="quote-ticket-header">
+              <div class="ticket-left">
+                <img
+                  src="/img/cotizacionimg.png"
+                  alt="Encabezado"
+                  class="ticket-company-img"
+                  onerror="this.style.display = 'none'"
+                />
+                <div class="ticket-company-name">
+                  JUAN CARLOS BERNA SOCIEDAD ANONIMA CERRADA
+                </div>
+              </div>
+              <div class="ticket-right-box">
+                <div class="ticket-ruc">RUC 20489584868</div>
+                <div class="ticket-doc-title">COTIZACIÓN</div>
+                <div class="ticket-doc-number">
+                  <span id="printNumeroCotizacion">-</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-meta-inline">
+              <div class="proformas-title">PROFORMAS JCB S.A.C</div>
+              <div class="print-client-grid">
+                <div class="row">
+                  <div class="field">
+                    <span class="lbl">SR.(s):</span>
+                    <span class="val" id="printClienteNombre">-</span>
+                  </div>
+                  <div class="field">
+                    <span class="lbl">DNI/RUC:</span>
+                    <span class="val" id="printDniRuc">-</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="field">
+                    <span class="lbl">DIRECCIÓN:</span>
+                    <span class="val" id="printDireccion">-</span>
+                  </div>
+                  <div class="field">
+                    <span class="lbl">TELÉFONO:</span>
+                    <span class="val" id="printTelefonoCliente">-</span>
+                  </div>
+                </div>
+              </div>
+              <div class="letter-intro">
+                <p><strong>ESTIMADO CLIENTE:</strong></p>
+                <p>
+                  POR MEDIO DE ESTA PRESENTE HACEMOS LLEGAR NUESTRO CORDIAL
+                  SALUDO Y A LA VEZ LA PRESENTE COTIZACIÓN A VUESTRA SOLICITUD:
+                </p>
+              </div>
+            </div>
+
+            <h3>DETALLES:</h3>
+            <div class="fechas-top">
+              <span
+                ><strong>Fecha de emisión:</strong>
+                <span id="fechaEmisionTop">-</span></span
+              >
+              <span
+                ><strong>Fecha de vencimiento:</strong>
+                <span id="fechaVencimientoTop">-</span></span
+              >
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Características</th>
+                  <th>Cant.</th>
+                  <th class="col-unit">P. Unit.</th>
+                  <th>Subtotal</th>
+                  <th id="accionesColumna">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaCotizacion"></tbody>
+            </table>
+
+            <div class="totals">
+              <div>
+                <span>Subtotal:</span><span id="subtotalText">S/ 0</span>
+              </div>
+              <div>
+                <span>Descuento:</span><span id="descuentoText">S/ 0</span>
+              </div>
+              <div>
+                <span id="IGVLabel">INCLUYE IGV (18%)</span
+                ><span id="IGVText"></span>
+              </div>
+              <div class="grand">
+                <span>Total:</span><span id="totalText">S/ 0</span>
+              </div>
+            </div>
+
+            <div class="mensaje-empresarial">
+              SIN OTRO PARTICULAR, Y EN ESPERA DE SU AMABLE ACEPTACIÓN, QUEDAMOS
+              A SU ENTERA DISPOSIÓN PARA CUALQUIER CONSULTA O ACLARACIÓN QUE
+              ESTIME PERTINENTE. AGRADECEMOS LA OPORTUNIDAD DE COTIZAR NUESTROS
+              PRODUCTOS Y SERVICIOS, Y ESPERAMOS PODER SERVIRLE PRONTO.
+            </div>
+            <div class="garantia-box">GARANTÍA 12 MESES</div>
+
+            <div class="note-box" style="margin-top: 14px">
+              <p>
+                <strong>Observaciones:</strong> Precios sujetos a variación
+                según stock. Cotización referencial.
+              </p>
+              <p><strong>Validez:</strong> 10 días calendario.</p>
+            </div>
+
+            <div class="info-banners">
+              <div class="info-item">
+                <img src="/img/cuentas.png" alt="Cuentas" />
+              </div>
+              <div class="info-item">
+                <img src="/img/envio.png" alt="Envío" />
+              </div>
+              <div class="info-item">
+                <img src="/img/redes.png" alt="Redes" />
+              </div>
             </div>
           </div>
-
-          <button
-            id="logoutBtn"
-            class="btn-danger"
-            style="max-width: 180px"
-            onclick="cerrarSesion()"
-          >
-            Cerrar sesión
-          </button>
+          <!-- /quoteCard -->
         </div>
+        <!-- /col-preview -->
 
-        <div class="card" id="datosCotizacionCard">
-          <h3>Datos de la cotización</h3>
+        <!-- ── DERECHA: controles ── -->
+        <div class="col-controls">
+          <!-- DATOS DE COTIZACIÓN -->
+          <div class="card">
+            <div class="card-title">Datos de la cotización</div>
 
-          <div class="grid grid-3">
-            <div class="grid grid-2" style="margin-top: 14px">
+            <div class="grid g2">
               <div class="input-suggest-wrap">
-  <label>DNI/RUC</label>
-  <input
-    type="text"
-    id="dniRuc"
-    placeholder="DNI o RUC"
-    autocomplete="off"
-    oninput="handleDniRucInput()"
-    onfocus="handleDniRucInput()"
-    onblur="cerrarSuggestConDelay()"
-  />
-  <div id="dniModal" class="dni-modal hidden">
-  <div class="dni-modal-card">
-    <div class="dni-modal-title">¿Usar este nombre?</div>
-    <div id="dniModalNombre" class="dni-modal-name">-</div>
-
-    <div class="dni-modal-actions">
-      <button id="dniModalUsar" class="btn-green" type="button">Usar</button>
-      <button id="dniModalManual" class="btn-gray" type="button">Escribir manual</button>
-    </div>
-  </div>
-</div>
-
-  <!-- Ventana flotante -->
-  <div id="dniRucSuggest" class="suggest-box hidden">
-    <div class="suggest-title">Sugerencia encontrada</div>
-
-    <button id="btnUsarNombre" type="button" class="suggest-item"></button>
-
-    <button type="button" class="suggest-item suggest-manual" onclick="elegirNombreManual()">
-      Escribir nombre manualmente
-    </button>
-
-    <div id="dniRucSuggestError" class="suggest-error hidden"></div>
-  </div>
-</div>
+                <label>DNI / RUC</label>
+                <input
+                  type="text"
+                  id="dniRuc"
+                  placeholder="DNI o RUC"
+                  autocomplete="off"
+                  oninput="handleDniRucInput()"
+                  onfocus="handleDniRucInput()"
+                  onblur="cerrarSuggestConDelay()"
+                />
+                <div id="dniModal" class="dni-modal hidden">
+                  <div class="dni-modal-card">
+                    <div class="dni-modal-title">¿Usar este nombre?</div>
+                    <div id="dniModalNombre" class="dni-modal-name">-</div>
+                    <div class="dni-modal-actions">
+                      <button id="dniModalUsar" class="btn-green" type="button">
+                        Usar
+                      </button>
+                      <button
+                        id="dniModalManual"
+                        class="btn-gray"
+                        type="button"
+                      >
+                        Manual
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div id="dniRucSuggest" class="suggest-box hidden">
+                  <div class="suggest-title">Sugerencia</div>
+                  <button
+                    id="btnUsarNombre"
+                    type="button"
+                    class="suggest-item"
+                  ></button>
+                  <button
+                    type="button"
+                    class="suggest-item suggest-manual"
+                    onclick="elegirNombreManual()"
+                  >
+                    Escribir manualmente
+                  </button>
+                  <div
+                    id="dniRucSuggestError"
+                    class="suggest-error hidden"
+                  ></div>
+                </div>
+              </div>
 
               <div>
                 <label>Dirección</label>
                 <input
                   type="text"
                   id="direccionCliente"
-                  placeholder="Dirección del cliente"
+                  placeholder="Dirección"
                   oninput="sincronizarCabecera()"
                 />
               </div>
             </div>
-            <div>
-              <label>Cliente</label>
-              <input
-                type="text"
-                id="cliente"
-                placeholder="Nombre del cliente"
-                oninput="sincronizarCabecera()"
-              />
+
+            <label>Cliente</label>
+            <input
+              type="text"
+              id="cliente"
+              placeholder="Nombre del cliente"
+              oninput="sincronizarCabecera()"
+            />
+
+            <label>Teléfono</label>
+            <input
+              type="text"
+              id="telefono"
+              placeholder="Número"
+              oninput="sincronizarCabecera()"
+            />
+
+            <div class="grid g2" style="margin-top: 12px">
+              <div>
+                <label>N° Cotización</label>
+                <input
+                  type="text"
+                  id="numeroCotizacion"
+                  oninput="sincronizarCabecera()"
+                />
+              </div>
+              <div>
+                <label>Descuento (S/)</label>
+                <input
+                  type="number"
+                  id="descuento"
+                  value="0"
+                  min="0"
+                  step="0.01"
+                  oninput="renderCotizacion()"
+                />
+              </div>
             </div>
 
-            <div>
-              <label>Teléfono cliente</label>
-              <input
-                type="text"
-                id="telefono"
-                placeholder="Número del cliente"
-                oninput="sincronizarCabecera()"
-              />
-            </div>
-
-            <div>
-              <label>N° Cotización</label>
-              <input
-                type="text"
-                id="numeroCotizacion"
-                oninput="sincronizarCabecera()"
-              />
-            </div>
-
-            <div>
-              <label>Descuento (S/)</label>
-              <input
-                type="number"
-                id="descuento"
-                value="0"
-                min="0"
-                step="0.01"
-                oninput="renderCotizacion()"
-              />
-            </div>
-
-            <div>
-              <label>IGV (%)</label>
-              <input
-                type="number"
-                id="IGV"
-                value="18"
-                min="0"
-                step="0.01"
-                oninput="renderCotizacion()"
-              />
-            </div>
-          </div>
-
-          <div class="grid grid-2" style="margin-top: 14px">
-            <div>
-              <label>Nombre de la tienda</label>
-              <input
-                type="text"
-                id="storeName"
-                value="JCB Technology"
-                oninput="actualizarDatosTienda()"
-              />
+            <div class="grid g2" style="margin-top: 0">
+              <div>
+                <label>IGV (%)</label>
+                <input
+                  type="number"
+                  id="IGV"
+                  value="18"
+                  min="0"
+                  step="0.01"
+                  oninput="renderCotizacion()"
+                />
+              </div>
+              <div>
+                <label>Nombre de la tienda</label>
+                <input
+                  type="text"
+                  id="storeName"
+                  value="JCB Technology"
+                  oninput="actualizarDatosTienda()"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="card" id="geminiArea">
-          <h3>Sugerencia rápida con Gemini</h3>
-          <p class="muted">
-            Es opcional. Sirve para escribir lo que necesitas y que intente
-            encontrar productos del catálogo.
-          </p>
+          <!-- GEMINI -->
+          <div class="card" id="geminiArea">
+            <div class="card-title">Sugerencia rápida · Gemini</div>
+            <p class="muted" style="margin-bottom: 10px">
+              Describe lo que necesitas y Gemini buscará en el catálogo.
+            </p>
 
-          <label style="margin-top: 12px">Qué quieres cotizar</label>
-          <textarea
-            id="geminiPrompt"
-            placeholder="Ej: necesito una laptop para oficina con 16GB RAM"
-          ></textarea>
+            <label>¿Qué quieres cotizar?</label>
+            <textarea
+              id="geminiPrompt"
+              placeholder="Ej: laptop para oficina con 16GB RAM"
+              style="min-height: 80px"
+            ></textarea>
 
-          <div class="grid grid-3" style="margin-top: 12px">
-            <button class="btn-green" onclick="usarGemini()">
-              Analizar con Gemini
-            </button>
-            <button class="btn-primary" onclick="agregarResultadosGemini()">
-              Agregar sugeridos
-            </button>
-            <button class="btn-gray" onclick="limpiarGemini()">
-              Limpiar Gemini
-            </button>
-          </div>
-
-          <p id="geminiStatus" class="status">Sin analizar.</p>
-          <div id="geminiResultados" style="margin-top: 12px"></div>
-        </div>
-
-        <div class="card" id="productSearchArea">
-          <h3>Buscar productos</h3>
-
-          <div class="grid grid-3">
-            <div>
-              <label>Categoría</label>
-              <select id="categoria" onchange="renderProductos()">
-                <option value="todos">Todos</option>
-                <option value="pc">PC</option>
-                <option value="laptop">Laptops</option>
-                <option value="camara">Cámaras</option>
-              </select>
-            </div>
-
-            <div>
-              <label>Buscar</label>
-              <input
-                type="text"
-                id="busqueda"
-                placeholder="Nombre, marca o modelo"
-                oninput="renderProductos()"
-              />
-            </div>
-
-            <div>
-              <label>Agregar manual rápido</label>
-              <button class="btn-primary" onclick="mostrarFormularioManual()">
-                Abrir formulario manual
+            <div class="grid g3" style="margin-top: 10px">
+              <button class="btn-green" onclick="usarGemini()">
+                Analizar con Gemini
+              </button>
+              <button class="btn-primary" onclick="agregarResultadosGemini()">
+                Agregar sugeridos
+              </button>
+              <button class="btn-gray" onclick="limpiarGemini()">
+                Limpiar Gemini
               </button>
             </div>
-          </div>
-        </div>
 
-        <div class="grid grid-2">
-          <div class="card results-card" id="productResultsCard">
+            <p id="geminiStatus" class="status" style="margin-top: 10px">
+              Sin analizar.
+            </p>
+            <div id="geminiResultados" style="margin-top: 10px"></div>
+          </div>
+
+          <!-- BUSCAR PRODUCTOS -->
+          <div class="card" id="productSearchArea">
+            <div class="card-title">Buscar productos</div>
+
+            <label>Categoría</label>
+            <select id="categoria" onchange="renderProductos()">
+              <option value="todos">Todos</option>
+              <option value="pc">PC</option>
+              <option value="laptop">Laptops</option>
+              <option value="camara">Cámaras</option>
+            </select>
+
+            <label>Buscar</label>
+            <input
+              type="text"
+              id="busqueda"
+              placeholder="Nombre, marca o modelo"
+              oninput="renderProductos()"
+            />
+
+            <label>Agregar manual rápido</label>
+            <button class="btn-primary" onclick="mostrarFormularioManual()">
+              Abrir formulario manual
+            </button>
+          </div>
+
+          <!-- RESULTADOS -->
+          <div class="card" id="productResultsCard">
             <div
               style="
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                gap: 10px;
                 margin-bottom: 12px;
               "
             >
-              <h3 style="margin-bottom: 0">Resultados</h3>
-
+              <div
+                class="card-title"
+                style="margin-bottom: 0; padding-bottom: 0; border-bottom: none"
+              >
+                Resultados
+              </div>
               <button
-                class="btn-primary"
-                style="
-                  width: auto;
-                  min-width: 44px;
-                  padding: 8px 14px;
-                  font-size: 20px;
-                  line-height: 1;
-                "
+                class="btn-primary btn-sm"
                 onclick="mostrarFormularioManual()"
-                title="Agregar producto manualmente"
+                title="Agregar manual"
               >
                 +
               </button>
             </div>
-
             <div class="results-scroll">
               <div id="listaProductos"></div>
             </div>
           </div>
 
-          <div class="card details-box results-card" id="productDetailCard">
-            <h3>Características del producto</h3>
+          <!-- CARACTERÍSTICAS -->
+          <div class="card details-box" id="productDetailCard">
+            <div class="card-title">Características</div>
             <div class="results-scroll">
               <div id="detalleProducto">
                 <p class="muted">
-                  Selecciona un producto para ver sus características o usa el
-                  botón + para agregar uno manualmente.
+                  Selecciona un producto o usa + para agregar uno.
                 </p>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="card" id="quoteCard">
-          <div class="quote-ticket-header">
-            <div class="ticket-left">
-              <img
-                src="/img/cotizacionimg.png"
-                alt="Encabezado cotización"
-                class="ticket-company-img"
-                onerror="this.style.display = 'none'"
-              />
-
-              <div class="ticket-company-name">
-                JUAN CARLOS BERNA SOCIEDAD ANONIMA CERRADA
-              </div>
+          <!-- ACCIONES -->
+          <div class="card" id="actionsArea">
+            <div class="card-title">Acciones</div>
+            <div class="no-print" style="margin-bottom: 14px">
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  cursor: pointer;
+                  text-transform: none;
+                  letter-spacing: 0;
+                  font-size: 12px;
+                  font-weight: 400;
+                  color: var(--text2);
+                  margin: 0;
+                "
+              >
+                <input
+                  id="printDetallesPrecio"
+                  type="checkbox"
+                  style="
+                    width: 15px;
+                    height: 15px;
+                    accent-color: var(--gold);
+                    padding: 0;
+                    border: none;
+                    flex-shrink: 0;
+                  "
+                />
+                Mostrar P. Unit. y Subtotal por producto al imprimir
+              </label>
             </div>
-
-            <div class="ticket-right-box">
-              <div class="ticket-ruc">RUC 20489584868</div>
-
-              <div class="ticket-doc-title">COTIZACIÓN</div>
-
-              <div class="ticket-doc-number">
-                <span id="printNumeroCotizacion">-</span>
-              </div>
+            <div class="grid g2">
+              <button class="btn-gray" onclick="limpiarCotizacion()">
+                Limpiar cotización
+              </button>
+              <button class="btn-primary" onclick="window.print()">
+                Imprimir / Guardar PDF
+              </button>
+              <button class="btn-gray" onclick="copiarCotizacionTexto()">
+                Copiar texto
+              </button>
+              <button class="btn-danger" onclick="resetearTodo()">
+                Reiniciar todo
+              </button>
             </div>
-          </div>
-
-          <div class="quote-meta-inline">
-            <div class="proformas-title">PROFORMAS JCB S.A.C</div>
-            <div class="print-client-grid">
-              <div class="row">
-                <div class="field">
-                  <span class="lbl">SR.(s):</span>
-                  <span class="val" id="printClienteNombre">-</span>
-                </div>
-
-                <div class="field">
-                  <span class="lbl">DNI/RUC:</span>
-                  <span class="val" id="printDniRuc">-</span>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="field">
-                  <span class="lbl">DIRECCIÓN:</span>
-                  <span class="val" id="printDireccion">-</span>
-                </div>
-
-                <div class="field">
-                  <span class="lbl">TELÉFONO:</span>
-                  <span class="val" id="printTelefonoCliente">-</span>
-                </div>
-              </div>
-            </div>
-            <div class="letter-intro">
-              <p><strong>ESTIMADO CLIENTE:</strong></p>
-              <p>
-                POR MEDIO DE ESTA PRESENTE HACEMOS LLEGAR NUESTRO CORDIAL SALUDO
-                Y A LA VEZ LA PRESENTE COTIZACIÓN A VUESTRA SOLICITUD:
-              </p>
-            </div>
-          </div>
-
-          <h3>DETALLES:</h3>
-          <div class="fechas-top">
-            <span
-              ><strong>Fecha de emisión:</strong>
-              <span id="fechaEmisionTop">-</span></span
-            >
-            <span
-              ><strong>Fecha de vencimiento:</strong>
-              <span id="fechaVencimientoTop">-</span></span
-            >
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Producto</th>
-                <th>Características</th>
-                <th>Cant.</th>
-                <th class="col-unit">P. Unit.</th>
-                <th>Subtotal</th>
-                <th id="accionesColumna">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="tablaCotizacion"></tbody>
-          </table>
-
-          <div class="totals">
-            <div>
-              <span>Subtotal:</span>
-              <span id="subtotalText">S/ 0</span>
-            </div>
-            <div>
-              <span>Descuento:</span>
-              <span id="descuentoText">S/ 0</span>
-            </div>
-            <div>
-              <span id="IGVLabel">INCLUYE IGV (18%)</span>
-              <span id="IGVText"></span>
-            </div>
-            <div class="grand">
-              <span>Total:</span>
-              <span id="totalText">S/ 0</span>
-            </div>
-          </div>
-
-          <div class="mensaje-empresarial">
-            SIN OTRO PARTICULAR, Y EN ESPERA DE SU AMABLE ACEPTACIÓN, QUEDAMOS A
-            SU ENTERA DISPOSIÓN PARA CUALQUIER CONSULTA O ACLARACIÓN QUE ESTIME
-            PERTINENTE. AGRADECEMOS LA OPORTUNIDAD DE COTIZAR NUESTROS PRODUCTOS
-            Y SERVICIOS, Y ESPERAMOS PODER SERVIRLE PRONTO.
-          </div>
-
-          <div class="garantia-box">GARANTÍA 12 MESES</div>
-
-          <div class="note-box" style="margin-top: 18px">
-            <p>
-              <strong>Observaciones:</strong> Precios sujetos a variación según
-              stock. Cotización referencial.
-            </p>
-            <p><strong>Validez:</strong> 10 días calendario.</p>
-          </div>
-
-          <div class="info-banners">
-
-            <div class="info-item">
-              <img src="/img/cuentas.png" alt="Cuentas" />
-              <div class="info-text"></div>
-            </div>
-
-            <div class="info-item">
-              <img src="/img/envio.png" alt="Envío nacional" />
-              <div class="info-text"></div>
-            </div>
-
-            <div class="info-item">
-              <img src="/img/redes.png" alt="Redes sociales" />
-              <div class="info-text"></div>
-            </div>
-
-</div>
-
-        <div class="card" id="actionsArea">
-          <!-- Preferencia de impresión (no afecta el PDF si no imprimes) -->
-<div class="no-print" style="margin-bottom:12px;">
-  <label style="display:flex; align-items:center; gap:10px; font-weight:700; margin:0;">
-    <input id="printDetallesPrecio" type="checkbox" style="width:auto; margin:0;" />
-    Mostrar P. Unit. y Subtotal por producto al imprimir
-  </label>
-</div>
-          <div class="grid grid-4">
-
-            <button class="btn-gray" onclick="limpiarCotizacion()">
-              Limpiar cotización
-            </button>
-            <button class="btn-primary" onclick="window.print()">
-              Imprimir / Guardar PDF
-            </button>
-            <button class="btn-gray" onclick="copiarCotizacionTexto()">
-              Copiar texto
-            </button>
-            <button class="btn-danger" onclick="resetearTodo()">
-              Reiniciar todo
-            </button>
           </div>
         </div>
+        <!-- /col-controls -->
       </div>
+      <!-- /app-columns -->
     </div>
+    <!-- /appView -->
 
     <script>
       const USER = "JCB@cotizar.com";
@@ -1989,8 +2213,6 @@ isolation: isolate !important;
         // fijo desde actualizarDatosTienda
       }
 
-      
-
       function sincronizarCabecera() {
         const num = byId("numeroCotizacion")?.value?.trim() || "-";
         const cliente = byId("cliente")?.value?.trim() || "-";
@@ -2041,112 +2263,117 @@ isolation: isolate !important;
 
       let _dniRucTimer = null;
 
-function abrirSuggest() {
-  const box = byId("dniRucSuggest");
-  if (box) box.classList.remove("hidden");
-}
+      function abrirSuggest() {
+        const box = byId("dniRucSuggest");
+        if (box) box.classList.remove("hidden");
+      }
 
-function cerrarSuggest() {
-  const box = byId("dniRucSuggest");
-  if (box) box.classList.add("hidden");
-}
+      function cerrarSuggest() {
+        const box = byId("dniRucSuggest");
+        if (box) box.classList.add("hidden");
+      }
 
-function cerrarSuggestConDelay() {
-  setTimeout(() => cerrarSuggest(), 300); // ← Más tiempo para clickear, gil
-}
+      function cerrarSuggestConDelay() {
+        setTimeout(() => cerrarSuggest(), 300); // ← Más tiempo para clickear, gil
+      }
 
-// En DOMContentLoaded, agrega listener persistente al botón
-document.addEventListener("DOMContentLoaded", () => {
-  // ... tu código ...
-  const btnUsar = byId("btnUsarNombre");
-  if (btnUsar) {
-    btnUsar.addEventListener("click", () => {
-      console.log("🖱️ Click detectado en btnUsarNombre");
-      // Si onclick no funciona, fuerza aquí la lógica de usar nombre
-    });
-  }
-});
+      // En DOMContentLoaded, agrega listener persistente al botón
+      document.addEventListener("DOMContentLoaded", () => {
+        // ... tu código ...
+        const btnUsar = byId("btnUsarNombre");
+        if (btnUsar) {
+          btnUsar.addEventListener("click", () => {
+            console.log("🖱️ Click detectado en btnUsarNombre");
+            // Si onclick no funciona, fuerza aquí la lógica de usar nombre
+          });
+        }
+      });
 
-function setSuggestError(msg) {
-  const err = byId("dniRucSuggestError");
-  if (!err) return;
-  if (!msg) {
-    err.textContent = "";
-    err.classList.add("hidden");
-  } else {
-    err.textContent = msg;
-    err.classList.remove("hidden");
-  }
-}
+      function setSuggestError(msg) {
+        const err = byId("dniRucSuggestError");
+        if (!err) return;
+        if (!msg) {
+          err.textContent = "";
+          err.classList.add("hidden");
+        } else {
+          err.textContent = msg;
+          err.classList.remove("hidden");
+        }
+      }
 
-function elegirNombreManual() {
-  cerrarSuggest();
-  const cliente = byId("cliente");
-  if (cliente) cliente.focus();
-}
-
-// Esta función YA NO rellena automático: solo muestra para seleccionar
-function handleDniRucInput() {
-  sincronizarCabecera();
-  const dniRuc = String(byId("dniRuc")?.value || "").trim();
-  const len = dniRuc.length;
-  const esCompleto = len === 8 || len === 11;
-  console.log("⌨️ Input:", dniRuc, "Len:", len, "Completo?", esCompleto);
-
-  // AGREGADO: SIEMPRE limpia suggest y error al cambiar (para que "reemplace" al borrar)
-  cerrarSuggest();
-  setSuggestError("");
-
-  if (!esCompleto) return;
-
-  clearTimeout(_dniRucTimer);
-  _dniRucTimer = setTimeout(() => consultarYMostrar(dniRuc), 300); // ← Tiempo equilibrado, gil
-}
-
-async function consultarYMostrar(dniRuc) {
-  console.log("🔍 Buscando:", dniRuc);
-  try {
-    setSuggestError("");
-    const res = await fetch("/api/doc", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ doc: dniRuc }),
-    });
-    console.log("📡 Status:", res.status); // ← LOG nuevo
-    const data = await res.json().catch(() => ({}));
-    console.log("📦 Data completa:", data);
-    if (!res.ok || !data?.ok) {
-      throw new Error(data?.error || "API falló");
-    }
-    const nombre = String(data.nombre || data.name || data.razon_social || "").trim();
-    const direccion = String(data.direccion || data.ubigeo || data.address || "").trim() || "";
-    console.log("🏠 Dir:", direccion || "Vacía");
-    if (!nombre) throw new Error("Sin nombre");
-    const btn = byId("btnUsarNombre");
-    if (btn) {
-      btn.textContent = `Usar: ${nombre}`;
-      btn.onclick = () => {
-        console.log("🖱️ Click: nombre=", nombre, "dir=", direccion);
-        byId("cliente").value = nombre;
-        byId("direccionCliente").value = direccion || "";
-        sincronizarCabecera();
+      function elegirNombreManual() {
         cerrarSuggest();
-      };
-    }
-    abrirSuggest();
-  } catch (e) {
-    console.error("💥 Error:", e.message);
-    abrirSuggest();
-    const btn = byId("btnUsarNombre");
-    if (btn) {
-      btn.textContent = "Error. Reintenta o manual.";
-      btn.onclick = () => {
-        consultarYMostrar(dniRuc); // ← AGREGADO: reintenta al click
-      };
-    }
-    setSuggestError(e.message || "No busca, carajo. Revisa API.");
-  }
-}
+        const cliente = byId("cliente");
+        if (cliente) cliente.focus();
+      }
+
+      // Esta función YA NO rellena automático: solo muestra para seleccionar
+      function handleDniRucInput() {
+        sincronizarCabecera();
+        const dniRuc = String(byId("dniRuc")?.value || "").trim();
+        const len = dniRuc.length;
+        const esCompleto = len === 8 || len === 11;
+        console.log("⌨️ Input:", dniRuc, "Len:", len, "Completo?", esCompleto);
+
+        // AGREGADO: SIEMPRE limpia suggest y error al cambiar (para que "reemplace" al borrar)
+        cerrarSuggest();
+        setSuggestError("");
+
+        if (!esCompleto) return;
+
+        clearTimeout(_dniRucTimer);
+        _dniRucTimer = setTimeout(() => consultarYMostrar(dniRuc), 300); // ← Tiempo equilibrado, gil
+      }
+
+      async function consultarYMostrar(dniRuc) {
+        console.log("🔍 Buscando:", dniRuc);
+        try {
+          setSuggestError("");
+          const res = await fetch("/api/doc", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ doc: dniRuc }),
+          });
+          console.log("📡 Status:", res.status); // ← LOG nuevo
+          const data = await res.json().catch(() => ({}));
+          console.log("📦 Data completa:", data);
+          if (!res.ok || !data?.ok) {
+            throw new Error(data?.error || "API falló");
+          }
+          const nombre = String(
+            data.nombre || data.name || data.razon_social || "",
+          ).trim();
+          const direccion =
+            String(
+              data.direccion || data.ubigeo || data.address || "",
+            ).trim() || "";
+          console.log("🏠 Dir:", direccion || "Vacía");
+          if (!nombre) throw new Error("Sin nombre");
+          const btn = byId("btnUsarNombre");
+          if (btn) {
+            btn.textContent = `Usar: ${nombre}`;
+            btn.onclick = () => {
+              console.log("🖱️ Click: nombre=", nombre, "dir=", direccion);
+              byId("cliente").value = nombre;
+              byId("direccionCliente").value = direccion || "";
+              sincronizarCabecera();
+              cerrarSuggest();
+            };
+          }
+          abrirSuggest();
+        } catch (e) {
+          console.error("💥 Error:", e.message);
+          abrirSuggest();
+          const btn = byId("btnUsarNombre");
+          if (btn) {
+            btn.textContent = "Error. Reintenta o manual.";
+            btn.onclick = () => {
+              consultarYMostrar(dniRuc); // ← AGREGADO: reintenta al click
+            };
+          }
+          setSuggestError(e.message || "No busca, carajo. Revisa API.");
+        }
+      }
 
       function separarNombreYModelo(producto) {
         const nombre = String(producto?.nombre || "").trim();
@@ -2660,13 +2887,11 @@ async function consultarYMostrar(dniRuc) {
       function renderCotizacion() {
         const tbody = byId("tablaCotizacion");
         const descuentoEl = byId("descuento");
-     
 
         if (!tbody || !descuentoEl) return;
 
         const descuento = Number(descuentoEl.value || 0);
         const IGVPorcentaje = Number(byId("IGV")?.value || 18); // solo para que no reviente
-       
 
         sincronizarCabecera();
         actualizarFechasCotizacion();
@@ -2750,7 +2975,7 @@ async function consultarYMostrar(dniRuc) {
 
         const subtotalFinal = subtotal;
         const descuentoFinal = Math.max(descuento, 0);
-        
+
         const total = Math.max(subtotalFinal - descuentoFinal, 0);
 
         byId("subtotalText").textContent = money(subtotalFinal);
@@ -3069,31 +3294,31 @@ async function consultarYMostrar(dniRuc) {
       }
 
       function aplicarPreferenciaImpresion() {
-  const chk = byId("printDetallesPrecio");
-  const card = byId("quoteCard");
-  if (!chk || !card) return;
+        const chk = byId("printDetallesPrecio");
+        const card = byId("quoteCard");
+        if (!chk || !card) return;
 
-  const show = !!chk.checked;
+        const show = !!chk.checked;
 
-  // Guarda preferencia
-  localStorage.setItem("print_detalles_precio", show ? "1" : "0");
+        // Guarda preferencia
+        localStorage.setItem("print_detalles_precio", show ? "1" : "0");
 
-  // Clase que controla columnas en impresión
-  card.classList.toggle("print-show-line-prices", show);
-}
+        // Clase que controla columnas en impresión
+        card.classList.toggle("print-show-line-prices", show);
+      }
 
-// Cargar preferencia al abrir
-document.addEventListener("DOMContentLoaded", () => {
-  const chk = byId("printDetallesPrecio");
-  if (chk) {
-    chk.checked = localStorage.getItem("print_detalles_precio") === "1";
-    chk.addEventListener("change", aplicarPreferenciaImpresion);
-  }
-  aplicarPreferenciaImpresion();
-});
+      // Cargar preferencia al abrir
+      document.addEventListener("DOMContentLoaded", () => {
+        const chk = byId("printDetallesPrecio");
+        if (chk) {
+          chk.checked = localStorage.getItem("print_detalles_precio") === "1";
+          chk.addEventListener("change", aplicarPreferenciaImpresion);
+        }
+        aplicarPreferenciaImpresion();
+      });
 
-// Antes de imprimir, aplica sí o sí
-window.addEventListener("beforeprint", aplicarPreferenciaImpresion);
+      // Antes de imprimir, aplica sí o sí
+      window.addEventListener("beforeprint", aplicarPreferenciaImpresion);
 
       function agregarResultadosGemini() {
         if (!geminiSugeridos.length) {
@@ -3143,7 +3368,6 @@ window.addEventListener("beforeprint", aplicarPreferenciaImpresion);
         sincronizarCabecera();
         actualizarFechasCotizacion();
         ponerFecha();
-        
       }
 
       // ✅ IMPORTANTE: correr cuando el DOM ya existe (evita que se mueran botones al recargar)
