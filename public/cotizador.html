@@ -1988,26 +1988,6 @@
             </div>
           </div>
 
-          <!-- MODAL DETALLE / AGREGAR MANUAL -->
-          <div id="detalleModal" class="detalle-modal hidden">
-            <div class="detalle-modal-card">
-              <div class="detalle-modal-head">
-                <div id="detalleModalTitulo" class="detalle-modal-title">
-                  Detalle del producto
-                </div>
-                <button
-                  type="button"
-                  class="detalle-modal-close"
-                  onclick="cerrarDetalleModal()"
-                >
-                  ×
-                </button>
-              </div>
-
-              <div id="detalleProducto"></div>
-            </div>
-          </div>
-
           <!-- MODAL DETALLE / EDITAR / AGREGAR -->
           <div id="detalleModal" class="detalle-modal hidden">
             <div class="detalle-modal-card">
@@ -2026,6 +2006,63 @@
 
               <div id="detalleProducto">
                 <p class="muted">Sin contenido.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODAL WHATSAPP -->
+          <div id="whatsModal" class="detalle-modal hidden">
+            <div class="detalle-modal-card" style="width: min(480px, 92vw)">
+              <div class="detalle-modal-head">
+                <div class="detalle-modal-title">Enviar a WhatsApp</div>
+                <button
+                  type="button"
+                  class="detalle-modal-close"
+                  onclick="cerrarWhatsModal()"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div>
+                <label>Número del cliente</label>
+                <input
+                  type="text"
+                  id="whatsNumero"
+                  placeholder="Ej. 987654321"
+                  maxlength="9"
+                />
+
+                <p class="muted" style="margin-top: 10px">
+                  Escribe solo el número celular de Perú, sin +51.
+                </p>
+
+                <div
+                  style="
+                    display: flex;
+                    gap: 8px;
+                    margin-top: 16px;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <button
+                    class="btn-green"
+                    type="button"
+                    style="width: auto; padding: 9px 14px"
+                    onclick="confirmarEnviarWhatsApp()"
+                  >
+                    Abrir WhatsApp
+                  </button>
+
+                  <button
+                    class="btn-gray"
+                    type="button"
+                    style="width: auto; padding: 9px 14px"
+                    onclick="cerrarWhatsModal()"
+                  >
+                    Cancelar
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -2067,11 +2104,11 @@
               <button class="btn-gray" onclick="limpiarCotizacion()">
                 Limpiar cotización
               </button>
-              <button class="btn-primary" onclick="window.print()">
+              <button class="btn-primary" onclick="imprimirCotizacion()">
                 Imprimir / Guardar PDF
               </button>
-              <button class="btn-green" onclick="enviarCotizacionWhatsApp()">
-                Enviar a WhatsApp proximamente
+              <button class="btn-green" onclick="abrirWhatsModal()">
+                Enviar a WhatsApp(fase beta-no tocar)
               </button>
               <button class="btn-danger" onclick="resetearTodo()">
                 Reiniciar todo
@@ -2121,17 +2158,24 @@
       }
 
       function generarNumeroCotizacion() {
-        const ahora = new Date();
-        const numero =
-          "COT-" +
-          ahora.getFullYear() +
-          String(ahora.getMonth() + 1).padStart(2, "0") +
-          String(ahora.getDate()).padStart(2, "0") +
-          "-" +
-          String(ahora.getHours()).padStart(2, "0") +
-          String(ahora.getMinutes()).padStart(2, "0");
+        const hoy = new Date();
+
+        const fecha =
+          hoy.getFullYear() +
+          String(hoy.getMonth() + 1).padStart(2, "0") +
+          String(hoy.getDate()).padStart(2, "0");
+
+        let contador = parseInt(
+          localStorage.getItem("cotizacion_contador") || "0",
+        );
+        contador++;
+
+        localStorage.setItem("cotizacion_contador", contador);
+
+        const numero = "COT-" + fecha + "-" + String(contador).padStart(4, "0");
 
         byId("numeroCotizacion").value = numero;
+
         sincronizarCabecera();
       }
 
@@ -3113,6 +3157,11 @@
           quoteCard.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
+      function imprimirCotizacion() {
+        generarNumeroCotizacion();
+        window.print();
+      }
+
       function cambiarCantidad(id, valor) {
         const item = cotizacion.find((x) => x.id === id);
         if (!item) return;
@@ -3333,6 +3382,80 @@
         sincronizarCabecera();
       }
 
+      function abrirWhatsModal() {
+        const modal = byId("whatsModal");
+        const input = byId("whatsNumero");
+
+        if (input) input.value = "";
+        if (modal) modal.classList.remove("hidden");
+
+        setTimeout(() => {
+          if (input) input.focus();
+        }, 50);
+      }
+
+      function cerrarWhatsModal() {
+        const modal = byId("whatsModal");
+        if (modal) modal.classList.add("hidden");
+      }
+
+      function confirmarEnviarWhatsApp() {
+        generarNumeroCotizacion();
+        const numeroInput = byId("whatsNumero");
+        const numero = String(numeroInput?.value || "").replace(/\D/g, "");
+
+        if (!cotizacion.length) {
+          alert("No hay productos en la cotización.");
+          return;
+        }
+
+        if (numero.length !== 9) {
+          alert("Ingresa un número válido de 9 dígitos.");
+          return;
+        }
+
+        const cliente = (byId("cliente")?.value || "").trim() || "Cliente";
+        const numeroCotizacion =
+          (byId("numeroCotizacion")?.value || "").trim() || "-";
+        const fechaEmision =
+          (byId("fechaEmisionTop")?.textContent || "").trim() || "-";
+        const fechaVencimiento =
+          (byId("fechaVencimientoTop")?.textContent || "").trim() || "-";
+
+        let mensaje = `*COTIZACIÓN*\n`;
+        mensaje += `*Cliente:* ${cliente}\n`;
+        mensaje += `*N° Cotización:* ${numeroCotizacion}\n`;
+        mensaje += `*Fecha de emisión:* ${fechaEmision}\n`;
+        mensaje += `*Fecha de vencimiento:* ${fechaVencimiento}\n\n`;
+        mensaje += `*DETALLE:*\n`;
+
+        cotizacion.forEach((item, index) => {
+          const sub = Number(item.precio || 0) * Number(item.cantidad || 0);
+
+          mensaje += `${index + 1}. ${item.nombre}\n`;
+          mensaje += `Cantidad: ${item.cantidad}\n`;
+          mensaje += `Precio: ${money(item.precio)}\n`;
+          mensaje += `Subtotal: ${money(sub)}\n`;
+
+          if (item.caracteristicas && item.caracteristicas.length) {
+            mensaje += `Características:\n`;
+            item.caracteristicas.forEach((c) => {
+              mensaje += `- ${c}\n`;
+            });
+          }
+
+          mensaje += `\n`;
+        });
+
+        mensaje += `Subtotal: ${byId("subtotalText")?.textContent || "S/ 0"}\n`;
+        mensaje += `Descuento: ${byId("descuentoText")?.textContent || "S/ 0"}\n`;
+        mensaje += `Total: ${byId("totalText")?.textContent || "S/ 0"}\n`;
+
+        const url = `https://wa.me/51${numero}?text=${encodeURIComponent(mensaje)}`;
+
+        cerrarWhatsModal();
+        window.open(url, "_blank");
+      }
       // ====== IMPORTANTE: asegura que los onclick encuentren las funciones ======
       window.limpiarCotizacion = limpiarCotizacion;
       window.resetearTodo = resetearTodo;
