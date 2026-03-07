@@ -1045,6 +1045,77 @@
         color: #111;
       }
 
+      /* =========================
+   MODAL DETALLE
+   ========================= */
+      .detalle-modal.hidden {
+        display: none !important;
+      }
+
+      .detalle-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(6px);
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .detalle-modal-card {
+        width: min(760px, 94vw);
+        max-height: 88vh;
+        overflow-y: auto;
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-radius: 20px;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+        padding: 22px;
+      }
+
+      .detalle-modal-card::-webkit-scrollbar {
+        width: 4px;
+      }
+      .detalle-modal-card::-webkit-scrollbar-thumb {
+        background: rgba(201, 168, 76, 0.4);
+        border-radius: 999px;
+      }
+
+      .detalle-modal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .detalle-modal-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      .detalle-modal-close {
+        width: auto !important;
+        min-width: 40px;
+        height: 40px;
+        padding: 0 !important;
+        border-radius: 10px !important;
+        background: var(--gray) !important;
+        color: #fff !important;
+        font-size: 22px !important;
+        line-height: 1 !important;
+      }
+
+      .detalle-modal-close:hover {
+        background: var(--gray2) !important;
+      }
       .garantia-box {
         text-align: center;
         font-size: 13px;
@@ -1880,8 +1951,11 @@
             />
 
             <label>Agregar manual rápido</label>
-            <button class="btn-primary" onclick="mostrarFormularioManual()">
-              Abrir formulario manual
+            <button
+              class="btn-primary"
+              onclick="mostrarFormularioCatalogoManual()"
+            >
+              Agregado rapido
             </button>
           </div>
 
@@ -1903,7 +1977,7 @@
               </div>
               <button
                 class="btn-primary btn-sm"
-                onclick="mostrarFormularioManual()"
+                onclick="mostrarFormularioCatalogoManual()"
                 title="Agregar manual"
               >
                 +
@@ -1914,14 +1988,44 @@
             </div>
           </div>
 
-          <!-- CARACTERÍSTICAS -->
-          <div class="card details-box" id="productDetailCard">
-            <div class="card-title">Características</div>
-            <div class="results-scroll">
+          <!-- MODAL DETALLE / AGREGAR MANUAL -->
+          <div id="detalleModal" class="detalle-modal hidden">
+            <div class="detalle-modal-card">
+              <div class="detalle-modal-head">
+                <div id="detalleModalTitulo" class="detalle-modal-title">
+                  Detalle del producto
+                </div>
+                <button
+                  type="button"
+                  class="detalle-modal-close"
+                  onclick="cerrarDetalleModal()"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div id="detalleProducto"></div>
+            </div>
+          </div>
+
+          <!-- MODAL DETALLE / EDITAR / AGREGAR -->
+          <div id="detalleModal" class="detalle-modal hidden">
+            <div class="detalle-modal-card">
+              <div class="detalle-modal-head">
+                <div id="detalleModalTitulo" class="detalle-modal-title">
+                  Detalle del producto
+                </div>
+                <button
+                  type="button"
+                  class="detalle-modal-close"
+                  onclick="cerrarDetalleModal()"
+                >
+                  ×
+                </button>
+              </div>
+
               <div id="detalleProducto">
-                <p class="muted">
-                  Selecciona un producto o usa + para agregar uno.
-                </p>
+                <p class="muted">Sin contenido.</p>
               </div>
             </div>
           </div>
@@ -1966,8 +2070,8 @@
               <button class="btn-primary" onclick="window.print()">
                 Imprimir / Guardar PDF
               </button>
-              <button class="btn-gray" onclick="copiarCotizacionTexto()">
-                Copiar texto
+              <button class="btn-green" onclick="enviarCotizacionWhatsApp()">
+                Enviar a WhatsApp proximamente
               </button>
               <button class="btn-danger" onclick="resetearTodo()">
                 Reiniciar todo
@@ -2472,7 +2576,7 @@
                         <button
                           class="btn-green"
                           style="width:auto; padding:9px 14px;"
-                          onclick="cambiarProductoLista(${p.id})"
+                          onclick="guardarProductoLista(${p.id})"
                         >
                           Guardar
                         </button>
@@ -2492,7 +2596,17 @@
           })
           .join("");
       }
+      function abrirDetalleModal(titulo = "Detalle del producto") {
+        const modal = byId("detalleModal");
+        const tituloEl = byId("detalleModalTitulo");
+        if (tituloEl) tituloEl.textContent = titulo;
+        if (modal) modal.classList.remove("hidden");
+      }
 
+      function cerrarDetalleModal() {
+        const modal = byId("detalleModal");
+        if (modal) modal.classList.add("hidden");
+      }
       function verDetalle(id) {
         const p = productos.find((x) => x.id === id);
         if (!p) return;
@@ -2500,67 +2614,70 @@
         productoSeleccionado = p;
 
         byId("detalleProducto").innerHTML = `
-            <p><strong>Nombre:</strong> ${p.nombre}</p>
-            <p><strong>Marca:</strong> ${p.marca}</p>
-            <p><strong>Modelo:</strong> ${p.modelo}</p>
-            <p><strong>Precio:</strong> ${money(p.precio)}</p>
-            <div class="pill">${String(p.categoria || "").toUpperCase()}</div>
+    <h4>${p.nombre}</h4>
+    <p><strong>Marca:</strong> ${p.marca}</p>
+    <p><strong>Modelo:</strong> ${p.modelo}</p>
+    <p><strong>Precio:</strong> ${money(p.precio)}</p>
+    <div class="pill">${String(p.categoria || "").toUpperCase()}</div>
 
-            <h4 style="margin-top:12px;">Características</h4>
-            <ul>
-              ${(p.caracteristicas || []).map((c) => `<li>${c}</li>`).join("")}
-            </ul>
-          `;
+    <h4 style="margin-top:16px;">Características</h4>
+    <ul>
+      ${(p.caracteristicas || []).map((c) => `<li>${c}</li>`).join("")}
+    </ul>
+  `;
+
+        abrirDetalleModal("Detalle del producto");
       }
 
-      function mostrarFormularioManual() {
+      function mostrarFormularioCatalogoManual() {
         productoSeleccionado = null;
 
         byId("detalleProducto").innerHTML = `
-            <h4>Agregar producto manualmente</h4>
+    <h4>Agregar producto al catálogo</h4>
 
-            <label>Nombre</label>
-            <input type="text" id="manualNombre" placeholder="Ej. RTX 4070 Super" />
+    <label>Nombre</label>
+    <input type="text" id="manualNombre" placeholder="Ej. RTX 4070 Super" />
 
-            <label>Marca</label>
-            <input type="text" id="manualMarca" placeholder="Ej. ASUS" />
+    <label>Marca</label>
+    <input type="text" id="manualMarca" placeholder="Ej. ASUS" />
 
-            <label>Modelo</label>
-            <input type="text" id="manualModelo" placeholder="Ej. DUAL-RTX4070S" />
+    <label>Modelo</label>
+    <input type="text" id="manualModelo" placeholder="Ej. DUAL-RTX4070S" />
 
-            <label>Categoría</label>
-            <select id="manualCategoria">
-              <option value="pc">PC</option>
-              <option value="laptop">Laptop</option>
-              <option value="camara">Cámara</option>
-            </select>
+    <label>Categoría</label>
+    <select id="manualCategoria">
+      <option value="pc">PC</option>
+      <option value="laptop">Laptop</option>
+      <option value="camara">Cámara</option>
+    </select>
 
-            <label>Precio</label>
-            <input type="number" id="manualPrecio" min="0" step="0.01" value="0" />
+    <label>Precio</label>
+    <input type="number" id="manualPrecio" min="0" step="0.01" value="0" />
 
-            <label>Características</label>
-            <textarea id="manualCaracteristicas" class="detail-edit" placeholder="Una característica por línea"></textarea>
+    <label>Características</label>
+    <textarea id="manualCaracteristicas" class="detail-edit" placeholder="Una característica por línea"></textarea>
 
-            <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
-              <button
-                class="btn-green"
-                style="width:auto; padding:9px 14px;"
-                onclick="guardarProductoManual()"
-              >
-                Guardar producto
-              </button>
+    <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+      <button
+        class="btn-green"
+        style="width:auto; padding:9px 14px;"
+        onclick="guardarProductoManual()"
+      >
+        Guardar en catálogo
+      </button>
 
-              <button
-                class="btn-gray"
-                style="width:auto; padding:9px 14px;"
-                onclick="limpiarDetalleProducto()"
-              >
-                Cancelar
-              </button>
-            </div>
-          `;
+      <button
+        class="btn-gray"
+        style="width:auto; padding:9px 14px;"
+        onclick="cerrarDetalleModal()"
+      >
+        Cancelar
+      </button>
+    </div>
+  `;
+
+        abrirDetalleModal("Agregar producto al catálogo");
       }
-
       // ========= helpers BD (/api/products) =========
       async function cargarCatalogoBD() {
         console.log("📡 Llamando /api/products...");
@@ -2686,14 +2803,12 @@
           await cargarCatalogoBD();
           renderProductos();
 
-          const creado = productos.find(
-            (p) =>
-              textoNormal(p.nombre) === textoNormal(nombre) &&
-              textoNormal(p.modelo) === textoNormal(modelo),
-          );
+          cerrarDetalleModal();
+          limpiarDetalleProducto();
 
-          if (creado) verDetalle(creado.id);
-          else limpiarDetalleProducto();
+          if (byId("geminiStatus")) {
+            byId("geminiStatus").textContent = "Producto agregado al catálogo.";
+          }
         } catch (e) {
           console.error(e);
           alert("No se pudo guardar en la BD: " + e.message);
@@ -2708,11 +2823,101 @@
       }
 
       function toggleEditarLista(id) {
-        const box = byId(`editBox_${id}`);
-        if (!box) return;
-        box.classList.toggle("hidden");
+        const p = productos.find((x) => x.id === id);
+        if (!p) return;
+
+        byId("detalleProducto").innerHTML = `
+    <h4>Editar producto</h4>
+
+    <label>Título</label>
+    <input
+      type="text"
+      id="modalNombre_${p.id}"
+      value="${String(p.nombre || "").replace(/"/g, "&quot;")}"
+    />
+
+    <label>Precio</label>
+    <input
+      type="number"
+      id="modalPrecio_${p.id}"
+      min="0"
+      step="0.01"
+      value="${Number(p.precio || 0)}"
+    />
+
+    <label>Características</label>
+    <textarea id="modalDesc_${p.id}" class="detail-edit">${(p.caracteristicas || []).join("\n")}</textarea>
+
+    <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+      <button
+        class="btn-green"
+        style="width:auto; padding:9px 14px;"
+        onclick="guardarEdicionModal(${p.id})"
+      >
+        Guardar
+      </button>
+
+      <button
+        class="btn-gray"
+        style="width:auto; padding:9px 14px;"
+        onclick="cerrarDetalleModal()"
+      >
+        Cerrar
+      </button>
+    </div>
+  `;
+
+        abrirDetalleModal("Editar producto");
       }
 
+      async function guardarEdicionModal(id) {
+        const p = productos.find((x) => x.id === id);
+        if (!p) return;
+
+        const nombreInput = byId(`modalNombre_${id}`);
+        const precioInput = byId(`modalPrecio_${id}`);
+        const descInput = byId(`modalDesc_${id}`);
+
+        const nuevoNombre = String(nombreInput?.value || "").trim();
+        if (nuevoNombre) p.nombre = nuevoNombre;
+
+        const precioTexto = String(precioInput?.value || "").trim();
+        if (precioTexto !== "") {
+          const nuevoPrecio = Number(precioTexto);
+          if (!isNaN(nuevoPrecio) && nuevoPrecio >= 0) {
+            p.precio = Number.isInteger(nuevoPrecio)
+              ? parseInt(precioTexto, 10)
+              : nuevoPrecio;
+          }
+        }
+
+        p.caracteristicas = String(descInput?.value || "")
+          .split("\n")
+          .map((x) => x.trim())
+          .filter(Boolean);
+
+        // ✅ cierra al toque para que se sienta rápido
+        cerrarDetalleModal();
+
+        // ✅ refresca vista local al instante
+        const item = cotizacion.find((x) => x.id === id);
+        if (item) {
+          item.nombre = p.nombre;
+          item.precio = p.precio;
+          item.caracteristicas = [...(p.caracteristicas || [])];
+        }
+
+        renderProductos();
+        renderCotizacion();
+
+        // ✅ guarda en segundo plano
+        try {
+          await actualizarProductoBD(id, p);
+        } catch (e) {
+          console.error(e);
+          alert("Se cerró rápido, pero no se pudo guardar en BD: " + e.message);
+        }
+      }
       async function cambiarProductoLista(id) {
         const p = productos.find((x) => x.id === id);
         if (!p) return;
@@ -2834,7 +3039,6 @@
 
         // ✅ Esto hace visible que sí agregó
         renderCotizacion();
-        verDetalle(id);
 
         // ✅ baja a la cotización para que lo veas
         const quoteCard = byId("quoteCard");
@@ -3062,64 +3266,9 @@
         sincronizarCabecera();
       }
 
-      function copiarCotizacionTexto() {
-        // ✅ NO usa IDs que no existen
-        const storeName =
-          val("storeName", "JCB Technology") || "JCB Technology";
-        const cliente = getCliente();
-        const telefono = getTelefono();
-        const numero = getNumeroCot();
-        const emision = getFechaEmision();
-        const venc = getFechaVencimiento();
-
-        if (!cotizacion.length) {
-          alert("No hay productos en la cotización.");
-          return;
-        }
-
-        let texto = "";
-        texto += `${storeName}\n`;
-        texto += `Cliente: ${cliente}\n`;
-        texto += `Teléfono: ${telefono}\n`;
-        texto += `N° Cotización: ${numero}\n`;
-        texto += `Fecha de emisión: ${emision}\n`;
-        texto += `Fecha de vencimiento: ${venc}\n\n`;
-        texto += `DETALLE:\n`;
-
-        cotizacion.forEach((item, index) => {
-          const sub = Number(item.precio) * Number(item.cantidad);
-          texto += `${index + 1}. ${item.nombre}\n`;
-          texto += `   Cantidad: ${item.cantidad}\n`;
-          texto += `   Precio: ${money(item.precio)}\n`;
-          texto += `   Subtotal: ${money(sub)}\n`;
-        });
-
-        texto += `\nSubtotal: ${txt("subtotalText", "S/ 0")}\n`;
-        texto += `Descuento: ${txt("descuentoText", "S/ 0")}\n`;
-        texto += `${txt("IGVLabel", "IGV")} - ${txt("IGVText", "S/ 0")}\n`;
-        texto += `Total: ${txt("totalText", "S/ 0")}\n\n`;
-
-        texto += `BCP: ${txt("printBCP", "-")}\n`;
-        texto += `CCI BCP: ${txt("printBCPcci", "-")}\n`;
-        texto += `Interbank: ${txt("printInterbank", "-")}\n`;
-        texto += `CCI Interbank: ${txt("printInterbankCci", "-")}\n`;
-        texto += `Caja Huancayo: ${txt("printCajaHuancayo", "-")}\n`;
-        texto += `CCI Caja Huancayo: ${txt("printCajaHuancayoCci", "-")}\n`;
-        texto += `BBVA: ${txt("printBBVA", "-")}\n`;
-        texto += `CCI BBVA: ${txt("printBBVACci", "-")}\n`;
-        texto += `Scotiabank: ${txt("printScotia", "-")}\n`;
-        texto += `CCI Scotiabank: ${txt("printScotiaCci", "-")}\n`;
-
-        navigator.clipboard
-          .writeText(texto)
-          .then(() => alert("Cotización copiada al portapapeles."))
-          .catch(() => alert("No se pudo copiar."));
-      }
-
       // ====== IMPORTANTE: asegura que los onclick encuentren las funciones ======
       window.limpiarCotizacion = limpiarCotizacion;
       window.resetearTodo = resetearTodo;
-      window.copiarCotizacionTexto = copiarCotizacionTexto;
 
       // ✅ llama fechas arriba al cargar
       document.addEventListener("DOMContentLoaded", () => {
@@ -3216,7 +3365,7 @@
                     <small>Detalles: ${(item.detalles || []).join(" | ") || "-"}</small>
                   </div>
                   <div class="product-actions">
-                    <button class="btn-primary" onclick="agregarGeminiAlCatalogo(${i})">Agregar al catálogo</button>
+                    <button class="btn-primary" onclick="editarGeminiAntesDeGuardar(${i})">Agregar al catálogo</button>
                     <button class="btn-green" onclick="agregarGeminiDirectoACotizacion(${i})">Agregar y cotizar</button>
                   </div>
                 </div>
@@ -3256,6 +3405,57 @@
           console.error(e);
           alert("No se pudo guardar el producto de Gemini en BD: " + e.message);
         }
+      }
+
+      function editarGeminiAntesDeGuardar(index) {
+        const item = geminiSugeridos[index];
+        if (!item) return;
+
+        byId("detalleProducto").innerHTML = `
+    <h4>Revisar producto de Gemini</h4>
+
+    <label>Nombre</label>
+    <input type="text" id="manualNombre" value="${item.nombre || ""}" />
+
+    <label>Marca</label>
+    <input type="text" id="manualMarca" value="${item.marca || ""}" />
+
+    <label>Modelo</label>
+    <input type="text" id="manualModelo" value="${item.modelo || ""}" />
+
+    <label>Categoría</label>
+    <select id="manualCategoria">
+      <option value="pc">PC</option>
+      <option value="laptop">Laptop</option>
+      <option value="camara">Cámara</option>
+    </select>
+
+    <label>Precio</label>
+    <input type="number" id="manualPrecio" value="${item.precio_sugerido || 0}" />
+
+    <label>Características</label>
+    <textarea id="manualCaracteristicas">${(item.detalles || []).join("\n")}</textarea>
+
+    <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;">
+      <button
+        class="btn-green"
+        style="width:auto; padding:9px 14px;"
+        onclick="guardarProductoManual()"
+      >
+        Guardar en catálogo
+      </button>
+
+      <button
+        class="btn-gray"
+        style="width:auto; padding:9px 14px;"
+        onclick="cerrarDetalleModal()"
+      >
+        Cancelar
+      </button>
+    </div>
+  `;
+
+        abrirDetalleModal("Agregar producto de Gemini");
       }
 
       async function agregarGeminiDirectoACotizacion(index) {
