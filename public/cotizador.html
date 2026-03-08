@@ -1163,7 +1163,24 @@
         margin: 0;
         border-radius: 0;
       }
+      /* modo captura (simula impresión) */
 
+      .modo-captura .no-print {
+        display: none !important;
+      }
+
+      .modo-captura input {
+        border: none !important;
+        background: transparent !important;
+      }
+
+      .modo-captura button {
+        display: none !important;
+      }
+
+      .modo-captura .acciones-celda {
+        display: none !important;
+      }
       /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -1185,6 +1202,253 @@
         .g4 {
           grid-template-columns: 1fr;
         }
+      }
+
+      /* ===== captura para WhatsApp / Cloudinary ===== */
+      .modo-captura-real {
+        background: #ffffff !important;
+        color: #000 !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        font-family: Arial, sans-serif !important;
+      }
+
+      .modo-captura-real * {
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+
+      .modo-captura-real h3 {
+        color: #111 !important;
+        font-family: "DM Sans", sans-serif !important;
+        font-size: 11px !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        padding-bottom: 10px !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        margin-bottom: 10px !important;
+      }
+
+      .modo-captura-real .quote-ticket-header {
+        display: grid !important;
+        grid-template-columns: minmax(0, 520px) 230px !important;
+        align-items: start !important;
+        justify-content: start !important;
+        column-gap: 10px !important;
+        border-bottom: 1px solid #d1d5db !important;
+        padding-bottom: 12px !important;
+        margin-bottom: 12px !important;
+      }
+
+      .modo-captura-real .ticket-company-img {
+        width: 100% !important;
+        max-width: 520px !important;
+        height: auto !important;
+        display: block !important;
+        object-fit: contain !important;
+      }
+
+      .modo-captura-real .ticket-right-box {
+        width: 230px !important;
+        min-width: 230px !important;
+        border: 2px solid #000 !important;
+        padding: 12px 10px !important;
+        text-align: center !important;
+        background: #c5c4c4 !important;
+      }
+
+      .modo-captura-real .ticket-ruc {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        margin-bottom: 8px !important;
+      }
+
+      .modo-captura-real .ticket-doc-title {
+        font-size: 22px !important;
+        font-weight: 800 !important;
+        line-height: 1.05 !important;
+        margin-bottom: 8px !important;
+        text-transform: uppercase !important;
+      }
+
+      .modo-captura-real .ticket-doc-number {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+      }
+
+      .modo-captura-real .ticket-company-name {
+        font-size: 11px !important;
+        margin-top: 4px !important;
+        font-weight: 800 !important;
+        text-transform: uppercase !important;
+      }
+
+      .modo-captura-real .proformas-title {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+        margin-bottom: 4px !important;
+        font-family: "Times New Roman", serif !important;
+      }
+
+      .modo-captura-real .print-client-grid .row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px 20px !important;
+        margin-bottom: 3px !important;
+      }
+
+      .modo-captura-real .print-client-grid .field {
+        display: grid !important;
+        grid-template-columns: 76px 1fr !important;
+        gap: 6px !important;
+        align-items: baseline !important;
+      }
+
+      .modo-captura-real .print-client-grid .row > .field:nth-child(2) {
+        margin-left: 40px !important;
+      }
+
+      .modo-captura-real .letter-intro {
+        font-size: 9.5px !important;
+        margin: 4px 0 8px !important;
+        text-transform: uppercase !important;
+      }
+
+      .modo-captura-real .fechas-top {
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 14px !important;
+        font-size: 10px !important;
+        margin: 4px 0 !important;
+      }
+
+      .modo-captura-real table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        table-layout: fixed !important;
+        margin-top: 6px !important;
+      }
+
+      .modo-captura-real th,
+      .modo-captura-real td {
+        color: #000 !important;
+        font-size: 10px !important;
+        padding: 4px !important;
+        border-bottom: 1px solid #aaaaaa !important;
+        vertical-align: top !important;
+        line-height: 1.15 !important;
+      }
+
+      .modo-captura-real th {
+        background: #f0f0f0 !important;
+        color: #000 !important;
+        font-size: 9px !important;
+        text-transform: uppercase !important;
+      }
+
+      .modo-captura-real th:nth-child(1),
+      .modo-captura-real td:nth-child(1) {
+        width: 24% !important;
+      }
+
+      .modo-captura-real th:nth-child(2),
+      .modo-captura-real td:nth-child(2) {
+        width: 48% !important;
+        font-size: 8.5px !important;
+        line-height: 1.05 !important;
+        word-break: break-word !important;
+      }
+
+      .modo-captura-real th:nth-child(3),
+      .modo-captura-real td:nth-child(3) {
+        width: 6% !important;
+        text-align: center !important;
+      }
+
+      .modo-captura-real th:nth-child(4),
+      .modo-captura-real td:nth-child(4) {
+        width: 10% !important;
+        text-align: right !important;
+      }
+
+      .modo-captura-real th:nth-child(5),
+      .modo-captura-real td:nth-child(5) {
+        width: 12% !important;
+        text-align: right !important;
+      }
+
+      .modo-captura-real .captura-caracteristicas {
+        font-size: 8.5px !important;
+        line-height: 1.05 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+      }
+
+      .modo-captura-real .captura-mini-text {
+        display: inline-block !important;
+        font-size: 10px !important;
+        color: #000 !important;
+      }
+
+      .modo-captura-real .totals {
+        max-width: 220px !important;
+        margin-top: 8px !important;
+        background: #f0f0f0 !important;
+        border: 1px solid #cccccc !important;
+        border-radius: 12px !important;
+      }
+
+      .modo-captura-real .totals div {
+        font-size: 10px !important;
+        margin-bottom: 3px !important;
+        color: #000 !important;
+      }
+
+      .modo-captura-real .totals .grand {
+        font-size: 12px !important;
+        padding-top: 4px !important;
+        margin-top: 4px !important;
+        border-top: 1px solid #aaaaaa !important;
+        color: #000 !important;
+      }
+
+      .modo-captura-real .mensaje-empresarial {
+        font-family: "Times New Roman", serif !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        margin: 10px 0 6px 0 !important;
+      }
+
+      .modo-captura-real .garantia-box {
+        font-family: "Times New Roman", serif !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+        margin: 6px 0 10px 0 !important;
+      }
+
+      .modo-captura-real .note-box p {
+        font-size: 10px !important;
+        line-height: 1.15 !important;
+        color: #000 !important;
+      }
+
+      .modo-captura-real .info-banners {
+        display: flex !important;
+        gap: 0 !important;
+        margin-top: 16px !important;
+        border-top: 1px solid #d1d5db !important;
+        padding-top: 16px !important;
+      }
+
+      .modo-captura-real .info-item img {
+        width: 100% !important;
+        max-width: none !important;
+        display: block !important;
       }
 
       /* ============================================================
@@ -2108,7 +2372,7 @@
                 Imprimir / Guardar PDF
               </button>
               <button class="btn-green" onclick="abrirWhatsModal()">
-                Enviar a WhatsApp(fase beta-no tocar)
+                Enviar a WhatsApp
               </button>
               <button class="btn-danger" onclick="resetearTodo()">
                 Reiniciar todo
@@ -3399,62 +3663,25 @@
         if (modal) modal.classList.add("hidden");
       }
 
-      function confirmarEnviarWhatsApp() {
-        generarNumeroCotizacion();
-        const numeroInput = byId("whatsNumero");
-        const numero = String(numeroInput?.value || "").replace(/\D/g, "");
+      async function confirmarEnviarWhatsApp() {
+        const telefono = document.getElementById("whatsNumero")?.value?.trim();
 
-        if (!cotizacion.length) {
-          alert("No hay productos en la cotización.");
+        if (!telefono) {
+          alert("Ingrese el número del cliente");
           return;
         }
 
-        if (numero.length !== 9) {
-          alert("Ingresa un número válido de 9 dígitos.");
-          return;
+        try {
+          const link = await subirCotizacionCloudinary();
+
+          const mensaje = `Hola, te envío tu cotización:\n${link}`;
+          const url = `https://wa.me/51${telefono}?text=${encodeURIComponent(mensaje)}`;
+
+          window.open(url, "_blank");
+        } catch (error) {
+          console.error(error);
+          alert("Error generando la cotización");
         }
-
-        const cliente = (byId("cliente")?.value || "").trim() || "Cliente";
-        const numeroCotizacion =
-          (byId("numeroCotizacion")?.value || "").trim() || "-";
-        const fechaEmision =
-          (byId("fechaEmisionTop")?.textContent || "").trim() || "-";
-        const fechaVencimiento =
-          (byId("fechaVencimientoTop")?.textContent || "").trim() || "-";
-
-        let mensaje = `*COTIZACIÓN*\n`;
-        mensaje += `*Cliente:* ${cliente}\n`;
-        mensaje += `*N° Cotización:* ${numeroCotizacion}\n`;
-        mensaje += `*Fecha de emisión:* ${fechaEmision}\n`;
-        mensaje += `*Fecha de vencimiento:* ${fechaVencimiento}\n\n`;
-        mensaje += `*DETALLE:*\n`;
-
-        cotizacion.forEach((item, index) => {
-          const sub = Number(item.precio || 0) * Number(item.cantidad || 0);
-
-          mensaje += `${index + 1}. ${item.nombre}\n`;
-          mensaje += `Cantidad: ${item.cantidad}\n`;
-          mensaje += `Precio: ${money(item.precio)}\n`;
-          mensaje += `Subtotal: ${money(sub)}\n`;
-
-          if (item.caracteristicas && item.caracteristicas.length) {
-            mensaje += `Características:\n`;
-            item.caracteristicas.forEach((c) => {
-              mensaje += `- ${c}\n`;
-            });
-          }
-
-          mensaje += `\n`;
-        });
-
-        mensaje += `Subtotal: ${byId("subtotalText")?.textContent || "S/ 0"}\n`;
-        mensaje += `Descuento: ${byId("descuentoText")?.textContent || "S/ 0"}\n`;
-        mensaje += `Total: ${byId("totalText")?.textContent || "S/ 0"}\n`;
-
-        const url = `https://wa.me/51${numero}?text=${encodeURIComponent(mensaje)}`;
-
-        cerrarWhatsModal();
-        window.open(url, "_blank");
       }
       // ====== IMPORTANTE: asegura que los onclick encuentren las funciones ======
       window.limpiarCotizacion = limpiarCotizacion;
@@ -3648,6 +3875,136 @@
         abrirDetalleModal("Agregar producto de Gemini");
       }
 
+      async function subirCotizacion() {
+        const cotizacion = document.querySelector("#quoteCard");
+
+        const canvas = await html2canvas(cotizacion, {
+          scale: 2,
+        });
+
+        const image = canvas.toDataURL("image/png");
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ image }),
+        });
+
+        const data = await res.json();
+
+        return data.url;
+      }
+
+      async function subirCotizacionCloudinary() {
+        const original = document.getElementById("quoteCard");
+        if (!original) throw new Error("No se encontró quoteCard");
+
+        const numeroCotizacion =
+          (document.getElementById("numeroCotizacion")?.value || "").trim() ||
+          `COT-${Date.now()}`;
+
+        const clone = original.cloneNode(true);
+        clone.id = "quoteCardCapture";
+        clone.classList.add("modo-captura-real");
+
+        if (original.classList.contains("print-show-line-prices")) {
+          clone.classList.add("print-show-line-prices");
+        } else {
+          clone.classList.remove("print-show-line-prices");
+        }
+
+        clone.querySelectorAll("*").forEach((el) => {
+          el.style.animation = "none";
+          el.style.transition = "none";
+        });
+
+        /* ✅ PRIMERO convertir textarea a texto */
+        clone.querySelectorAll("textarea.desc-edit").forEach((ta) => {
+          const div = document.createElement("div");
+          div.className = "captura-caracteristicas";
+          div.innerHTML = String(ta.value || "")
+            .split("\n")
+            .map((x) => x.trim())
+            .filter(Boolean)
+            .map((x) => `• ${x}`)
+            .join("<br>");
+
+          ta.replaceWith(div);
+        });
+
+        /* ✅ convertir inputs cantidad/precio a texto */
+        clone
+          .querySelectorAll('input[type="number"].mini-input')
+          .forEach((inp) => {
+            const span = document.createElement("span");
+            span.className = "captura-mini-text";
+            span.textContent = inp.value || "";
+            inp.replaceWith(span);
+          });
+
+        /* ✅ ahora sí ocultar/borrar lo que sobra */
+        clone
+          .querySelectorAll(
+            "#accionesColumna, .acciones-celda, .no-print button",
+          )
+          .forEach((el) => {
+            el.remove();
+          });
+
+        /* ✅ quitar columna precio unitario si está desactivada */
+        if (!clone.classList.contains("print-show-line-prices")) {
+          clone.querySelectorAll("th.col-unit, td.col-unit").forEach((el) => {
+            el.remove();
+          });
+        }
+
+        /* ✅ contenedor más ancho, parecido al PDF */
+        const wrap = document.createElement("div");
+        wrap.id = "wrapCapturaCotizacion";
+        wrap.style.position = "fixed";
+        wrap.style.left = "-20000px";
+        wrap.style.top = "0";
+        wrap.style.width = "820px";
+        wrap.style.background = "#ffffff";
+        wrap.style.padding = "24px";
+        wrap.style.zIndex = "9999";
+
+        wrap.appendChild(clone);
+        document.body.appendChild(wrap);
+
+        await new Promise((r) => setTimeout(r, 250));
+
+        const canvas = await html2canvas(clone, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+        });
+
+        const image = canvas.toDataURL("image/png");
+
+        wrap.remove();
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image,
+            fileName: numeroCotizacion,
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data?.url) {
+          throw new Error(data?.error || "No se pudo subir la imagen");
+        }
+
+        return data.url;
+      }
       async function agregarGeminiDirectoACotizacion(index) {
         const item = geminiSugeridos[index];
         if (!item) return;
@@ -3765,5 +4122,6 @@
         iniciarApp();
       });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   </body>
 </html>
