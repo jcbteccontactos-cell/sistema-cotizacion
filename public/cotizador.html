@@ -591,9 +591,22 @@
         background: rgba(201, 168, 76, 0.02);
       }
       .mini-input {
-        width: 80px;
-        padding: 6px 10px;
-        font-size: 12px;
+        background: #ffffff;
+        color: #000000;
+        border: 2px solid #d1d5db;
+        border-radius: 10px;
+        padding: 4px 8px;
+        width: 70px;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .mini-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        background: #ffffff;
+        color: #000000;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
       }
 
       /* ============================================================
@@ -622,7 +635,7 @@
         padding-top: 10px;
         margin-top: 10px;
         color: var(--gold);
-        font-family: "Cormorant Garamond", serif;
+        font-family: "Times New Roman", serif;
       }
 
       /* ============================================================
@@ -1809,13 +1822,13 @@
         }
 
         .totals .grand {
-          font-size: 13px !important;
+          font-size: 11px !important;
+          font-weight: 600 !important;
           padding-top: 6px !important;
           margin-top: 6px !important;
-          letter-spacing: 0.4px;
-          color: #111111 !important;
           border-top: 1px solid #bdbdbd !important;
-          font-weight: 700 !important;
+          letter-spacing: normal !important;
+          color: #111111 !important;
         }
 
         #quoteCard:not(.print-show-line-prices) table th:nth-child(4),
