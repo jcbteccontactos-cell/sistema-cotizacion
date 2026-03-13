@@ -11,8 +11,8 @@
     />
     <style>
       /* ============================================================
-   RESET & VARIABLES
-   ============================================================ */
+         RESET & VARIABLES
+         ============================================================ */
       *,
       *::before,
       *::after {
@@ -46,8 +46,8 @@
       }
 
       /* ============================================================
-   BASE
-   ============================================================ */
+         BASE
+         ============================================================ */
       html,
       body {
         height: 100%;
@@ -97,8 +97,8 @@
       }
 
       /* ============================================================
-   LAYOUT — LOGIN
-   ============================================================ */
+         LAYOUT — LOGIN
+         ============================================================ */
       .login-wrap {
         display: flex;
         justify-content: center;
@@ -125,8 +125,8 @@
       }
 
       /* ============================================================
-   LAYOUT — APP  (dos columnas)
-   ============================================================ */
+         LAYOUT — APP  (dos columnas)
+         ============================================================ */
       #appView {
         display: flex;
         flex-direction: column;
@@ -219,8 +219,8 @@
       }
 
       /* ============================================================
-   CARD
-   ============================================================ */
+         CARD
+         ============================================================ */
       .card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -270,8 +270,8 @@
       }
 
       /* ============================================================
-   FORMS
-   ============================================================ */
+         FORMS
+         ============================================================ */
       label {
         display: block;
         font-size: 10px;
@@ -334,8 +334,8 @@
       }
 
       /* ============================================================
-   BUTTONS
-   ============================================================ */
+         BUTTONS
+         ============================================================ */
       button {
         width: 100%;
         padding: 11px 18px;
@@ -389,8 +389,8 @@
       }
 
       /* ============================================================
-   GRID HELPERS
-   ============================================================ */
+         GRID HELPERS
+         ============================================================ */
       .grid {
         display: grid;
         gap: 12px;
@@ -407,8 +407,8 @@
       }
 
       /* ============================================================
-   MISC
-   ============================================================ */
+         MISC
+         ============================================================ */
       .hidden {
         display: none !important;
       }
@@ -440,8 +440,8 @@
       }
 
       /* ============================================================
-   RESULTS SCROLL (dentro de col-controls)
-   ============================================================ */
+         RESULTS SCROLL (dentro de col-controls)
+         ============================================================ */
       .results-scroll {
         max-height: 300px;
         overflow-y: auto;
@@ -459,8 +459,8 @@
       }
 
       /* ============================================================
-   PRODUCT ITEM
-   ============================================================ */
+         PRODUCT ITEM
+         ============================================================ */
       .product-item {
         border: 1px solid var(--border);
         border-radius: 12px;
@@ -532,8 +532,8 @@
       }
 
       /* ============================================================
-   DETAILS BOX
-   ============================================================ */
+         DETAILS BOX
+         ============================================================ */
       .details-box ul {
         margin-top: 12px;
         padding-left: 0;
@@ -563,8 +563,8 @@
       }
 
       /* ============================================================
-   TABLA (pantalla)
-   ============================================================ */
+         TABLA (pantalla)
+         ============================================================ */
       table {
         width: 100%;
         border-collapse: collapse;
@@ -597,8 +597,8 @@
       }
 
       /* ============================================================
-   TOTALS
-   ============================================================ */
+         TOTALS
+         ============================================================ */
       .totals {
         max-width: 260px;
         margin-left: auto;
@@ -626,8 +626,8 @@
       }
 
       /* ============================================================
-   SUGGEST / DNI
-   ============================================================ */
+         SUGGEST / DNI
+         ============================================================ */
       .input-suggest-wrap {
         position: relative;
       }
@@ -802,8 +802,8 @@
       }
 
       /* ============================================================
-   ACCIONES AREA
-   ============================================================ */
+         ACCIONES AREA
+         ============================================================ */
       #actionsArea {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -834,8 +834,8 @@
       }
 
       /* ============================================================
-   PRINT ONLY / NO PRINT
-   ============================================================ */
+         PRINT ONLY / NO PRINT
+         ============================================================ */
       .print-only {
         display: none;
       }
@@ -844,8 +844,8 @@
       }
 
       /* ============================================================
-   QUOTE CARD — pantalla (preview)
-   ============================================================ */
+         QUOTE CARD — pantalla (preview)
+         ============================================================ */
       #quoteCard {
         background: #ffffff;
         border: 1px solid var(--border);
@@ -1046,8 +1046,8 @@
       }
 
       /* =========================
-   MODAL DETALLE
-   ========================= */
+         MODAL DETALLE
+         ========================= */
       .detalle-modal.hidden {
         display: none !important;
       }
@@ -1182,8 +1182,8 @@
         display: none !important;
       }
       /* ============================================================
-   RESPONSIVE
-   ============================================================ */
+         RESPONSIVE
+         ============================================================ */
       @media (max-width: 1000px) {
         .app-columns {
           grid-template-columns: 1fr;
@@ -1292,6 +1292,7 @@
         text-align: center !important;
         margin-bottom: 4px !important;
         font-family: "Times New Roman", serif !important;
+        font-family: "Times New Roman", Georgia, serif !important;
       }
 
       .modo-captura-real .print-client-grid .row {
@@ -1452,8 +1453,8 @@
       }
 
       /* ============================================================
-   @media print — INTACTO + sin marca de agua + fondo blanco + todo negro
-   ============================================================ */
+         @media print — INTACTO + sin marca de agua + fondo blanco + todo negro
+         ============================================================ */
       @media print {
         #quoteCard.hide-unit-print .col-unit {
           display: none !important;
@@ -1468,58 +1469,69 @@
           font-weight: 700 !important;
           text-align: left !important;
           margin: 10px 0 6px 0 !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
+
         .proformas-title {
           font-size: 17px !important;
           font-weight: 700 !important;
           text-align: center !important;
           margin-bottom: 4px !important;
           font-family: "Times New Roman", serif !important;
-          color: #000000 !important;
+          color: #111111 !important;
+          letter-spacing: 0.4px !important;
         }
+
         .info-banners {
           display: flex !important;
           gap: 0 !important;
           margin-top: auto !important;
         }
+
         .info-item img {
           width: 100% !important;
           max-width: none !important;
           margin: 0 !important;
         }
+
         .garantia-box {
           font-family: "Times New Roman", serif !important;
           font-size: 14px !important;
           font-weight: 700 !important;
           text-align: center !important;
           margin: 6px 0 10px 0 !important;
-          color: #000000 !important;
+          color: #111111 !important;
+          letter-spacing: 0.3px !important;
         }
+
         .quote-ticket-header {
           display: grid;
           grid-template-columns: minmax(0, 520px) 230px;
           align-items: start;
           justify-content: start;
           column-gap: 10px;
-          border-bottom: 1px solid #d1d5db;
+          border-bottom: 1px solid #cfcfcf;
           padding-bottom: 12px;
           margin-bottom: 12px;
         }
+
         .quote-center-note {
           font-size: 9.5px !important;
           gap: 40px !important;
           margin-top: 8px !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
+
         .ticket-left {
           min-width: 0;
         }
+
         .letter-intro {
           font-size: 9.5px !important;
           margin: 4px 0 8px !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
+
         .ticket-company-img {
           width: 100%;
           max-width: 520px;
@@ -1527,51 +1539,61 @@
           display: block;
           object-fit: contain;
         }
+
         .ticket-right-box {
           width: 230px;
-          border: 2px solid #000000;
+          border: 1.5px solid #222222;
           padding: 12px 10px;
           text-align: center;
-          background: #c5c4c4 !important;
+          background: #e8e8e8 !important;
           margin: 0;
           justify-self: start;
           align-self: start;
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
         }
+
         .ticket-company-name {
           font-size: 11px !important;
           margin-top: 4px !important;
-          color: #000000 !important;
+          color: #111111 !important;
+          letter-spacing: 0.3px !important;
         }
+
         .ticket-ruc {
           font-size: 14px !important;
           font-weight: 700 !important;
           margin-bottom: 8px !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
+
         .ticket-doc-title {
           font-size: 22px !important;
           font-weight: 800 !important;
           line-height: 1.05 !important;
           margin-bottom: 8px !important;
-          color: #000000 !important;
+          color: #111111 !important;
+          letter-spacing: 0.6px !important;
+          text-transform: uppercase;
         }
+
         .ticket-doc-number {
           font-size: 18px !important;
           font-weight: 700 !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
+
         .quote-meta-inline {
           display: flex !important;
           gap: 12px !important;
           flex-wrap: wrap !important;
           margin-bottom: 10px !important;
         }
+
         .quote-meta-inline p {
           margin: 0 !important;
           font-size: 10px !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
 
         @page {
@@ -1604,6 +1626,7 @@
         body * {
           visibility: hidden !important;
         }
+
         #quoteCard,
         #quoteCard * {
           visibility: visible !important;
@@ -1627,7 +1650,7 @@
           break-inside: auto !important;
           overflow: visible !important;
           isolation: isolate !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
 
         /* MARCA DE AGUA */
@@ -1643,7 +1666,7 @@
           background-repeat: no-repeat !important;
           background-position: center !important;
           background-size: contain !important;
-          opacity: 0.22 !important;
+          opacity: 0.16 !important;
           z-index: 0 !important;
           pointer-events: none !important;
           visibility: visible !important;
@@ -1662,21 +1685,23 @@
         #quoteCard strong,
         #quoteCard b,
         #quoteCard em {
-          color: #000000 !important;
+          color: #111111 !important;
         }
 
         #accionesColumna,
         .acciones-celda {
           display: none !important;
         }
+
         .no-print {
           display: none !important;
         }
+
         .print-only {
           display: inline !important;
           font-size: 10px !important;
           line-height: 1.15 !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
 
         table {
@@ -1685,20 +1710,25 @@
           margin-top: 6px !important;
           font-size: 10px !important;
         }
+
         th,
         td {
           padding: 4px !important;
           vertical-align: top !important;
           font-size: 10px !important;
           line-height: 1.15 !important;
-          color: #000000 !important;
-          border-color: #aaaaaa !important;
+          color: #111111 !important;
+          border-color: #c9c9c9 !important;
         }
+
         th {
-          background: #f0f0f0 !important;
+          background: #ececec !important;
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
-          color: #000000 !important;
+          color: #111111 !important;
+          border-bottom: 1px solid #bdbdbd !important;
+          font-weight: 700 !important;
+          letter-spacing: 0.3px !important;
         }
 
         #quoteCard th:nth-child(2),
@@ -1712,6 +1742,7 @@
           width: 110px !important;
           min-width: 110px !important;
         }
+
         .print-logo-wrap img {
           width: 100px !important;
           height: 100px !important;
@@ -1725,52 +1756,66 @@
           gap: 18px !important;
           padding-bottom: 10px !important;
           margin-bottom: 10px !important;
-          border-bottom: 1px solid #cccccc !important;
+          border-bottom: 1px solid #cfcfcf !important;
         }
+
         .quote-header-left {
           display: flex !important;
           align-items: flex-start !important;
           gap: 12px !important;
           flex: 1 !important;
         }
+
         .quote-meta {
           text-align: right !important;
           min-width: 190px !important;
         }
+
         .quote-meta p {
           margin-bottom: 3px !important;
           font-size: 10px !important;
           line-height: 1.15 !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
+
         .company-lines p,
         .payment-lines p,
         .note-box p {
           margin-bottom: 3px !important;
           font-size: 10px !important;
           line-height: 1.15 !important;
-          color: #000000 !important;
+          color: #111111 !important;
         }
 
         .totals {
-          max-width: 220px !important;
-          margin-top: 8px !important;
-          background: #f0f0f0 !important;
-          border: 1px solid #cccccc !important;
+          width: 280px !important;
+          max-width: 280px !important;
+          margin-top: 10px !important;
+          background: #f3f3f3 !important;
+          border: 1px solid #cfcfcf !important;
+          border-radius: 12px !important;
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
+          padding: 10px 14px !important;
         }
+
         .totals div {
+          display: flex !important;
+          justify-content: space-between !important;
+          align-items: center !important;
           font-size: 10px !important;
-          margin-bottom: 3px !important;
-          color: #000000 !important;
+          margin-bottom: 6px !important;
+          color: #111111 !important;
         }
+
         .totals .grand {
-          font-size: 12px !important;
-          padding-top: 4px !important;
-          margin-top: 4px !important;
-          color: #000000 !important;
-          border-top: 1px solid #aaaaaa !important;
+          font-size: 13px !important;
+          padding-top: 6px !important;
+          margin-top: 6px !important;
+          letter-spacing: 0.4px;
+          color: #111111 !important;
+          border-top: 1px solid #bdbdbd !important;
+          font-weight: 700 !important;
         }
 
         #quoteCard:not(.print-show-line-prices) table th:nth-child(4),
@@ -1784,10 +1829,12 @@
         #quoteCard:not(.print-show-line-prices) table td:nth-child(1) {
           width: 36% !important;
         }
+
         #quoteCard:not(.print-show-line-prices) table th:nth-child(2),
         #quoteCard:not(.print-show-line-prices) table td:nth-child(2) {
           width: 44% !important;
         }
+
         #quoteCard:not(.print-show-line-prices) table th:nth-child(3),
         #quoteCard:not(.print-show-line-prices) table td:nth-child(3) {
           width: 20% !important;
@@ -1797,10 +1844,12 @@
         #quoteCard table {
           table-layout: fixed !important;
         }
+
         #quoteCard th:nth-child(1),
         #quoteCard td:nth-child(1) {
           width: 24% !important;
         }
+
         #quoteCard th:nth-child(2),
         #quoteCard td:nth-child(2) {
           width: 48% !important;
@@ -1808,16 +1857,19 @@
           padding-right: 6px !important;
           word-break: break-word !important;
         }
+
         #quoteCard th:nth-child(3),
         #quoteCard td:nth-child(3) {
           width: 6% !important;
           text-align: center !important;
         }
+
         #quoteCard th:nth-child(4),
         #quoteCard td:nth-child(4) {
           width: 10% !important;
           text-align: right !important;
         }
+
         #quoteCard th:nth-child(5),
         #quoteCard td:nth-child(5) {
           width: 12% !important;
@@ -2369,7 +2421,7 @@
                 Limpiar cotización
               </button>
               <button class="btn-primary" onclick="imprimirCotizacion()">
-                Imprimir / Guardar PDF
+                Imprimir cotización
               </button>
               <button class="btn-green" onclick="abrirWhatsModal()">
                 Enviar a WhatsApp (Beta 2)
@@ -3663,6 +3715,134 @@
         if (modal) modal.classList.add("hidden");
       }
 
+      async function generarPdfBonitoBlob() {
+        const original = document.getElementById("quoteCard");
+        if (!original) throw new Error("No se encontró quoteCard");
+
+        const numeroCotizacion =
+          (document.getElementById("numeroCotizacion")?.value || "").trim() ||
+          `COT-${Date.now()}`;
+
+        const clone = original.cloneNode(true);
+        clone.id = "quoteCardPdf";
+
+        const mostrarDetallesPrecio =
+          document.getElementById("printDetallesPrecio")?.checked === true;
+
+        if (mostrarDetallesPrecio) {
+          clone.classList.add("print-show-line-prices");
+        } else {
+          clone.classList.remove("print-show-line-prices");
+        }
+
+        clone
+          .querySelectorAll("#accionesColumna, .acciones-celda")
+          .forEach((el) => {
+            el.remove();
+          });
+
+        clone.querySelectorAll("textarea.desc-edit").forEach((ta) => {
+          const div = document.createElement("div");
+          div.innerHTML = String(ta.value || "")
+            .split("\n")
+            .map((x) => x.trim())
+            .filter(Boolean)
+            .map((x) => `• ${x}`)
+            .join("<br>");
+          ta.replaceWith(div);
+        });
+
+        clone
+          .querySelectorAll('input[type="number"].mini-input')
+          .forEach((inp) => {
+            const span = document.createElement("span");
+            span.textContent = inp.value || "";
+            inp.replaceWith(span);
+          });
+
+        clone.querySelectorAll(".no-print").forEach((el) => el.remove());
+        clone.querySelectorAll("button").forEach((el) => el.remove());
+
+        if (!mostrarDetallesPrecio) {
+          clone
+            .querySelectorAll("th:nth-child(4), td:nth-child(4)")
+            .forEach((el) => {
+              el.remove();
+            });
+          clone
+            .querySelectorAll("th:nth-child(5), td:nth-child(5)")
+            .forEach((el) => {
+              el.remove();
+            });
+        }
+
+        const estilos = Array.from(
+          document.querySelectorAll("style, link[rel='stylesheet']"),
+        )
+          .map((el) => el.outerHTML)
+          .join("\n");
+
+        const htmlFinal = `
+  <!doctype html>
+  <html lang="es">
+    <head>
+      <meta charset="UTF-8" />
+      <title>${numeroCotizacion}</title>
+      ${estilos}
+      <style>
+        @media print {
+          body * {
+            visibility: hidden !important;
+          }
+
+          #quoteCardPdf,
+          #quoteCardPdf * {
+            visibility: visible !important;
+          }
+
+          #quoteCardPdf {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            background: #fff !important;
+          }
+        }
+
+        body {
+          background: #fff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+      </style>
+    </head>
+    <body>
+      ${clone.outerHTML}
+    </body>
+  </html>
+`;
+
+        const res = await fetch("/api/generar-pdf", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            html: htmlFinal,
+            numeroCotizacion,
+          }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data?.error || "No se pudo generar el PDF");
+        }
+
+        const arrayBuffer = await res.arrayBuffer();
+
+        return new Blob([arrayBuffer], { type: "application/pdf" });
+      }
+
       async function confirmarEnviarWhatsApp() {
         const telefono = document.getElementById("whatsNumero")?.value?.trim();
 
@@ -3672,25 +3852,38 @@
         }
 
         try {
-          const link = await subirCotizacionCloudinary();
+          const pdfBlob = await generarPdfBonitoBlob();
 
-          const mensaje = `Hola, te envío tu cotización:\n${link}`;
+          const numeroCotizacion =
+            (document.getElementById("numeroCotizacion")?.value || "").trim() ||
+            `COT-${Date.now()}`;
+
+          const file = new File([pdfBlob], `${numeroCotizacion}.pdf`, {
+            type: "application/pdf",
+          });
+
+          const pdfUrl = URL.createObjectURL(file);
+
+          const a = document.createElement("a");
+          a.href = pdfUrl;
+          a.download = `${numeroCotizacion}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+
+          const mensaje = `Hola, te envío tu cotización ${numeroCotizacion}. Te adjunto el PDF aquí.`;
           const url = `https://wa.me/51${telefono}?text=${encodeURIComponent(mensaje)}`;
 
           window.open(url, "_blank");
+
+          setTimeout(() => {
+            URL.revokeObjectURL(pdfUrl);
+          }, 60000);
         } catch (error) {
           console.error(error);
-          alert("Error generando la cotización");
+          alert("Error generando el PDF");
         }
       }
-      // ====== IMPORTANTE: asegura que los onclick encuentren las funciones ======
-      window.limpiarCotizacion = limpiarCotizacion;
-      window.resetearTodo = resetearTodo;
-
-      // ✅ llama fechas arriba al cargar
-      document.addEventListener("DOMContentLoaded", () => {
-        actualizarFechasArriba();
-      });
 
       function yaExisteEnCatalogoGemini(item) {
         const nombre = textoNormal(item?.nombre || "");
@@ -3875,171 +4068,6 @@
         abrirDetalleModal("Agregar producto de Gemini");
       }
 
-      async function subirCotizacion() {
-        const cotizacion = document.querySelector("#quoteCard");
-
-        const canvas = await html2canvas(cotizacion, {
-          scale: 2,
-        });
-
-        const image = canvas.toDataURL("image/png");
-
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ image }),
-        });
-
-        const data = await res.json();
-
-        return data.url;
-      }
-
-      async function subirCotizacionCloudinary() {
-        const original = document.getElementById("quoteCard");
-        if (!original) throw new Error("No se encontró quoteCard");
-
-        const numeroCotizacion =
-          (document.getElementById("numeroCotizacion")?.value || "").trim() ||
-          `COT-${Date.now()}`;
-
-        const clone = original.cloneNode(true);
-        clone.id = "quoteCardCapture";
-        clone.classList.add("modo-captura-real");
-
-        if (original.classList.contains("print-show-line-prices")) {
-          clone.classList.add("print-show-line-prices");
-        } else {
-          clone.classList.remove("print-show-line-prices");
-        }
-
-        clone.querySelectorAll("*").forEach((el) => {
-          el.style.animation = "none";
-          el.style.transition = "none";
-        });
-
-        /* ✅ PRIMERO convertir textarea a texto */
-        clone.querySelectorAll("textarea.desc-edit").forEach((ta) => {
-          const div = document.createElement("div");
-          div.className = "captura-caracteristicas";
-          div.innerHTML = String(ta.value || "")
-            .split("\n")
-            .map((x) => x.trim())
-            .filter(Boolean)
-            .map((x) => `• ${x}`)
-            .join("<br>");
-
-          ta.replaceWith(div);
-        });
-
-        /* ✅ convertir inputs cantidad/precio a texto */
-        clone
-          .querySelectorAll('input[type="number"].mini-input')
-          .forEach((inp) => {
-            const span = document.createElement("span");
-            span.className = "captura-mini-text";
-            span.textContent = inp.value || "";
-            inp.replaceWith(span);
-          });
-
-        /* ✅ ahora sí ocultar/borrar lo que sobra */
-        clone
-          .querySelectorAll(
-            "#accionesColumna, .acciones-celda, .no-print button",
-          )
-          .forEach((el) => {
-            el.remove();
-          });
-
-        /* ✅ quitar columna precio unitario si está desactivada */
-        if (!clone.classList.contains("print-show-line-prices")) {
-          clone.querySelectorAll("th.col-unit, td.col-unit").forEach((el) => {
-            el.remove();
-          });
-        }
-
-        /* ✅ contenedor más ancho, parecido al PDF */
-        const wrap = document.createElement("div");
-        wrap.id = "wrapCapturaCotizacion";
-        wrap.style.position = "fixed";
-        wrap.style.left = "-20000px";
-        wrap.style.top = "0";
-        wrap.style.width = "820px";
-        wrap.style.background = "#ffffff";
-        wrap.style.padding = "24px";
-        wrap.style.zIndex = "9999";
-
-        wrap.appendChild(clone);
-        document.body.appendChild(wrap);
-
-        await new Promise((r) => setTimeout(r, 250));
-
-        const canvas = await html2canvas(clone, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-        });
-
-        const image = canvas.toDataURL("image/png");
-
-        wrap.remove();
-
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            image,
-            fileName: numeroCotizacion,
-          }),
-        });
-
-        const data = await res.json().catch(() => ({}));
-
-        if (!res.ok || !data?.url) {
-          throw new Error(data?.error || "No se pudo subir la imagen");
-        }
-
-        return data.url;
-      }
-      async function agregarGeminiDirectoACotizacion(index) {
-        const item = geminiSugeridos[index];
-        if (!item) return;
-
-        const nuevoProducto = {
-          categoria: normalizarCategoria(item.categoria),
-          nombre: item.nombre || "Producto nuevo",
-          marca: item.marca || "N/D",
-          modelo: item.modelo || "N/D",
-          precio: Number(item.precio_sugerido || 0),
-          caracteristicas: Array.isArray(item.detalles) ? item.detalles : [],
-          creadoPorGemini: true,
-        };
-
-        try {
-          await crearProductoBD(nuevoProducto);
-          await cargarCatalogoBD();
-          renderProductos();
-
-          const creado = productos.find(
-            (p) =>
-              textoNormal(p.nombre) === textoNormal(nuevoProducto.nombre) &&
-              textoNormal(p.modelo) === textoNormal(nuevoProducto.modelo),
-          );
-
-          if (creado) agregarProducto(creado.id, 1);
-
-          byId("geminiStatus").textContent =
-            "Producto agregado al catálogo y a la cotización.";
-        } catch (e) {
-          console.error(e);
-          alert("No se pudo guardar el producto de Gemini en BD: " + e.message);
-        }
-      }
-
       function aplicarPreferenciaImpresion() {
         const chk = byId("printDetallesPrecio");
         const card = byId("quoteCard");
@@ -4122,6 +4150,5 @@
         iniciarApp();
       });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   </body>
 </html>
