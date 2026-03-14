@@ -23,17 +23,20 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Falta html" });
     }
 
+    const executablePath = await chromium.executablePath();
+
     browser = await puppeteer.launch({
-      args: chromium.args,
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
+      executablePath,
       headless: true,
     });
 
     const page = await browser.newPage();
 
     await page.setContent(html, {
-      waitUntil: "networkidle0",
+      waitUntil: ["domcontentloaded", "networkidle0"],
+      timeout: 60000,
     });
 
     await page.emulateMediaType("print");
@@ -57,14 +60,14 @@ export default async function handler(req, res) {
       "Content-Disposition",
       `attachment; filename="${numeroCotizacion || "cotizacion"}.pdf"`,
     );
-    res.setHeader("Content-Length", finalBuffer.length);
 
-    return res.status(200).end(finalBuffer);
+    return res.status(200).send(finalBuffer);
   } catch (error) {
     console.error("ERROR GENERANDO PDF:", error);
     return res.status(500).json({
       error: "No se pudo generar el PDF",
-      detalle: error.message,
+      detalle: error?.message || "Error desconocido",
+      stack: process.env.NODE_ENV !== "production" ? error?.stack : undefined,
     });
   } finally {
     if (browser) {
