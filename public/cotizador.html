@@ -1900,6 +1900,11 @@
       }
     </style>
   </head>
+  <iframe
+    id="pdfDownloadFrame"
+    name="pdfDownloadFrame"
+    style="display: none"
+  ></iframe>
   <body>
     <!-- ============================================================
      LOGIN
@@ -2042,7 +2047,7 @@
                   <th>Características</th>
                   <th>Cant.</th>
                   <th class="col-unit">P. Unit.</th>
-                  <th>Subtotal</th>
+                  <th class="col-subtotal">Subtotal</th>
                   <th id="accionesColumna">Acción</th>
                 </tr>
               </thead>
@@ -2439,7 +2444,7 @@
               <button class="btn-green" onclick="abrirWhatsModal()">
                 Enviar a WhatsApp (Beta 2)
               </button>
-              <button class="btn-danger" onclick="resetearTodo()">
+              <button class="btn-danger" onclick="reiniciarTodo()">
                 Reiniciar todo
               </button>
             </div>
@@ -3606,7 +3611,7 @@
   />
 </td>
 
-                  <td>${money(sub)}</td>
+                  <td class="col-subtotal">${money(sub)}</td>
 
                   <td class="acciones-celda">
                     <button
@@ -3683,29 +3688,26 @@
         renderCotizacion();
       }
 
-      function resetearTodo() {
+      function reiniciarTodo() {
         cotizacion = [];
         geminiSugeridos = [];
 
-        if (byId("cliente")) byId("cliente").value = "";
-        if (byId("telefono")) byId("telefono").value = "";
-        if (byId("dniRuc")) byId("dniRuc").value = "";
-        if (byId("direccionCliente")) byId("direccionCliente").value = "";
-
-        if (byId("busqueda")) byId("busqueda").value = "";
-        if (byId("categoria")) byId("categoria").value = "todos";
-        if (byId("descuento")) byId("descuento").value = "0";
-        if (byId("IGV")) byId("IGV").value = "18";
-
-        if (byId("geminiPrompt")) byId("geminiPrompt").value = "";
-        if (byId("geminiResultados")) byId("geminiResultados").innerHTML = "";
-        if (byId("geminiStatus"))
-          byId("geminiStatus").textContent = "Sin analizar.";
+        byId("cliente").value = "";
+        byId("telefono").value = "";
+        byId("dniRuc").value = "";
+        byId("direccionCliente").value = "";
+        byId("busqueda").value = "";
+        byId("categoria").value = "todos";
+        byId("descuento").value = "0";
+        byId("IGV").value = "18";
+        byId("geminiPrompt").value = "";
+        byId("geminiResultados").innerHTML = "";
+        byId("geminiStatus").textContent = "Sin analizar.";
 
         limpiarDetalleProducto();
+        cerrarSuggest();
 
         generarNumeroCotizacion();
-        actualizarFechasArriba(); // ✅ fechas arriba
         renderProductos();
         renderCotizacion();
         sincronizarCabecera();
@@ -3748,12 +3750,14 @@
           clone.classList.remove("print-show-line-prices");
         }
 
+        // quitar acción
         clone
           .querySelectorAll("#accionesColumna, .acciones-celda")
           .forEach((el) => {
             el.remove();
           });
 
+        // textarea -> texto
         clone.querySelectorAll("textarea.desc-edit").forEach((ta) => {
           const div = document.createElement("div");
           div.innerHTML = String(ta.value || "")
@@ -3765,29 +3769,48 @@
           ta.replaceWith(div);
         });
 
+        // inputs mini -> texto
         clone
           .querySelectorAll('input[type="number"].mini-input')
           .forEach((inp) => {
-            const span = document.createElement("span");
-            span.textContent = inp.value || "";
-            inp.replaceWith(span);
+            const td = inp.closest("td");
+            const valor = inp.value || "";
+
+            if (td) {
+              const printOnly = td.querySelector(".print-only");
+              if (printOnly) {
+                printOnly.textContent = valor;
+              }
+            }
+
+            inp.remove();
           });
 
+        // quitar no-print y botones
         clone.querySelectorAll(".no-print").forEach((el) => el.remove());
         clone.querySelectorAll("button").forEach((el) => el.remove());
 
+        // ocultar columnas si no está marcado
         if (!mostrarDetallesPrecio) {
-          clone
-            .querySelectorAll("th:nth-child(4), td:nth-child(4)")
-            .forEach((el) => {
-              el.remove();
-            });
-          clone
-            .querySelectorAll("th:nth-child(5), td:nth-child(5)")
-            .forEach((el) => {
-              el.remove();
-            });
+          clone.querySelectorAll(".col-unit, .col-subtotal").forEach((el) => {
+            el.remove();
+          });
         }
+
+        // arreglar imágenes para puppeteer
+        clone.querySelectorAll("img").forEach((img) => {
+          const src = img.getAttribute("src");
+          if (!src) return;
+
+          if (src.startsWith("/")) {
+            img.setAttribute("src", `${window.location.origin}${src}`);
+          } else if (src.startsWith("img/")) {
+            img.setAttribute("src", `${window.location.origin}/${src}`);
+          }
+
+          img.setAttribute("loading", "eager");
+          img.setAttribute("decoding", "sync");
+        });
 
         const estilos = Array.from(
           document.querySelectorAll("style, link[rel='stylesheet']"),
@@ -3796,43 +3819,78 @@
           .join("\n");
 
         const htmlFinal = `
-  <!doctype html>
-  <html lang="es">
-    <head>
-      <meta charset="UTF-8" />
-      <title>${numeroCotizacion}</title>
-      ${estilos}
-      <style>
-        @media print {
-          body * {
-            visibility: hidden !important;
-          }
-
-          #quoteCardPdf,
-          #quoteCardPdf * {
-            visibility: visible !important;
-          }
-
-          #quoteCardPdf {
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            background: #fff !important;
-          }
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <base href="${window.location.origin}/" />
+    <title>${numeroCotizacion}</title>
+    ${estilos}
+    <style>
+      @media print {
+        body * {
+          visibility: hidden !important;
         }
 
-        body {
-          background: #fff !important;
-          margin: 0 !important;
-          padding: 0 !important;
+        #quoteCardPdf,
+        #quoteCardPdf * {
+          visibility: visible !important;
         }
-      </style>
-    </head>
-    <body>
-      ${clone.outerHTML}
-    </body>
-  </html>
+
+        #quoteCardPdf {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          background: #ffffff !important;
+          color: #111111 !important;
+        }
+
+        #quoteCardPdf,
+        #quoteCardPdf *,
+        #quoteCardPdf p,
+        #quoteCardPdf span,
+        #quoteCardPdf td,
+        #quoteCardPdf th,
+        #quoteCardPdf div,
+        #quoteCardPdf strong,
+        #quoteCardPdf b,
+        #quoteCardPdf em,
+        #quoteCardPdf small,
+        #quoteCardPdf label,
+        #quoteCardPdf h1,
+        #quoteCardPdf h2,
+        #quoteCardPdf h3,
+        #quoteCardPdf h4,
+        #quoteCardPdf h5,
+        #quoteCardPdf h6,
+        #quoteCardPdf li {
+          color: #111111 !important;
+          opacity: 1 !important;
+          text-shadow: none !important;
+        }
+
+        #quoteCardPdf img {
+          display: block !important;
+          max-width: 100% !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+      }
+
+      html,
+      body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #111111 !important;
+      }
+    </style>
+  </head>
+  <body>
+    ${clone.outerHTML}
+  </body>
+</html>
 `;
 
         const res = await fetch("/api/generar-pdf", {
@@ -3865,33 +3923,190 @@
         }
 
         try {
-          const pdfBlob = await generarPdfBonitoBlob();
+          const original = document.getElementById("quoteCard");
+          if (!original) throw new Error("No se encontró quoteCard");
 
           const numeroCotizacion =
             (document.getElementById("numeroCotizacion")?.value || "").trim() ||
             `COT-${Date.now()}`;
 
-          const file = new File([pdfBlob], `${numeroCotizacion}.pdf`, {
-            type: "application/pdf",
+          const clone = original.cloneNode(true);
+          clone.id = "quoteCardPdf";
+
+          const mostrarDetallesPrecio =
+            document.getElementById("printDetallesPrecio")?.checked === true;
+
+          if (mostrarDetallesPrecio) {
+            clone.classList.add("print-show-line-prices");
+          } else {
+            clone.classList.remove("print-show-line-prices");
+          }
+
+          clone
+            .querySelectorAll("#accionesColumna, .acciones-celda")
+            .forEach((el) => el.remove());
+
+          clone.querySelectorAll("textarea.desc-edit").forEach((ta) => {
+            const div = document.createElement("div");
+            div.innerHTML = String(ta.value || "")
+              .split("\n")
+              .map((x) => x.trim())
+              .filter(Boolean)
+              .map((x) => `• ${x}`)
+              .join("<br>");
+            ta.replaceWith(div);
           });
 
-          const pdfUrl = URL.createObjectURL(file);
+          clone
+            .querySelectorAll('input[type="number"].mini-input')
+            .forEach((inp) => {
+              const td = inp.closest("td");
+              const valor = inp.value || "";
 
-          const a = document.createElement("a");
-          a.href = pdfUrl;
-          a.download = `${numeroCotizacion}.pdf`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
+              if (td) {
+                const printOnly = td.querySelector(".print-only");
+                if (printOnly) {
+                  printOnly.textContent = valor;
+                }
+              }
 
-          const mensaje = `Hola, te envío tu cotización ${numeroCotizacion}. Te adjunto el PDF aquí.`;
+              inp.remove();
+            });
+
+          clone.querySelectorAll(".no-print").forEach((el) => el.remove());
+          clone.querySelectorAll("button").forEach((el) => el.remove());
+
+          if (!mostrarDetallesPrecio) {
+            clone.querySelectorAll(".col-unit, .col-subtotal").forEach((el) => {
+              el.remove();
+            });
+          }
+
+          clone.querySelectorAll("img").forEach((img) => {
+            const src = img.getAttribute("src");
+            if (!src) return;
+
+            if (src.startsWith("/")) {
+              img.setAttribute("src", `${window.location.origin}${src}`);
+            } else if (src.startsWith("img/")) {
+              img.setAttribute("src", `${window.location.origin}/${src}`);
+            }
+
+            img.setAttribute("loading", "eager");
+            img.setAttribute("decoding", "sync");
+          });
+
+          const estilos = Array.from(
+            document.querySelectorAll('style, link[rel="stylesheet"]'),
+          )
+            .map((el) => el.outerHTML)
+            .join("\n");
+
+          const htmlFinal = `
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <base href="${window.location.origin}/" />
+    <title>${numeroCotizacion}</title>
+    ${estilos}
+    <style>
+      @media print {
+        body * {
+          visibility: hidden !important;
+        }
+
+        #quoteCardPdf,
+        #quoteCardPdf * {
+          visibility: visible !important;
+        }
+
+        #quoteCardPdf {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          background: #ffffff !important;
+          color: #111111 !important;
+        }
+
+        #quoteCardPdf,
+        #quoteCardPdf *,
+        #quoteCardPdf p,
+        #quoteCardPdf span,
+        #quoteCardPdf td,
+        #quoteCardPdf th,
+        #quoteCardPdf div,
+        #quoteCardPdf strong,
+        #quoteCardPdf b,
+        #quoteCardPdf em,
+        #quoteCardPdf small,
+        #quoteCardPdf label,
+        #quoteCardPdf h1,
+        #quoteCardPdf h2,
+        #quoteCardPdf h3,
+        #quoteCardPdf h4,
+        #quoteCardPdf h5,
+        #quoteCardPdf h6,
+        #quoteCardPdf li {
+          color: #111111 !important;
+          opacity: 1 !important;
+          text-shadow: none !important;
+        }
+
+        #quoteCardPdf img {
+          display: block !important;
+          max-width: 100% !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+      }
+
+      html,
+      body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #111111 !important;
+      }
+    </style>
+  </head>
+  <body>
+    ${clone.outerHTML}
+  </body>
+</html>
+`;
+
+          // ✅ descarga real vía form oculto
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = "/api/generar-pdf";
+          form.target = "pdfDownloadFrame";
+          form.style.display = "none";
+
+          const inputHtml = document.createElement("input");
+          inputHtml.type = "hidden";
+          inputHtml.name = "html";
+          inputHtml.value = htmlFinal;
+
+          const inputNumero = document.createElement("input");
+          inputNumero.type = "hidden";
+          inputNumero.name = "numeroCotizacion";
+          inputNumero.value = numeroCotizacion;
+
+          form.appendChild(inputHtml);
+          form.appendChild(inputNumero);
+          document.body.appendChild(form);
+
+          form.submit();
+          form.remove();
+
+          // ✅ abrir WhatsApp
+          const mensaje = `Hola, le envio su cotización ${numeroCotizacion}. Te adjunto el PDF aquí.`;
           const url = `https://wa.me/51${telefono}?text=${encodeURIComponent(mensaje)}`;
-
           window.open(url, "_blank");
 
-          setTimeout(() => {
-            URL.revokeObjectURL(pdfUrl);
-          }, 60000);
+          cerrarWhatsModal();
         } catch (error) {
           console.error(error);
           alert("Error generando el PDF");
@@ -3995,6 +4210,43 @@
               `,
           )
           .join("");
+      }
+
+      async function agregarGeminiDirectoACotizacion(index) {
+        const item = geminiSugeridos[index];
+        if (!item) return;
+
+        const nuevoProducto = {
+          categoria: normalizarCategoria(item.categoria),
+          nombre: item.nombre || "Producto nuevo",
+          marca: item.marca || "N/D",
+          modelo: item.modelo || "N/D",
+          precio: Number(item.precio_sugerido || 0),
+          caracteristicas: Array.isArray(item.detalles) ? item.detalles : [],
+          creadoPorGemini: true,
+        };
+
+        try {
+          await crearProductoBD(nuevoProducto);
+          await cargarCatalogoBD();
+          renderProductos();
+
+          const creado = productos.find(
+            (p) =>
+              textoNormal(p.nombre) === textoNormal(nuevoProducto.nombre) &&
+              textoNormal(p.modelo) === textoNormal(nuevoProducto.modelo),
+          );
+
+          if (creado) {
+            agregarProducto(creado.id, 1);
+          }
+
+          byId("geminiStatus").textContent =
+            "Producto agregado al catálogo y a la cotización.";
+        } catch (e) {
+          console.error(e);
+          alert("No se pudo guardar el producto de Gemini en BD: " + e.message);
+        }
       }
 
       async function agregarGeminiAlCatalogo(index) {
