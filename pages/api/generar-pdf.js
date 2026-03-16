@@ -60,6 +60,7 @@ export default async function handler(req, res) {
       "Content-Disposition",
       `attachment; filename="${numeroCotizacion || "cotizacion"}.pdf"`,
     );
+    res.setHeader("Content-Length", finalBuffer.length);
 
     return res.status(200).send(finalBuffer);
   } catch (error) {
