@@ -1,4 +1,4 @@
-import chromium from "@sparticuz/chromium";
+import chromium from "@sparticuz/chromium-min";
 import puppeteer from "puppeteer-core";
 
 export const config = {
@@ -23,7 +23,9 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Falta html" });
     }
 
-    const executablePath = await chromium.executablePath();
+    const executablePath = await chromium.executablePath(
+      "https://github.com/Sparticuz/chromium/releases/download/v143.0.0/chromium-v143.0.0-pack.tar",
+    );
 
     browser = await puppeteer.launch({
       args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
@@ -68,11 +70,6 @@ export default async function handler(req, res) {
     return res
       .status(500)
       .send("ERROR PDF: " + (error?.message || "Error desconocido"));
-    // return res.status(500).json({
-    //  error: "No se pudo generar el PDF",
-    //detalle: error?.message || "Error desconocido",
-    //stack: process.env.NODE_ENV !== "production" ? error?.stack : undefined,
-    // });
   } finally {
     if (browser) {
       await browser.close();
