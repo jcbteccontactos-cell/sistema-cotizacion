@@ -7,7 +7,7 @@
     "build": "next build"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^143.0.4",
+    "@sparticuz/chromium-min": "^143.0.4",
     "@supabase/supabase-js": "^2.98.0",
     "cloudinary": "^2.9.0",
     "formidable": "^3.5.4",
