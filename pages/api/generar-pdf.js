@@ -65,11 +65,14 @@ export default async function handler(req, res) {
     return res.status(200).send(finalBuffer);
   } catch (error) {
     console.error("ERROR GENERANDO PDF:", error);
-    return res.status(500).json({
-      error: "No se pudo generar el PDF",
-      detalle: error?.message || "Error desconocido",
-      stack: process.env.NODE_ENV !== "production" ? error?.stack : undefined,
-    });
+    return res
+      .status(500)
+      .send("ERROR PDF: " + (error?.message || "Error desconocido"));
+    // return res.status(500).json({
+    //  error: "No se pudo generar el PDF",
+    //detalle: error?.message || "Error desconocido",
+    //stack: process.env.NODE_ENV !== "production" ? error?.stack : undefined,
+    // });
   } finally {
     if (browser) {
       await browser.close();
