@@ -4082,7 +4082,7 @@
           const form = document.createElement("form");
           form.method = "POST";
           form.action = "/api/generar-pdf";
-          form.target = "_blank";
+          form.target = "";
           form.style.display = "none";
 
           const inputHtml = document.createElement("input");
@@ -4105,7 +4105,7 @@
           // ✅ abrir WhatsApp
           const mensaje = `Hola, le envio su cotización ${numeroCotizacion}. Te adjunto el PDF aquí.`;
           const url = `https://wa.me/51${telefono}?text=${encodeURIComponent(mensaje)}`;
-          window.open(url, "_blank");
+          window.open(url, "pdfDowloadFrame");
 
           cerrarWhatsModal();
         } catch (error) {
